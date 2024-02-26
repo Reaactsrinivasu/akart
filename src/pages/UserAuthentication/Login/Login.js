@@ -61,7 +61,7 @@ const Login = () => {
     }
   });
   const responseFacebook = (response) => {
-    console.log(response.picture?.data.url);
+    // console.log(response.picture?.data.url);
   setProfile(response);
   };
   // const profiePic = profile?.picture?.data.url;
@@ -159,8 +159,20 @@ const logOut = () => {
                   label="Remember me"
                 /> */}
               <FormControl fullWidth>
-                <FormLabel sx={{marginBottom:'10px',color:'#000',forntWeight:400,fontSize:'15px'}}>Enter email or mobile number</FormLabel>
-                <OutlinedInput placeholder="email or mobile number" size="small"/>
+                <FormLabel
+                  sx={{
+                    marginBottom: "10px",
+                    color: "#000",
+                    forntWeight: 400,
+                    fontSize: "15px",
+                  }}
+                >
+                  Enter email or mobile number
+                </FormLabel>
+                <OutlinedInput
+                  placeholder="email or mobile number"
+                  size="small"
+                />
               </FormControl>
               <Button
                 type="submit"
@@ -190,11 +202,7 @@ const logOut = () => {
                     </Link> */}
                 </Grid>
                 <Grid item>
-                    <Link
-                      href="#"
-                      variant="body2"
-                      underline="none"
-                    >
+                  <Link href="#" variant="body2" underline="none">
                     {"Not a memeber ? Sign Up"}
                   </Link>
                 </Grid>
