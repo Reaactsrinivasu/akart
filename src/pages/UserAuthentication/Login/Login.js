@@ -280,7 +280,7 @@ const logOut = () => {
                   callback={responseFacebook}
                 /> */}
                 <FacebookLogin
-                  appId="422351110260814"
+                  appId="7293056090774263"
                   autoLoad={false}
                   fields="name,email,picture"
                   callback={responseFacebook}
