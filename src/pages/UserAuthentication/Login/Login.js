@@ -16,21 +16,44 @@ import { FormLabel } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-
+import { useNavigate,useLocation} from "react-router-dom";
 const GoogleIcon = "assets/imgs/google.png";
 const FacebookIcon = "assets/imgs/facebook.png";
 
 
 const Login = () => {
   const [profile, setProfile] = useState();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const preData = location?.state;
+  //  console.log("preData", preData);
+  const [credential, setCredential] = useState(preData);
+  
   const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // event.preventDefault();
+    // Determine whether the entered value is an email or mobile number
+    const isEmail = /^\S+@\S+\.\S+$/.test(credential);
+    const isMobileNumber = /^\d{10}$/.test(credential);
+
+
+     if (isEmail) {
+       navigate("/login/email", { state: credential });
+     } else if (isMobileNumber) {
+       // Redirect to login with mobile number page
+       navigate("/login/mobile", { state: credential });
+     } else {
+       // Handle invalid input
+       alert("Invalid email or mobile number");
+     }
+
+    // const data = new FormData(event.currentTarget);
+    // console.log("credential", credential);
   };
+  // {
+  //   // email: data.get("email"),
+  //   // password: data.get("password"),
+  //   ("credential");
+  // }
   // const login = useGoogleLogin({
   //   onSuccess: (codeResponse) => setUser(codeResponse),
   //   onError: (error) => console.log("Login Failed:", error),
@@ -51,12 +74,12 @@ const Login = () => {
           )
           .then((res) => {
             setProfile(res.data);
-            console.log('res', res)
+            // console.log('res', res);
           })
           .catch((err) => console.log(err));
         // console.log('res',res)
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   });
@@ -65,14 +88,14 @@ const Login = () => {
   setProfile(response);
   };
   // const profiePic = profile?.picture?.data.url;
-  console.log("profile", profile?.picture);
+  // console.log("profile", profile?.picture);
 const logOut = () => {
   googleLogout();
   setProfile(null);
 };
 
  const authHandler = (err, data) => {
-   console.log("insta data",err, data);
+  //  console.log("insta data",err, data);
  };
   return (
     <Container
@@ -99,17 +122,7 @@ const logOut = () => {
           </Button>
         </div>
       ) : (
-        <Box
-        // sx={{
-        //   marginTop: 8,
-        //   display: "flex",
-        //   flexDirection: "column",
-        //   alignItems: "center",
-        //   bgcolor: "#fff",
-        //   borderRadius: "10px",
-        //   boxShadow: "10px",
-        // }}
-        >
+        <Box>
           <Paper
             elevation={1}
             variant="elevation"
@@ -126,38 +139,14 @@ const logOut = () => {
             }}
           >
             <Typography component="h1" variant="h5" mt={2}>
-              Sign in
+              Sign In
             </Typography>
             <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
+              // component="form"
+              // onSubmit={handleSubmit}
+              // noValidate
               sx={{ mt: 1 }}
             >
-              {/* <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email or Mobile number"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              /> */}
-              {/* <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                /> */}
-              {/* <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                /> */}
               <FormControl fullWidth>
                 <FormLabel
                   sx={{
@@ -172,10 +161,14 @@ const logOut = () => {
                 <OutlinedInput
                   placeholder="email or mobile number"
                   size="small"
+                  type="text"
+                  value={credential}
+                  onChange={(e) => setCredential(e.target.value)}
                 />
               </FormControl>
               <Button
-                type="submit"
+                  // type="submit"
+                  onClick={(e)=>handleSubmit(e)}
                 fullWidth
                 // variant="contained"
                 // sx={{ mt: 3, mb: 2, textTransform: "none" }}
@@ -202,7 +195,13 @@ const logOut = () => {
                     </Link> */}
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2" underline="none">
+                  <Link
+                    // href="#"
+                    variant="body2"
+                    underline="none"
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => navigate("/signup")}
+                  >
                     {"Not a memeber ? Sign Up"}
                   </Link>
                 </Grid>

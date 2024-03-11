@@ -45,10 +45,10 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    // console.log({
+    //   email: data.get("email"),
+    //   password: data.get("password"),
+    // });
   };
   // const login = useGoogleLogin({
   //   onSuccess: (codeResponse) => setUser(codeResponse),
@@ -70,21 +70,21 @@ const Login = () => {
           )
           .then((res) => {
             setProfile(res.data);
-            console.log('res', res)
+            // console.log('res', res)
           })
           .catch((err) => console.log(err));
         // console.log('res',res)
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
   });
   const responseFacebook = (response) => {
-    console.log(response.picture?.data.url);
+    // console.log(response.picture?.data.url);
   setProfile(response);
   };
   // const profiePic = profile?.picture?.data.url;
-  console.log("profile", profile);
+  // console.log("profile", profile);
 const logOut = () => {
   googleLogout();
   setProfile(null);
@@ -93,10 +93,10 @@ const logOut = () => {
   const responseMessage = (response) => {
   };
   const errorMessage = (error) => {
-    console.log(error);
+    // console.log(error);
   };
  const authHandler = (err, data) => {
-   console.log("insta data",err, data);
+  //  console.log("insta data",err, data);
  };
   return (
     <Container

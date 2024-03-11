@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkakart=self.webpackChunkakart||[]).push([[983],{3983:(a,e,r)=>{r.r(e),r.d(e,{default:()=>c});r(5043);var t=r(5865),s=r(579);const c=()=>(0,s.jsx)(s.Fragment,{children:(0,s.jsx)(t.A,{variant:"h2",children:"Welcome To Akart"})})}}]);
+//# sourceMappingURL=983.ede0bb72.chunk.js.map

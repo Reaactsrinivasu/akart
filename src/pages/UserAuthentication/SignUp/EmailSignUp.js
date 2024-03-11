@@ -1,113 +1,135 @@
-import * as React from "react";
-// import { useState, useEffect } from "react";
-import Sheet from "@mui/joy/Sheet";
-import Button from "@mui/joy/Button";
-import Typography from "@mui/joy/Typography";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
-import Container from "@mui/joy/Container";
-import { CssVarsProvider} from "@mui/joy/styles";
-import CssBaseline from "@mui/joy/CssBaseline";
-import Box from "@mui/joy/Box";
-import Link from "@mui/joy/Link";
+import React, { useState, useEffect } from "react";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import { toast } from "react-toastify";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import FormControl from "@mui/material/FormControl";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { FormLabel, TextField } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import { useLocation, useNavigate } from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { useSelector, useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import {
+  initialValues,
+  generateValidationSchema,
+} from "../../../common/Validations";
+import { signupWithEmailInitiate } from "../../../redux/actions/emailSignupActions";
 const EmailSignUp = () => {
-  // const [loginData, setLoginData] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  // const onInputChange = (e) => {
-  //   let { name, value } = e.target;
-  //   setLoginData({ ...loginData, [name]: value });
-  // };
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const token = localStorage.getItem("token");
-  // const [storedResult, setStoredResult] = useState(null);
-  const handleSubmit = async (e) => {};
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleSubmit = async (values) => {
+    try {
+      // Make the API call directly in the component  
+      dispatch(signupWithEmailInitiate(values,navigate));
+      // navigate("/otp/otpverify", { state: formik.values.email });
+      // Dispatch the success action
+      // dispatch(createSignupWithEmailIdSuccess(result));
+    } catch (error) {
+      // Dispatch the error action
+      // dispatch(createSignupWithEmailIdError(error));
+    }
+  };
+
+  const formFields = ["email"];
+  const validationSchema = generateValidationSchema(formFields);
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      type:"email_account",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => handleSubmit(values),
+  });
+
   return (
-    <CssVarsProvider>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <main>
-          <Sheet
+    <>
+      <Container
+        component="main"
+        maxWidth="xs"
+        sx={{
+          margin: "auto",
+        }}
+      >
+        <Box>
+          <Paper
+            elevation={1}
+            variant="elevation"
+            square={false}
             sx={{
-              maxWidth: 360,
-              mx: "auto",
-              my: 15,
-              py: 3,
-              px: 2,
+              marginTop: 10,
+              padding: "10px",
               display: "flex",
               flexDirection: "column",
-              gap: 2,
-              borderRadius: "sm",
-              boxShadow: "sm",
+              alignItems: "center",
               bgcolor: "#fff",
-              color: "orange",
-              // boxShadow:'10px'
-              // boxShadow: "0px 10px 50px rgba(0, 0, 0, 0.1)",
             }}
-            variant="outlined"
           >
-            <div>
-              <Typography
-                level="h1"
-                variant="h1"
-                component="h1"
+            <Typography component="h1" variant="h5" mt={2}>
+              Sign Up
+            </Typography>
+            <form onSubmit={formik.handleSubmit} style={{ marginTop: "20px" }}>
+              <FormControl fullWidth>
+                <FormLabel
+                  sx={{
+                    marginBottom: "10px",
+                    color: "#000",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                  }}
+                >
+                  Enter Your Email Id
+                </FormLabel>
+                <TextField
+                  placeholder="enter your email id"
+                  id="email"
+                  name="email"
+                  size="small"
+                  value={formik.values.email}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                />
+              </FormControl>
+              <Button
+                type="submit"
+                fullWidth
                 sx={{
-                  fontWeight: 400,
-                  fontSize: "28px",
-                  lineHeight: 1.2,
+                  mt: 3,
+                  mb: 2, // margin top
                   color: "#111",
-                  letterSpacing: "1px",
-                }}
-              >
-                Sign up
-              </Typography>
-            </div>
-            <FormControl>
-              <FormLabel>Enter your email id</FormLabel>
-              <Input placeholder="email" />
-            </FormControl>
-            <Button
-              sx={{
-                mt: 1, // margin top
-                color: "#111",
-                bgcolor: "#FFD814",
-                borderColor: "#FCD200",
-                borderRadius: "sm",
-                "&:hover": {
+                  bgcolor: "#FFD814",
+                  borderColor: "#FCD200",
+                  borderRadius: "md",
                   textDecoration: "none",
                   textTransform: "none",
-                  bgcolor: "#FCD200",
-                },
-              }}
-              onClick={handleSubmit}
-            >
-              Continue
-            </Button>
-            <Box
-              sx={{
-                display: "flex",
-                gap: 1,
-                alignItems: "center",
-                flexWrap: "wrap",
-              }}
-            >
-              <Typography>Already a member?</Typography>
-              <Link
-                href="#underline"
-                underline="none"
-                level="body-sm"
-                fontWeight="bold"
+                  "&:hover": {
+                    bgcolor: "#FCD200",
+                  },
+                }}
               >
-                Sign in
-              </Link>
-            </Box>
-          </Sheet>
-        </main>
+                Send OTP
+              </Button>
+              <Grid container sx={{ marginBottom: "8px" }}>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password ?
+                  </Link>
+                </Grid>
+              </Grid>
+            </form>
+          </Paper>
+        </Box>
       </Container>
-    </CssVarsProvider>
+    </>
   );
 };
+
 export default EmailSignUp;
