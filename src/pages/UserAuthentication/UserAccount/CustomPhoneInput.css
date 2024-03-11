@@ -1,0 +1,30 @@
+.PhoneInputInput {
+    /* Add your custom styles here */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 11px;
+    color: #ccc;
+}
+/* body{
+    color: #ccc;
+} */
+.react-phone-number-input__input {
+    /* Add custom styles for the input field */
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+.react-phone-number-input__icon {
+    /* Add custom styles for the country select button */
+    background-color: #ddd;
+    color: #333;
+}
+
+.react-phone-number-input__country {
+    /* Add custom styles for the country dropdown */
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333;
+
+}
+

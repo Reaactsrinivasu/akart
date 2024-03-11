@@ -3,11 +3,11 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 // import theme from "../src/common/Theme";
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
-
 const theme = createTheme({
   palette: {
     background: {
@@ -17,21 +17,14 @@ const theme = createTheme({
     },
   },
 });
-// root.render(
-//   <>
-//     <CssBaseline />
-//        <BrowserRouter>  
-//         <App />
-//       </BrowserRouter>
-//   </>
-// );
+
 root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-      <BrowserRouter>
-        {/* <React.StrictMode> */}
-          <App />
-        {/* </React.StrictMode> */}
-      </BrowserRouter>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </ThemeProvider>
 );

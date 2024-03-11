@@ -3,8 +3,10 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
-import Layout from "../../Layout/Layout";
+import Layout from "../../../Layout/Layout";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
+    const navigate = useNavigate();
   return (
     <>
       <Layout>
@@ -12,7 +14,7 @@ const Home = () => {
           <CssBaseline />
           <Box component="main" sx={{ p: 3 }}>
             <Toolbar />
-            <Typography>
+            <Typography sx={{ textAlign: "justify" }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
               unde fugit veniam eius, perspiciatis sunt? Corporis qui ducimus
               quibusdam, aliquam dolore excepturi quae. Distinctio enim at
@@ -51,7 +53,7 @@ const Home = () => {
               impedit, nam facilis libero dolorem dolores sunt inventore
               perferendis, aut sapiente modi nesciunt.
             </Typography>
-            <Typography>
+            <Typography sx={{ textAlign: "justify" }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
               unde fugit veniam eius, perspiciatis sunt? Corporis qui ducimus
               quibusdam, aliquam dolore excepturi quae. Distinctio enim at
@@ -90,7 +92,7 @@ const Home = () => {
               impedit, nam facilis libero dolorem dolores sunt inventore
               perferendis, aut sapiente modi nesciunt.
             </Typography>
-            <Typography>
+            <Typography sx={{ textAlign: "justify" }}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique
               unde fugit veniam eius, perspiciatis sunt? Corporis qui ducimus
               quibusdam, aliquam dolore excepturi quae. Distinctio enim at

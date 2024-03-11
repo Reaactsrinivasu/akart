@@ -12,7 +12,9 @@ import LoginButton from "./LoginButton";
 import CartIcon from "./CartIcon";
 import More from "./More";
 import BecomeSeller from "./BecomeSeller";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
+      const navigate = useNavigate();
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -70,9 +72,9 @@ const Navbar = () => {
           >
             <SearchBar />
           </Box>
-          Login Button
+          {/* Login Button */}
           <Box>
-            <LoginButton />
+            <LoginButton  />
           </Box>
           {/* More */}
           <Box>
