@@ -24,11 +24,11 @@ export const verifyOtpWithEmailInitiate = (user, navigate) => {
         
         let email = res.data?.account.email;
         let id = res.data?.account.id;
-        let userData = { email: email, id: id };
+        let userData = { email: email,id: id };
         console.log(res);
         dispatch(verifyOtpWithEmailIdSuccess(res));
         if (res.status === 200) {
-          navigate("/register", { state: userData });
+          navigate("/register",{state:userData});
         }
       })
       .catch((error) => dispatch(verifyOtpWithEmailIdError(error.message)));

@@ -1,5 +1,4 @@
 import * as types from "../actions/actionTypes";
-
 const initialState = {
   createMobileSignupDetails: {
     users: [],
@@ -12,17 +11,17 @@ const mobileSignupReducer = (
   action
 ) => {
   switch (action.type) {
-    case types.SIGNUP_USING_EMAILID_START:
+    case types.SIGNUP_USING_MOBILE_NUMBER_START:
       return {
         ...state,
         loading: true,
       };
-    case types.SIGNUP_USING_EMAILID_SUCCESS:
+    case types.SIGNUP_USING_MOBILE_NUMBER_SUCCESS:
       return {
         ...state,
         loading: false,
       };
-    case types.SIGNUP_USING_EMAILID_ERROR:
+    case types.SIGNUP_USING_MOBILE_NUMBER_ERROR:
       return {
         ...state,
         loading: false,

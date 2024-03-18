@@ -54,6 +54,12 @@ const generateValidationSchema = (fields) => {
           .required("Password is required");
         // .validateSync(value, { abortEarly: false }) || "";
         break;
+      case "new_password":
+        validationRules.new_password = Yup.string()
+          .min(8, "New Password should be at least 8 characters")
+          .required("New Password is required");
+        // .validateSync(value, { abortEarly: false }) || "";
+        break;
       case "password_confirmation":
         validationRules.password_confirmation = Yup.string()
           .min(8, "Password should be at least 8 characters")

@@ -13,30 +13,70 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Input from "@mui/material/Input";
 import { useSelector, useDispatch } from "react-redux";
 import { verifyOtpWithEmailInitiate } from "../../../redux/actions/otpVerifyWithEmailIdActions";
+import { verifyOtpWithMobileInitiate } from "../../../redux/actions/otpVerifyWithMobileActions";
+import { resendOtpInitiate } from "../../../redux/actions/resendOtpActions";
 const OTPInputVerificationBlock = () => {
-    const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  
+      const location = useLocation();
+      const navigate = useNavigate();
+      const dispatch = useDispatch();
       const [otp, setOtp] = useState("");
-      const [timer, setTimer] = useState("00:00");
+      const [timer, setTimer] = useState(60);
       const [isResendDisabled, setResendDisabled] = useState(true);
-    const [otpValues, setOtpValues] = useState(["", "", "", ""]);
-    const otpFieldsRef = useRef([]);
-const receivedData = location?.state;
+      const [otpValues, setOtpValues] = useState(["", "", "", ""]);
+      const otpFieldsRef = useRef([]);
+      const receivedData = location?.state;
 // console.log("receivedData in otpverify form  email sign up", receivedData);
-  const handleInput = (index, value) => {
+// useEffect(() => {
+//   // Your OTP timer logic here (e.g., countdown from 5 minutes)
+//   const countdownMinutes = 1;
+//   let seconds = countdownMinutes * 60;
+//   const intervalId = setInterval(() => {
+//     seconds--;
+//     const minutes = Math.floor(seconds / 60);
+//     const remainingSeconds = seconds % 60;
+//     const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+//       remainingSeconds
+//     ).padStart(2, "0")}`;
+//     setTimer(formattedTime);
+//     if (seconds === 0) {
+//       setResendDisabled(false);
+//       clearInterval(intervalId);
+//     }
+//   }, 1000);
+//   return () => clearInterval(intervalId); // Cleanup the interval on unmount
+  // }, []);
+  
+  useEffect(() => {
+    let intervalId;
+
+    if (timer > 0) {
+      intervalId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else {
+      setResendDisabled(false); // Enable the resend button when timer reaches 0
+      clearInterval(intervalId);
+    }
+
+    return () => clearInterval(intervalId); // Cleanup the interval on unmount
+  }, [timer]);
+  const formattedTimer = `${String(Math.floor(timer / 60)).padStart(
+    2,
+    "0"
+  )}:${String(timer % 60).padStart(2, "0")}`;
+
+      const handleInput = (index, value) => {
     if (value.length > 1) {
       return;
     }
-    const newOtpValues = [...otpValues];
+      const newOtpValues = [...otpValues];
     newOtpValues[index] = value;
     setOtpValues(newOtpValues);
     if (value.length === 1 && index < otpValues.length - 1) {
       otpFieldsRef.current[index + 1].focus();
     }
   };
-const handleBackspace = (index) => {
+      const handleBackspace = (index) => {
   if (otpValues[index] !== "") {
     const newOtpValues = [...otpValues];
     newOtpValues[index] = "";
@@ -44,49 +84,71 @@ const handleBackspace = (index) => {
   } else if (index > 0) {
     otpFieldsRef.current[index - 1].focus();
   }
-};
-    const handleVerification = () => {
+  };
+      const handleVerification = () => {
       const enteredOtp = otpValues.join("");
-      console.log("Entered OTP data:", {
-        otp: enteredOtp,
-        email: receivedData.email,
-        account_id: receivedData.id,
-      });
+     if (receivedData?.email) {
        dispatch(
          verifyOtpWithEmailInitiate(
-           { otp: enteredOtp, email: receivedData.email, account_id:receivedData.id},
+           {
+             otp: enteredOtp,
+             email: receivedData.email,
+             account_id: receivedData.id,
+           },
            navigate
          )
        );
+     } else if (receivedData?.phone_number) {
+       dispatch(
+         verifyOtpWithMobileInitiate(
+           {
+             otp: enteredOtp,
+             phone_number: receivedData.phone_number.toString(),
+             account_id: receivedData.id,
+           },
+           navigate
+         )
+       );
+     } else {
+       // Handle other errors if needed
+       alert("An error occurred");
+     }
       setOtpValues(["", "", "", ""]);
       // Add your verification logic here
     };
-    const handleResendClick = () => {
+  const handleResendClick = () => {
+      if (receivedData?.email) {
+        dispatch(
+          resendOtpInitiate(
+            {
+              email: receivedData.email,
+              account_id: receivedData.id,
+            },
+            navigate
+          )
+        );
+      } else if (receivedData?.phone_number) {
+        dispatch(
+          resendOtpInitiate(
+            {
+              phone_number: receivedData.phone_number.toString(),
+              account_id: receivedData.id,
+            },
+            navigate
+          )
+        );
+      } else {
+        // Handle other errors if needed
+        alert("An error occurred");
+    }
+    setTimer(60);
+    setResendDisabled(true);
       // Handle resend OTP logic here
-      setResendDisabled(false);
-      setTimer("00:30"); // Reset timer to 5 minutes on resend
+      // setResendDisabled(false);
+      // setTimer("01:00"); // Reset timer to 5 minutes on resend
       // Additional logic to send a new OTP
       // console.log("Resending OTP...");
     };
-    useEffect(() => {
-      // Your OTP timer logic here (e.g., countdown from 5 minutes)
-      const countdownMinutes = 0.5;
-      let seconds = countdownMinutes * 60;
-      const intervalId = setInterval(() => {
-        seconds--;
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
-          remainingSeconds
-        ).padStart(2, "0")}`;
-        setTimer(formattedTime);
-        if (seconds === 0) {
-          setResendDisabled(false);
-          clearInterval(intervalId);
-        }
-      }, 1000);
-      return () => clearInterval(intervalId); // Cleanup the interval on unmount
-    }, []);
   return (
     <Container
       component="main"
@@ -114,7 +176,9 @@ const handleBackspace = (index) => {
           <Typography mt={2}>
             Please Enter OTP Sent To{" "}
             <Link sx={{ textDecoration: "none", cursor: "pointer" }}>
-              {receivedData.email}
+              {receivedData?.email
+                ? receivedData?.email
+                : receivedData?.phone_number}
             </Link>{" "}
           </Typography>
           <Link
@@ -169,7 +233,7 @@ const handleBackspace = (index) => {
               ))}
             </Grid>
             <Button
-                          onClick={() =>  handleVerification()}
+              onClick={() => handleVerification()}
               fullWidth
               variant="contained"
               sx={{
@@ -193,7 +257,7 @@ const handleBackspace = (index) => {
             <Grid container sx={{ marginBottom: "8px" }}>
               <Grid item xs>
                 <Typography sx={{ fontSize: "14px" }}>
-                  not recieved your code ? {timer}
+                  not recieved your code ? {formattedTimer}
                 </Typography>
               </Grid>
               <Grid item>

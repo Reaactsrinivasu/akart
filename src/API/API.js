@@ -83,17 +83,63 @@ class API {
           ) {
             alert("Something went wrong!!");
           } else {
-            // resolve(response.data);
+            // resolve(response.data);  
             resolve(response);
-            console.log('response', response);
-            toast.success(response.data?.message);
+            if (response) {
+              console.log('response', response);
+              toast.success(response.data?.message); 
+            }
           }
           // console.log("response", response);
         })
         .catch((error) => {
-          // console.log("ERROR", error);
-          if (error.response.data.email[0] === 'has already been taken') {
-          toast.error(`email ${error.response.data?.email[0]}`);
+          let err = error?.response;
+          let errData = error?.response.data;
+          console.log("ERROR", error);
+          // switch (true) {
+          //   case error.response?.data?.email[0] === "has already been taken":
+          //     toast.error(`Email ${error.response?.data?.email[0]}`);
+          //     break;
+          //   case error.response.data?.phone_number[0] ===
+          //     "has already been taken":
+          //     toast.error(
+          //       `Mobile Number ${error.response?.data?.phone_number[0]}`
+          //     );
+          //     break;
+          //   default:
+          //     // Handle other errors if needed
+          //     break;
+          // }
+          // console.log("phone_number", error.response.data?.phone_number[0]);
+          // if(
+          //   error.response.data?.phone_number[0] === "has already been taken"
+          // ) {
+          //   toast.error(
+          //     `Mobile Number ${error.response.data?.phone_number[0]}`
+          //   );
+          // }
+          // if (error.response.data?.email[0] === 'has already been taken') {
+          // toast.error(`email ${error.response.data?.email[0]}`);
+          // }
+          if (
+            error.response.data?.email &&
+            error.response.data.email.length > 0
+          ) {
+            toast.error(`Email ${error.response.data.email[0]}`);
+          } else if (
+            error.response.data?.phone_number &&
+            error.response.data.phone_number.length > 0
+          ) {
+            toast.error(`Mobile Number ${error.response.data.phone_number[0]}`);
+          } else if (
+            error.response.data.message &&
+            error.response.data.message.length > 0
+          ) {
+            toast.error(`${error.response.data.message}`);
+          } else if(err?.status===401){
+            toast.error(`${errData.errors}`);
+          } else {
+            toast.error("An error occurred");
           }
           //DEFAULT ERROR HANDLING
         });

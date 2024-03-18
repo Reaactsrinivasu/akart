@@ -3,8 +3,23 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Routes, Route } from "react-router-dom";
 import { Suspense, useLayoutEffect } from "react";
 // import Loader from "./common/Loader";
-import EmailOtpVerification from "./pages/UserAuthentication/OtpManagement/OtpVerification";
+
+const CreateNewPassword = React.lazy(() =>
+  import(
+    "./pages/UserAuthentication/PasswordManagement/ForgetPassword/CreateNewPassword"
+  )
+);
 const WelcomePage = React.lazy(() => import("./common/WelcomePage"));
+const PasswordRecoveryWithMobile = React.lazy(() =>
+  import(
+    "./pages/UserAuthentication/PasswordManagement/ForgetPassword/PasswordRecoveryWithMobile"
+  )
+);
+const PasswordRecoveryWithEmail = React.lazy(() =>
+  import(
+    "./pages/UserAuthentication/PasswordManagement/ForgetPassword/PasswordRecoveryWithEmail"
+  )
+);
 const Login = React.lazy(() =>
   import("./pages/UserAuthentication/Login/Login")
 );
@@ -25,8 +40,11 @@ const MobileSignUp = React.lazy(() =>
 const OtpVerification = React.lazy(() =>
   import("./pages/UserAuthentication/OtpManagement/OtpVerification")
 );
-const CreateUserAccount = React.lazy(() =>
-  import("./pages/UserAuthentication/UserAccount/CreateUserAccount")
+const OtpVerifyForNewPassword = React.lazy(() =>
+  import("./pages/UserAuthentication/OtpManagement/OtpVerifyForNewPassword")
+);
+const UpdateUserAccount = React.lazy(() =>
+  import("./pages/UserAuthentication/UserAccount/UpdateUserAccount")
 );
 const Approutes = () => {
     //   <Suspense
@@ -49,15 +67,31 @@ const Approutes = () => {
             <Route path="/login/mobile" element={<MobileLogin />} />
             <Route path="/signup" exact element={<SignUp />} />
             <Route path="/signup/emailsignup" exact element={<EmailSignUp />} />
+            <Route path="/createnewpwd" exact element={<CreateNewPassword />} />
             <Route
               path="/signup/mobilesignup"
               exact
               element={<MobileSignUp />}
             />
             <Route path="/otp/otpverify" exact element={<OtpVerification />} />
-            <Route path="/register" exact element={<CreateUserAccount />} />
+            <Route
+              path="/otp/otpverifyfornewpassword"
+              exact
+              element={<OtpVerifyForNewPassword />}
+            />
+            <Route path="/register" exact element={<UpdateUserAccount />} />
             {/* <Route path="/otp/mobileotp" exact element={<WelcomePage />} /> */}
             <Route path="/welcomepage" exact element={<WelcomePage />} />
+            <Route
+              path="/emailpwdrecovery"
+              exact
+              element={<PasswordRecoveryWithEmail />}
+            />
+            <Route
+              path="/mobilepwdrecovery"
+              exact
+              element={<PasswordRecoveryWithMobile />}
+            />
           </Routes>
         </Suspense>
       </GoogleOAuthProvider>
