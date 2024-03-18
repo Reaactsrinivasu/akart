@@ -11,9 +11,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { FormLabel, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import InputAdornment from "@mui/material/InputAdornment";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { useSelector, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import {
   initialValues,
@@ -25,20 +25,13 @@ const EmailSignUp = () => {
   const dispatch = useDispatch();
   const handleSubmit = async (values) => {
     try {
-      // Make the API call directly in the component  
       dispatch(signupWithEmailInitiate(values,navigate));
-      // navigate("/otp/otpverify", { state: formik.values.email });
-      // Dispatch the success action
-      // dispatch(createSignupWithEmailIdSuccess(result));
     } catch (error) {
-      // Dispatch the error action
-      // dispatch(createSignupWithEmailIdError(error));
     }
   };
 
   const formFields = ["email"];
   const validationSchema = generateValidationSchema(formFields);
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -63,15 +56,23 @@ const EmailSignUp = () => {
             variant="elevation"
             square={false}
             sx={{
-              marginTop: 10,
-              padding: "10px",
+              // maxWidth: 400,
+              mx: "auto", // margin left & right
+              my: 15, // margin top & botom
+              py: 3, // padding top & bottom
+              px: 2, // padding left & right
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              gap: 2,
+              borderRadius: "sm",
+              // boxShadow: "md",
+              // boxShadow: '0px 10px 80px rgba(0, 0, 0, 0.1)',
               bgcolor: "#fff",
+              // color: "orange",
             }}
+            // variant="outlined"
           >
-            <Typography component="h1" variant="h5" mt={2}>
+            <Typography textAlign="center" component="h1" variant="h5" mt={2}>
               Sign Up
             </Typography>
             <form onSubmit={formik.handleSubmit} style={{ marginTop: "20px" }}>
@@ -102,7 +103,7 @@ const EmailSignUp = () => {
                 type="submit"
                 fullWidth
                 sx={{
-                  mt: 3,
+                  mt: 2,
                   mb: 2, // margin top
                   color: "#111",
                   bgcolor: "#FFD814",
@@ -117,10 +118,31 @@ const EmailSignUp = () => {
               >
                 Send OTP
               </Button>
-              <Grid container sx={{ marginBottom: "8px" }}>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
+              <Grid
+                container
+                display="flex"
+                flexDirection="row"
+                justifyContent="flex-end"
+                sx={{
+                  marginBottom: "8px",
+                  gap: 1,
+                  color: "#9e9e9e",
+                  cursor: "pointer",
+                }}
+              >
+                <Grid item>
+                  <Typography variant="body1">Already a member ?</Typography>
+                </Grid>
+                <Grid item>
+                  {/* <Link href="#" variant="body2">
                     Forgot password ?
+                  </Link> */}
+                  <Link
+                    underline="none"
+                    variant="body1"
+                    onClick={() => navigate("/login")}
+                  >
+                    Sign in
                   </Link>
                 </Grid>
               </Grid>

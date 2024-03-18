@@ -37,25 +37,26 @@ const SignUp = () => {
           variant="elevation"
           square={false}
           sx={{
-            marginTop: 8,
-            padding: "10px",
+            // maxWidth: 400,
+            mx: "auto", // margin left & right
+            my: 15, // margin top & botom
+            py: 3, // padding top & bottom
+            px: 2, // padding left & right
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            gap: 2,
+            borderRadius: "sm",
+            // boxShadow: "md",
+            // boxShadow: '0px 10px 80px rgba(0, 0, 0, 0.1)',
             bgcolor: "#fff",
-            // borderRadius: "10px",
-            // boxShadow: "10px",
+            // color: "orange",
           }}
+          // variant="outlined"
         >
-          <Typography component="h2" variant="h5" mt={2}>
+          <Typography textAlign="center" component="h2" variant="h5" mt={2}>
             Sign Up
           </Typography>
-          <Box
-            // component="form"
-            // onSubmit={handleSubmit}
-            // noValidate
-            sx={{ padding: "15px" }}
-          >
+          <Box sx={{ padding: "18px" }}>
             <Button
               // type="submit"
               onClick={() => navigate("/signup/mobilesignup")}
@@ -63,8 +64,8 @@ const SignUp = () => {
               // variant="contained"
               // sx={{ mt: 3, mb: 2, textTransform: "none" }}
               sx={{
-                mt: 3,
-                mb: 2, // margin top
+                mt: 1,
+                mb: 1, // margin top
                 color: "#111",
                 bgcolor: "#FFD814",
                 borderColor: "#FCD200",
@@ -78,6 +79,22 @@ const SignUp = () => {
             >
               Sign up with mobile number
             </Button>
+
+            <Divider
+              // variant="middle"
+              sx={{
+                marginRight: "1px",
+                // marginLeft:'-10px',
+                marginTop: "10px",
+                // marginBottom: "5px",
+                "& .MuiDivider-wrapper": {
+                  marginLeft: "-8px",
+                  marginRight: "-8px",
+                },
+              }}
+            >
+              <Chip label="or" size="small" />
+            </Divider>
             <Button
               // type="submit"
               onClick={() => navigate("/signup/emailsignup")}
@@ -85,7 +102,7 @@ const SignUp = () => {
               // variant="contained"
               // sx={{ mt: 3, mb: 2, textTransform: "none" }}
               sx={{
-                mt: 3,
+                mt: 2,
                 mb: 2, // margin top
                 color: "#111",
                 bgcolor: "#FFD814",
@@ -100,18 +117,6 @@ const SignUp = () => {
             >
               Sign up with email id
             </Button>
-            <Grid container sx={{ marginBottom: "8px" }}>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password ?
-                </Link>
-              </Grid>
-              {/* <Grid item>
-                <Link href="#" variant="body2" underline="none">
-                  {"Not a memeber ? Sign Up"}
-                </Link>
-              </Grid> */}
-            </Grid>
           </Box>
         </Paper>
       </Box>

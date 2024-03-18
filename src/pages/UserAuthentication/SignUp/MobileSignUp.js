@@ -7,48 +7,38 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { FormLabel } from "@mui/material";
+import { FormLabel, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import InputAdornment from "@mui/material/InputAdornment";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { signupWithMobileInitiate } from "../../../redux/actions/mobileSignupActions";
+import { useFormik } from "formik";
+import {
+  initialValues,
+  generateValidationSchema,
+} from "../../../common/Validations";
 const MobileSignUp = () => {
-  
-    const location = useLocation();
-    const navigate = useNavigate();
-    const receivedData = location?.state;
-    // console.log("receivedData", receivedData);
-    const [mobileSignUpData, setMobileSignUpData] = useState({
-      mobile_number: "",
-      type: "mobile_account",
-    });
-   const onInputChange = (e) => {
-    //  console.log("mobileSignUpData", mobileSignUpData);
-     let { name, value } = e.target;
-     setMobileSignUpData({ ...mobileSignUpData, [name]: value });
-   };
- const handleSubmit = (e) => {
-   // event.preventDefault();
-  //  console.log("mobileSignUpData in submit", mobileSignUpData);
-    setMobileSignUpData({});
+ const navigate = useNavigate();
+ const dispatch = useDispatch();
+  const handleSubmit = async (values) => {
+    try {
+      console.log("values", values);
+       dispatch(signupWithMobileInitiate(values,navigate));
+    } catch (error) {
+   }
  };
-  const gotoPreviousPageHandler = (mobiletoedit) => {
-    // console.log("mobiletoedit", mobiletoedit);
-    navigate("/login", { state: mobiletoedit });
-  };
-
-  // const [loginData, setLoginData] = useState({
-  //   email: "",
-  //   password: "",
-  // });
-  // const onInputChange = (e) => {
-  //   let { name, value } = e.target;
-  //   setLoginData({ ...loginData, [name]: value });
-  // };
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  // const token = localStorage.getItem("token");
-  // const [storedResult, setStoredResult] = useState(null);
+  const formFields = ["phone_number"];
+  const validationSchema = generateValidationSchema(formFields);
+  const formik = useFormik({
+    initialValues: {
+      phone_number: "",
+      type: "mobile_account",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => handleSubmit(values),
+  });
   return (
     <>
       <Container
@@ -59,30 +49,31 @@ const MobileSignUp = () => {
         }}
       >
         <Box>
-          <Paper
-            elevation={1}
-            variant="elevation"
-            square={false}
-            sx={{
-              marginTop: 8,
-              padding: "10px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              bgcolor: "#fff",
-              // borderRadius: "10px",
-              // boxShadow: "10px",
-            }}
-          >
-            <Typography component="h1" variant="h5" mt={2}>
+           <Paper
+          elevation={1}
+          variant="elevation"
+          square={false}
+          sx={{
+            // maxWidth: 400,
+            mx: "auto", // margin left & right
+            my: 15, // margin top & botom
+            py: 3, // padding top & bottom
+            px: 2, // padding left & right
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            borderRadius: "sm",
+            // boxShadow: "md",
+            // boxShadow: '0px 10px 80px rgba(0, 0, 0, 0.1)',
+            bgcolor: "#fff",
+            // color: "orange",
+          }}
+          // variant="outlined"
+        >
+            <Typography textAlign="center" component="h1" variant="h5" mt={2}>
               Sign Up
             </Typography>
-            <Box
-              // component="form"
-              // onSubmit={handleSubmit}
-              // noValidate
-              sx={{ mt: 1 }}
-            >
+            <form onSubmit={formik.handleSubmit} style={{ marginTop: "20px" }}>
               <FormControl fullWidth>
                 <FormLabel
                   sx={{
@@ -94,30 +85,28 @@ const MobileSignUp = () => {
                 >
                   Enter Your Mobile Number
                 </FormLabel>
-                <OutlinedInput
+                <TextField
                   placeholder="enter your mobile number"
-                  id="mobile_number"
-                  name="mobile_number"
+                  id="phone_number"
+                  name="phone_number"
                   size="small"
-                  // type="number"
-                  value={mobileSignUpData.mobile_number || ""}
-                  onChange={onInputChange}
-                  required
+                  value={formik.values.phone_number}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.phone_number &&
+                    Boolean(formik.errors.phone_number)
+                  }
+                  helperText={
+                    formik.touched.phone_number && formik.errors.phone_number
+                  }
                 />
               </FormControl>
               <Button
-                onClick={(e) => {
-                  handleSubmit(e);
-                  navigate("/otp/otpverify", {
-                    state: mobileSignUpData.mobile_number,
-                  });
-                }}
-                // type="submit"
+                type="submit"
                 fullWidth
-                // variant="contained"
-                // sx={{ mt: 3, mb: 2, textTransform: "none" }}
                 sx={{
-                  mt: 3,
+                  mt: 2,
                   mb: 2, // margin top
                   color: "#111",
                   bgcolor: "#FFD814",
@@ -130,26 +119,42 @@ const MobileSignUp = () => {
                   },
                 }}
               >
-                Continue
+                Send OTP
               </Button>
-              <Grid container sx={{ marginBottom: "8px" }}>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
+              <Grid
+                container
+                display="flex"
+                flexDirection="row"
+                justifyContent="flex-end"
+                sx={{
+                  marginBottom: "8px",
+                  gap: 1,
+                  color: "#9e9e9e",
+                  cursor: "pointer",
+                }}
+              >
+                <Grid item>
+                  <Typography variant="body1">Already a member ?</Typography>
+                </Grid>
+                <Grid item>
+                  {/* <Link href="#" variant="body2">
                     Forgot password ?
+                  </Link> */}
+                  <Link
+                    underline="none"
+                    variant="body1"
+                    onClick={() => navigate("/login")}
+                  >
+                    Sign in
                   </Link>
                 </Grid>
-                {/* <Grid item>
-                <Link href="#" variant="body2" underline="none">
-                  {"Not a memeber ? Sign Up"}
-                </Link>
-              </Grid> */}
               </Grid>
-            </Box>
+            </form>
           </Paper>
         </Box>
       </Container>
     </>
   );
-}
+};
 
-export default MobileSignUp
+export default MobileSignUp;

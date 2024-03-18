@@ -35,7 +35,6 @@ const Login = () => {
     const isEmail = /^\S+@\S+\.\S+$/.test(credential);
     const isMobileNumber = /^\d{10}$/.test(credential);
 
-
      if (isEmail) {
        navigate("/login/email", { state: credential });
      } else if (isMobileNumber) {
