@@ -19,7 +19,7 @@ import {
   initialValues,
   generateValidationSchema,
 } from "../../../../common/Validations";
-import { PasswordRecoveryInitiate } from "../../../../redux/actions/PasswordRecoveryActions";
+import { passwordRecoveryForEmailInitiate } from "../../../../redux/actions/PasswordRecoveryActions";
 const PasswordRecoveryWithEmail = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const PasswordRecoveryWithEmail = () => {
   const receivedData = location?.state;
   const handleSubmit = async (values) => {
     try {
-      dispatch(PasswordRecoveryInitiate(values, navigate));
+      dispatch(passwordRecoveryForEmailInitiate(values, navigate));
     } catch (error) {}
   };
   const formFields = ["email"];

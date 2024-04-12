@@ -9,6 +9,9 @@ import mobileOtpVerfyReducer from "./otpVerifyWithMobileReducer";
 import creatPasswordRecoveryReducer from "./passwordRecoveryReducer";
 import emailOtpVerfyReducer from "./otpVerifyWithEmailIdReducer";
 import createNewPasswordReducer from "./createNewPasswordReducer";
+import homeGrandGlobalDataReducer from "./home/getHomeGrandGlobalDataReducer";
+//Home page reducers
+import getHomeCarouselDataReducer from "./home/getHomeCarouselDataReducer"
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
@@ -18,7 +21,10 @@ const rootReducer = combineReducers({
   mobilesignupdata: mobileSignupReducer,
   emailotpverifydata: emailOtpVerfyReducer,
   mobileotpverifydata: mobileOtpVerfyReducer,
-  passwordrecoverydata:creatPasswordRecoveryReducer,
+  passwordrecoverydata: creatPasswordRecoveryReducer,
   createnewpassworddata: createNewPasswordReducer,
+  // Home page data
+  homecarouseldata: getHomeCarouselDataReducer,
+  homegrandglobaldata: homeGrandGlobalDataReducer,
 });
 export default rootReducer;

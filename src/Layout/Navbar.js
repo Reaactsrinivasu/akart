@@ -13,18 +13,23 @@ import CartIcon from "./CartIcon";
 import More from "./More";
 import BecomeSeller from "./BecomeSeller";
 import { useNavigate } from "react-router-dom";
+
 const Navbar = () => {
-      const navigate = useNavigate();
+  const navigate = useNavigate();
+  
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         component="nav"
-        // position="static"
+        elevation={0}
         position="fixed"
-        sx={{
-          bgcolor: "#fff",
-        }}
+        sx={
+          {
+            // bgcolor: "#fff",
+            bgcolor: "#FCF0E2",
+          }
+        }
       >
         <Toolbar>
           <Box
@@ -74,7 +79,7 @@ const Navbar = () => {
           </Box>
           {/* Login Button */}
           <Box>
-            <LoginButton  />
+            <LoginButton />
           </Box>
           {/* More */}
           <Box>
@@ -82,7 +87,7 @@ const Navbar = () => {
           </Box>
           {/* Become a Seller */}
           <Box>
-            <BecomeSeller />
+            <BecomeSeller/>
           </Box>
           {/* Cart Icon */}
           <Box

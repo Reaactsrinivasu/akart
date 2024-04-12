@@ -54,6 +54,12 @@ const generateValidationSchema = (fields) => {
           .required("Password is required");
         // .validateSync(value, { abortEarly: false }) || "";
         break;
+      case "old_password":
+        validationRules.old_password = Yup.string()
+          .min(8, "Current Password should be at least 8 characters")
+          .required("Current Password is required");
+        // .validateSync(value, { abortEarly: false }) || "";
+        break;
       case "new_password":
         validationRules.new_password = Yup.string()
           .min(8, "New Password should be at least 8 characters")
@@ -64,6 +70,17 @@ const generateValidationSchema = (fields) => {
         validationRules.password_confirmation = Yup.string()
           .min(8, "Password should be at least 8 characters")
           .required("Confirm Password is required");
+        // .validateSync(value, { abortEarly: false }) || "";
+        break;
+      case "confirm_password":
+        validationRules.confirm_password = Yup.string()
+          .min(8, "Confirm Password should be at least 8 characters")
+          .required("Confirm Password is required");
+        // .validateSync(value, { abortEarly: false }) || "";
+        break;
+      case "input":
+        validationRules.input = Yup.string()
+          .required("Input is required");
         // .validateSync(value, { abortEarly: false }) || "";
         break;
 
@@ -84,8 +101,8 @@ const initialValues = {
   address: "",
   first_name: "",
   password: "",
-  password_confirmation: ""
-  
+  password_confirmation: "",
+  input:"",
 };
  
 export { initialValues, generateValidationSchema };

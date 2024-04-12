@@ -1,7 +1,16 @@
 import React from "react";
-
-const Divider = () => {
-  return <div>Divider</div>;
+import Imports from "../common/Imports";
+const ReusableDivider = (props) => {
+  return (
+    <>
+      <Imports.Divider
+        sx={{
+          ...props.sx,
+        }}
+      >
+        {props.children}
+      </Imports.Divider>
+    </>
+  );
 };
-
-export default Divider;
+export default ReusableDivider;

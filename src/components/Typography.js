@@ -1,9 +1,20 @@
 import React from 'react'
-
-const Typography = () => {
+import Imports from '../common/Imports';
+const ReusableTypography = (props) => {
     return (
-        <div>Typography</div>
+      <>
+        <Imports.Typography
+          component={props.component}
+          variant={props.variant}
+          color={props.color}
+          sx={{
+            ...props.sx,
+          }}
+        >
+          {props.children}
+        </Imports.Typography>
+      </>
     );
 };
 
-export default Typography;
+export default ReusableTypography;

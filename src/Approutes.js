@@ -3,7 +3,15 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Routes, Route } from "react-router-dom";
 import { Suspense, useLayoutEffect } from "react";
 // import Loader from "./common/Loader";
-
+const InnerProductpage = React.lazy(() =>
+  import("./pages/Products/InnerProducts/InnerProductpage")
+);
+const Products = React.lazy(() => import("./pages/Products/Products/Products"));
+const UpdatePassword = React.lazy(() =>
+  import(
+    "./pages/UserAuthentication/PasswordManagement/UpdatePassword/UpdatePassword"
+  )
+);
 const CreateNewPassword = React.lazy(() =>
   import(
     "./pages/UserAuthentication/PasswordManagement/ForgetPassword/CreateNewPassword"
@@ -46,6 +54,7 @@ const OtpVerifyForNewPassword = React.lazy(() =>
 const UpdateUserAccount = React.lazy(() =>
   import("./pages/UserAuthentication/UserAccount/UpdateUserAccount")
 );
+
 const Approutes = () => {
     //   <Suspense
     //       fallback={
@@ -92,6 +101,9 @@ const Approutes = () => {
               exact
               element={<PasswordRecoveryWithMobile />}
             />
+            <Route path="/updatepassword" exact element={<UpdatePassword />} />
+            <Route path="/products" exact element={<Products />} />
+            <Route path="/innerproducts" exact element={<InnerProductpage />} />
           </Routes>
         </Suspense>
       </GoogleOAuthProvider>
