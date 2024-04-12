@@ -4,7 +4,7 @@ const LogoText = () => {
     return (
       <>
         <Typography
-          variant="h4"
+          variant="h2"
           noWrap
           component="div"
           sx={{
@@ -12,6 +12,8 @@ const LogoText = () => {
             fontWeight: "bold",
             color: "#ff7e00",
             fontStyle: "Alfa Slab One",
+            minHeight: "45px",
+            lineHeight: "39px",
           }}
         >
           akart

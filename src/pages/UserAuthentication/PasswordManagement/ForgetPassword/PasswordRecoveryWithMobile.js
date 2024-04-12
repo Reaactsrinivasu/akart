@@ -19,15 +19,16 @@ import {
   initialValues,
   generateValidationSchema,
 } from "../../../../common/Validations";
-import { PasswordRecoveryInitiate } from "../../../../redux/actions/PasswordRecoveryActions";
+import { passwordRecoveryForMobileInitiate } from "../../../../redux/actions/PasswordRecoveryActions";
 const PasswordRecoveryWithMobile = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const receivedData = location?.state;
   const handleSubmit = async (values) => {
+    console.log('values for mobile', values);
     try {
-      dispatch(PasswordRecoveryInitiate(values, navigate));
+      dispatch(passwordRecoveryForMobileInitiate(values, navigate));
     } catch (error) {}
   };
   const formFields = ["phone_number"];
@@ -67,7 +68,7 @@ const PasswordRecoveryWithMobile = () => {
               borderRadius: "sm",
               // boxShadow: "md",
               // boxShadow: '0px 10px 80px rgba(0, 0, 0, 0.1)',
-              bgcolor: "#fff",
+              bgcolor: "#fff", 
               // color: "orange",
             }}
             // variant="outlined"

@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import { useLocation, useNavigate } from "react-router-dom";
 import Input from "@mui/material/Input";
 import { useSelector, useDispatch } from "react-redux";
-import { verifyOtpForNewPasswordInitiate } from "../../../redux/actions/otpVerifyForNewPasswordActions";
+import { verifyOtpForNewPasswordInitiate, } from "../../../redux/actions/otpVerifyForNewPasswordActions";
 import { resendOtpInitiate } from "../../../redux/actions/resendOtpActions";
 const OTPInputVerificationBlock = () => {
   const location = useLocation();

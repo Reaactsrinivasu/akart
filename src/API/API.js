@@ -70,6 +70,7 @@ class API {
       axiosConfig.method = method;
       axiosConfig.url = this.baseURL + url;
       axiosConfig.headers = this.setHeaders(data);
+       console.log("axiosConfig.headers", axiosConfig.headers);
       if (data) {
         // if (data) axiosConfig.params = data;
         if (data) axiosConfig.data = data;
@@ -81,14 +82,20 @@ class API {
             response &&
             response.status === STATUS_CODE.INTERNAL_SERVER_ERROR
           ) {
-            alert("Something went wrong!!");
+            toast.error("Something went wrong!!");
           } else {
             // resolve(response.data);  
             resolve(response);
             if (response) {
               console.log('response', response);
-              toast.success(response.data?.message); 
+              toast.success(response.data?.messages); 
             }
+            // else if (response.status === 200) {
+            //   toast.success(response.data?.message); 
+            // }
+            // else {
+            //   toast.success("Something went wrong"); 
+            // }
           }
           // console.log("response", response);
         })
@@ -138,7 +145,9 @@ class API {
             toast.error(`${error.response.data.message}`);
           } else if(err?.status===401){
             toast.error(`${errData.errors}`);
-          } else {
+          } else if (err?.status === 422) {
+            toast.error(`${error.response.data.errors}`);
+          }else {
             toast.error("An error occurred");
           }
           //DEFAULT ERROR HANDLING

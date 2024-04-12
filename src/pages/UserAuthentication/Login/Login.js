@@ -1,369 +1,271 @@
-import React, { useState,useEffect } from "react";
-import axios from "axios";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
-import Chip from "@mui/material/Chip";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import FormControl from "@mui/material/FormControl";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import { FormLabel } from "@mui/material";
-import Paper from "@mui/material/Paper";
+import React from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
-import { useNavigate,useLocation} from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import Imports from "../../../common/Imports";
+import DataTerms from "../../../common/DataTerms";
+import {
+  initialValues,
+  generateValidationSchema,
+} from "../../../common/Validations";
 const GoogleIcon = "assets/imgs/google.png";
 const FacebookIcon = "assets/imgs/facebook.png";
 
-
 const Login = () => {
-  const [profile, setProfile] = useState();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const preData = location?.state;
-  //  console.log("preData", preData);
-  const [credential, setCredential] = useState(preData);
-  
-  const handleSubmit = (event) => {
-    // event.preventDefault();
-    // Determine whether the entered value is an email or mobile number
-    const isEmail = /^\S+@\S+\.\S+$/.test(credential);
-    const isMobileNumber = /^\d{10}$/.test(credential);
+   const [profile, setProfile] = Imports?.useState();
+   const location = useLocation();
+   const navigate = useNavigate();
+   const preData = location?.state;
+   const [credential, setCredential] = Imports?.useState(preData);
+   const login = useGoogleLogin({
+     // onSuccess: (tokenResponse) => console.log(tokenResponse),
+     onSuccess: async (response) => {
+       try {
+         const res = await Imports.axios
+           .get(
+             `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${response.access_token}`,
+             {
+               headers: {
+                 Authorization: `Bearer ${response.access_token}`,
+                 Accept: "application/json",
+               },
+             }
+           )
+           .then((res) => {
+             setProfile(res.data);
+             // console.log('res', res);
+           })
+           .catch((err) => console.log(err));
+         // console.log('res',res)
+       } catch (err) {
+         // console.log(err);
+       }
+     },
+   });
+   const responseFacebook = (response) => {
+     // console.log(response.picture?.data.url);
+     setProfile(response);
+   };
+   // const profiePic = profile?.picture?.data.url;
+   // console.log("profile", profile?.picture);
+   const logOut = () => {
+     googleLogout();
+     setProfile(null);
+   };
 
-     if (isEmail) {
-       navigate("/login/email", { state: credential });
-     } else if (isMobileNumber) {
-       // Redirect to login with mobile number page
-       navigate("/login/mobile", { state: credential });
-     } else {
-       // Handle invalid input
-       alert("Invalid email or mobile number");
-     }
-
-    // const data = new FormData(event.currentTarget);
-    // console.log("credential", credential);
+   const authHandler = (err, data) => {
+     //  console.log("insta data",err, data);
   };
-  // {
-  //   // email: data.get("email"),
-  //   // password: data.get("password"),
-  //   ("credential");
-  // }
-  // const login = useGoogleLogin({
-  //   onSuccess: (codeResponse) => setUser(codeResponse),
-  //   onError: (error) => console.log("Login Failed:", error),
-  // });
-  const login = useGoogleLogin({
-    // onSuccess: (tokenResponse) => console.log(tokenResponse),
-    onSuccess: async (response) => {
-      try {
-        const res = await axios
-          .get(
-            `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${response.access_token}`,
-            {
-              headers: {
-                Authorization: `Bearer ${response.access_token}`,
-                Accept: "application/json",
-              },
-            }
-          )
-          .then((res) => {
-            setProfile(res.data);
-            // console.log('res', res);
-          })
-          .catch((err) => console.log(err));
-        // console.log('res',res)
-      } catch (err) {
-        // console.log(err);
-      }
-    }
-  });
-  const responseFacebook = (response) => {
-    // console.log(response.picture?.data.url);
-  setProfile(response);
-  };
-  // const profiePic = profile?.picture?.data.url;
-  // console.log("profile", profile?.picture);
-const logOut = () => {
-  googleLogout();
-  setProfile(null);
-};
+ const handleSubmit = async (values) => {
+    console.log("email login ", values);
+      // Determine whether the entered value is an email or mobile number
+      const isEmail = /^\S+@\S+\.\S+$/.test(values?.input);
+      const isMobileNumber = /^\d{10}$/.test(values?.input);
+      console.log("isEmail ", isEmail);
 
- const authHandler = (err, data) => {
-  //  console.log("insta data",err, data);
+   if (isEmail) {
+     navigate("/login/email", { state: values?.input });
+   } else if (isMobileNumber) {
+     // Redirect to login with mobile number page
+     navigate("/login/mobile", { state: values?.input });
+   } else {
+     // Handle invalid input
+     Imports.toast.error("Invalid email or mobile number");
+   }
+
+   // const data = new FormData(event.currentTarget);
+   // console.log("credential", credential);
  };
+ const formFields = ["input"];
+ const validationSchema = generateValidationSchema(formFields);
+ const formik = Imports.useFormik({
+   initialValues: {
+    input:""
+   },
+   validationSchema: validationSchema,
+   onSubmit: (values) => handleSubmit(values),
+ });
   return (
-    <Container
-      component="main"
-      maxWidth="xs"
-      sx={{
-        margin: "auto",
-      }}
-    >
-      {profile ? (
-        <div>
-          <h3>User Logged in</h3>
-          <img src={profile?.picture} alt="user pic" />
-          <Typography variant="h5">Welcome {profile.name}</Typography>
-          <Typography variant="h6">email:{profile.email}</Typography>
-          <br />
-          <br />
-          <Button
-            onClick={logOut}
-            variant="contained"
-            sx={{ mt: 3, mb: 2, textTransform: "none" }}
-          >
-            Log out
-          </Button>
-        </div>
-      ) : (
-        <Box>
-          <Paper
-            elevation={1}
-            variant="elevation"
-            square={false}
-            sx={{
-              marginTop: 8,
-              padding: "10px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              bgcolor: "#fff",
-              // borderRadius: "10px",
-              // boxShadow: "10px",
-            }}
-          >
-            <Typography component="h1" variant="h5" mt={2}>
-              Sign In
-            </Typography>
-            <Box
-              // component="form"
-              // onSubmit={handleSubmit}
-              // noValidate
-              sx={{ mt: 1 }}
+    <>
+      <Imports.ReusableBgBox
+        sx={{
+          backgroundImage: `linear-gradient(to right bottom, #f0f4f8d9, rgba(0 0 0 / 17%)), url(/assets/imgs/mainSigninBg.jpg)`,
+        }}
+      >
+        <Imports.ReusableContainer component="main" maxWidth="xs">
+          <Imports.ReusableBox>
+            <Imports.ReusablePaper
+              elevation={5}
+              variant="elevation"
+              square={false}
             >
-              <FormControl fullWidth>
-                <FormLabel
-                  sx={{
-                    marginBottom: "10px",
-                    color: "#000",
-                    forntWeight: 400,
-                    fontSize: "15px",
-                  }}
-                >
-                  Enter email or mobile number
-                </FormLabel>
-                <OutlinedInput
-                  placeholder="email or mobile number"
-                  size="small"
-                  type="text"
-                  value={credential}
-                  onChange={(e) => setCredential(e.target.value)}
-                />
-              </FormControl>
-              <Button
-                  // type="submit"
-                  onClick={(e)=>handleSubmit(e)}
-                fullWidth
-                // variant="contained"
-                // sx={{ mt: 3, mb: 2, textTransform: "none" }}
+              <Imports.ReusableTypography
+                component="h1"
+                variant="h2"
+                mt={2}
                 sx={{
-                  mt: 3,
-                  mb: 2, // margin top
-                  color: "#111",
-                  bgcolor: "#FFD814",
-                  borderColor: "#FCD200",
-                  borderRadius: "md",
-                  textDecoration: "none",
-                  textTransform: "none",
-                  "&:hover": {
-                    bgcolor: "#FCD200",
-                  },
+                  color: "#4f4f4f",
+                  // fontSize: "2.0rem",
+                  // lineHeight: "2rem",
+                  margin: "1.5rem 0px",
                 }}
               >
-                Continue
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  {/* <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link> */}
-                </Grid>
-                <Grid item>
-                  <Link
-                    // href="#"
-                    variant="body2"
-                    underline="none"
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => navigate("/signup")}
+                {DataTerms?.LoginButtonText}
+              </Imports.ReusableTypography>
+              <Imports.ReusableBox sx={{ mt: 1 }}>
+                <form onSubmit={formik.handleSubmit} component="form">
+                  <Imports.ReusableFormTextField
+                    placeholder={DataTerms?.EmailOrPhoneNumberPlaceHolder}
+                    size="small"
+                    type="text"
+                    id="input"
+                    name="input"
+                    value={
+                      credential
+                        ? (formik.values.input = credential)
+                        : formik.values.input
+                    }
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    error={formik.touched.input && Boolean(formik.errors.input)}
+                    helperText={formik.touched.input && formik.errors.input}
+                  />
+                  <Imports.ReusableButton
+                    variant="contained"
+                    type="submit"
+                    fullWidth
+                    sx={{
+                      mt: 3,
+                      mb: 2, // margin top
+                    }}
                   >
-                    {"Not a memeber ? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Divider
-                // variant="middle"
-                sx={{
-                  marginRight: "-10px",
-                  // marginLeft:'-10px',
-                  marginTop: "10px",
-                  // marginBottom: "5px",
-                  "& .MuiDivider-wrapper": {
-                    marginLeft: "-8px",
-                    marginRight: "-8px",
-                  },
-                }}
-              >
-                <Chip label="or" size="small" />
-              </Divider>
-              <ButtonGroup
-                fullWidth
-                orientation="vertical"
-                sx={{ marginBottom: "15px" }}
-              >
-                <Button
-                  onClick={() => login()}
-                  // variant="contained"
-                  startIcon={
-                    <img
-                      alt="google"
-                      src={GoogleIcon}
-                      style={{ width: "22px", height: "22px" }}
-                    />
-                  }
+                    {DataTerms?.ContinueButtonText}
+                  </Imports.ReusableButton>
+                </form>
+                <Imports.ReusableGrid
+                  container
+                  display="flex"
+                  flexDirection="row"
+                  justifyContent="flex-end"
                   sx={{
-                    mt: 3,
-                    mb: 2,
-                    color: "#111",
-                    fontWeight: 500,
-                    fontSize: "15px",
-                    textTransform: "none",
-                    backgroundColor: " #F0F4F8",
-                    border: "none",
-                    "&:hover": {
-                      backgroundColor: " #F0F4F8",
-                      border: "none",
+                    marginBottom: "8px",
+                    gap: 1,
+                    color: "#9e9e9e",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Imports.Grid item>
+                    <Imports.ReusableTypography variant="body1">
+                      {DataTerms?.NotMemeberLinkText}
+                    </Imports.ReusableTypography>
+                  </Imports.Grid>
+                  <Imports.Grid item>
+                    <Imports.ReusableLink
+                      variant="body2"
+                      underline="none"
+                      sx={{ cursor: "pointer", color: "blue" }}
+                      onClick={() => navigate("/signup")}
+                    >
+                      {DataTerms?.SignupLinkText}
+                    </Imports.ReusableLink>
+                  </Imports.Grid>
+                </Imports.ReusableGrid>
+                <Imports.ReusableDivider
+                  // variant="middle"
+                  sx={{
+                    marginRight: "auto",
+                    // marginLeft:'-10px',
+                    marginTop: "auto",
+                    // marginBottom: "5px",
+                    "& .MuiDivider-wrapper": {
+                      marginLeft: "-8px",
+                      marginRight: "-8px",
                     },
                   }}
                 >
-                  Continue with Google
-                </Button>
-                {/* <Button
-                  // variant="contained"
-                  startIcon={
-                    <img
-                      alt="google"
-                      src={FacebookIcon}
-                      style={{ width: "21px", height: "21px" }}
-                    />
-                  }
-                  sx={{
-                    mt: 3,
-                    mb: 2,
-                    color: "#111",
-                    fontWeight: 500,
-                    fontSize: "15px",
-                    textTransform: "none",
-                    backgroundColor: " #F0F4F8",
-                    border: "none",
-                    "&:hover": {
-                      backgroundColor: " #F0F4F8",
-                      border: "none",
-                    },
-                  }}
+                  <Imports.ReusableChip label="or" size="small" />
+                </Imports.ReusableDivider>
+                <Imports.ButtonGroup
+                  fullWidth
+                  orientation="vertical"
+                  sx={{ marginBottom: "15px" }}
                 >
-                  Continue with Facebook
-                </Button> */}
-                {/* <FacebookLogin
-                  appId="1537947807067024"
-                  autoLoad={true}
-                  fields="name,email,picture"
-                  // onClick={componentClicked}
-                  callback={responseFacebook}
-                /> */}
-                <FacebookLogin
-                  appId="519056126982535"
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  callback={responseFacebook}
-                  render={(renderProps) => (
-                    // <button onClick={renderProps.onClick}>
-                    //   This is my custom FB button
-                    // </button>
-                    <Button
-                      // variant="contained"
-                      onClick={renderProps.onClick}
-                      startIcon={
-                        <img
-                          alt="facebook"
-                          src={FacebookIcon}
-                          style={{ width: "24px", height: "24px" }}
-                        />
-                      }
-                      sx={{
-                        mt: 3,
-                        mb: 2,
-                        color: "#111",
-                        fontWeight: 500,
-                        fontSize: "15px",
-                        textTransform: "none",
+                  <Imports.ReusableButton
+                    onClick={() => login()}
+                    // variant="contained"
+                    startIcon={
+                      <img
+                        alt="google"
+                        src={GoogleIcon}
+                        style={{
+                          width: "22px",
+                          height: "22px",
+                          marginRight: "8px",
+                        }}
+                      />
+                    }
+                    sx={{
+                      mt: 3,
+                      mb: 2,
+                      color: "#111",
+                      fontWeight: 500,
+                      fontSize: "15px",
+                      textTransform: "none",
+                      backgroundColor: " #F0F4F8",
+                      borderRadius: "8px",
+                      border: "none",
+                      whiteSpace: "nowrap",
+                      "&:hover": {
                         backgroundColor: " #F0F4F8",
                         border: "none",
-                        "&:hover": {
+                      },
+                    }}
+                  >
+                    {DataTerms?.GoogleButtonText}
+                  </Imports.ReusableButton>
+                  <FacebookLogin
+                    appId="519056126982535"
+                    autoLoad={false}
+                    fields="name,email,picture"
+                    callback={responseFacebook}
+                    render={(renderProps) => (
+                      <Imports.ReusableButton
+                        onClick={renderProps.onClick}
+                        startIcon={
+                          <img
+                            alt="facebook"
+                            src={FacebookIcon}
+                            style={{ width: "24px", height: "24px" }}
+                          />
+                        }
+                        sx={{
+                          mt: 3,
+                          mb: 2,
+                          color: "#111",
+                          fontWeight: 500,
+                          fontSize: "15px",
+                          textTransform: "none",
                           backgroundColor: " #F0F4F8",
+                          borderRadius: "8px",
                           border: "none",
-                        },
-                      }}
-                    >
-                      Continue with Facebook
-                    </Button>
-                  )}
-                />
-                {/* <Button
-                  // variant="contained"
-                  startIcon={
-                    <img
-                      alt="instagram"
-                      src={Instagram}
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                  }
-                  sx={{
-                    mt: 3,
-                    mb: 2,
-                    color: "#111",
-                    fontWeight: 500,
-                    fontSize: "15px",
-                    textTransform: "none",
-                    backgroundColor: " #F0F4F8",
-                    border: "none",
-                    "&:hover": {
-                      backgroundColor: " #F0F4F8",
-                      border: "none",
-                    },
-                  }}
-                >
-                  Continue with Twitter
-                </Button>
-                <InstagramLogin
-                  authCallback={authHandler}
-                  appId={instAppId}
-                  appSecret={instSecretId}
-                  redirectUri={redirect_url}
-                /> */}
-              </ButtonGroup>
-            </Box>
-          </Paper>
-          {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
-        </Box>
-      )}
-    </Container>
+                          whiteSpace: "nowrap",
+                          "&:hover": {
+                            backgroundColor: " #F0F4F8",
+                            border: "none",
+                          },
+                        }}
+                      >
+                        {DataTerms?.FacebookButtonText}
+                      </Imports.ReusableButton>
+                    )}
+                  />
+                </Imports.ButtonGroup>
+              </Imports.ReusableBox>
+            </Imports.ReusablePaper>
+          </Imports.ReusableBox>
+        </Imports.ReusableContainer>
+      </Imports.ReusableBgBox>
+    </>
   );
 };
 export default Login;

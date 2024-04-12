@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography,Button } from '@mui/material';
+import { Typography,Button ,Box,Grid} from '@mui/material';
 import { useLocation, useNavigate } from "react-router-dom";
 
 const WelcomePage = () => {
@@ -10,6 +10,9 @@ const WelcomePage = () => {
   const logoutHandler = () => {
     localStorage.removeItem('token');
     navigate("/");
+  }
+  const updatePasswordHandler = () => {
+     navigate("/updatepassword");
   }
   return (
     <>
@@ -22,7 +25,24 @@ const WelcomePage = () => {
           Welcome To Akart Appliction.
         </Typography>
       )}
-      <Button onClick={() => logoutHandler()}>Logout</Button>
+      <Grid container>
+        <Grid>
+          <Button
+            sx={{ textTransform: "none" }}
+            onClick={() => logoutHandler()}
+          >
+            Logout
+          </Button>
+        </Grid>
+        <Grid>
+          <Button
+            sx={{ textTransform: "none" }}
+            onClick={() => updatePasswordHandler()}
+          >
+            UpdatePassword
+          </Button>
+        </Grid>
+      </Grid>
     </>
   );
 }

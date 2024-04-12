@@ -98,9 +98,10 @@ const CreateNewPassword = () => {
                   fontSize: "15px",
                 }}
               >
-                New Password
+                Password
               </FormLabel>
               <TextField
+                placeholder="password"
                 type="password"
                 id="password"
                 name="password"

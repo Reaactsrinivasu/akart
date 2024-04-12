@@ -12,7 +12,7 @@ const More = () => {
           fontSize:'20px'
         }}
       >
-        Become a Seller
+        More
       </Typography>
     );
 };

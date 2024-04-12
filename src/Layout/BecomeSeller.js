@@ -1,8 +1,11 @@
 import React from 'react';
 import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 const BecomeSeller = () => {
+  const navigate = useNavigate();
   return (
     <Typography
+      onClick={() => navigate("/products")}
       variant="body1"
       sx={{
         color: "blue",
@@ -12,7 +15,7 @@ const BecomeSeller = () => {
         fontSize: "20px",
       }}
     >
-      More
+      Become a Seller
     </Typography>
   );
 }

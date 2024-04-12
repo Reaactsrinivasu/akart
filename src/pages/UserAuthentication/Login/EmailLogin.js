@@ -199,5 +199,4 @@ const EmailLogin = () => {
     </Container>
   );
 };
-
 export default EmailLogin;
