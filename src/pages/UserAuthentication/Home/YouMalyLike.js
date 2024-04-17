@@ -1,4 +1,5 @@
 import React from "react";
+import { useRef, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -14,82 +15,259 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import Imports from "../../../common/Imports";
 import ReusableSlider from "./ReusableSlider";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import { useSelector, useDispatch } from "react-redux";
+import { loadHomeYouMayLikeDataInitiate } from "../../../redux/actions/home/getHomeYouMayLikeActions";
 const YouMalyLike = () => {
-  const imgData1 = [
+  const dispatch = useDispatch();
+  
+  const imageData = [
     {
-      image: "assets/imgs/cardImg-1.jpg",
+      img: "assets/imgs/todayImg-2.jpg",
+      data: "small",
+      // description: "Best offers on Storite",
+      // discount: "UpTo 15% Off",
+      // subdec: "Limited Deal",
     },
     {
-      image: "assets/imgs/cardImg-2.jpg",
+      img: "assets/imgs/todayImg-2.jpg",
+      data: "large",
+      // description: "Best offers on Storite",
+      // discount: "UpTo 15% Off",
+      // subdec: "Limited Deal",
     },
     {
-      image: "assets/imgs/cardImg-3.jpg",
+      img: "assets/imgs/todayImg-2.jpg",
+      data: "small",
+      // description: "Best offers on Puma",
+      // discount: "UpTo 15% Off",
+      // subdec: "Limited Deal",
     },
+    // {
+    //   img: "assets/imgs/todayImg-2.jpg",
+    //   description: "Best offers from Top Brands",
+    //   discount: "UpTo 15% Off",
+    //   subdec: "Limited Deal",
+    // },
+  ];
 
-    {
-      image: "assets/imgs/cardImg-4.jpg",
-    },
-  ];
-  const imgData2 = [
-    {
-      image: "assets/imgs/cardImg-5.jpg",
-    },
-    {
-      image: "assets/imgs/cardImg-6.jpg",
-    },
-    {
-      image: "assets/imgs/cardImg-7.jpg",
-    },
-
-    {
-      image: "assets/imgs/cardImg-8.jpg",
-    },
-  ];
-  const imgData3 = [
-    {
-      image: "assets/imgs/cardImg-9.jpg",
-    },
-    {
-      image: "assets/imgs/cardImg-10.jpg",
-    },
-    {
-      image: "assets/imgs/cardImg-11.jpg",
-    },
-    {
-      image: "assets/imgs/cardImg-12.jpg",
-    },
-  ];
-const imageData = [
-  {
-    img: "assets/imgs/todayImg-2.jpg",
-    description: "Best offers on Storite",
-    discount: "UpTo 15% Off",
-    subdec: "Limited Deal",
-  },
-  {
-    img: "assets/imgs/todayImg-2.jpg",
-    description: "Best offers on Storite",
-    discount: "UpTo 15% Off",
-    subdec: "Limited Deal",
-  },
-  {
-    img: "assets/imgs/todayImg-2.jpg",
-    description: "Best offers on Puma",
-    discount: "UpTo 15% Off",
-    subdec: "Limited Deal",
-  },
-  {
-    img: "assets/imgs/todayImg-2.jpg",
-    description: "Best offers from Top Brands",
-    discount: "UpTo 15% Off",
-    subdec: "Limited Deal",
-  },
-];
+  // useEffect(() => {
+  //   dispatch(loadHomeYouMayLikeDataInitiate());
+  // }, [dispatch]);
+  // const homeYouMayLikeData = useSelector(
+  //   (state) => state.homeyoumaylikedata?.data?.data
+  // );
+  // console.log("homeYouMayLikeData", homeYouMayLikeData?.data);
   return (
     <>
       <Imports.ReusableBox>
         <Grid container spacing={2} p={0}>
-          <Grid item xs={12} md={4} lg={4}>
+          {/* {[0].map((index) => ( */}
+          {/* <Grid item xs={12} md={4} lg={4}>
+              <Grid container>
+                <Grid item xs={12} md={12}>
+                  <Imports.ReusableBox
+                    sx={{
+                      backgroundColor: "#FFFFFF",
+                      borderRadius: "12px",
+                      // border: "1px solid #9e9e9e",
+                      padding: 1,
+                    }}
+                  >
+                    <Imports.ReusableBox
+                      sx={{
+                        padding: 2,
+                        fontWeight: 500,
+                        marginLeft: "-5px",
+                        display: "flex",
+                        justifyContent: "space-around",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Imports.ReusableTypography variant="h3">
+                        You May Also Like....
+                      </Imports.ReusableTypography>
+                      <Imports.IconButton
+                        size="large"
+                        edge="start"
+                        sx={{
+                          color: "#0078db",
+                        }}
+                      >
+                        <ArrowCircleRightIcon sx={{ fontSize: "40px" }} />
+                      </Imports.IconButton>
+                    </Imports.ReusableBox>
+                    <Grid container p={1}>
+                      {homeYouMayLikeData?.data
+                        // .slice(index * 4, index * 4 + 4)
+                        .map((item, index) => {
+                          if (item.data === "large") {
+                            return (
+                              <Grid item xs={12} sm={6} md={6} key={index}>
+                                <Imports.ReusableBox
+                                  sx={{
+                                    border: "1px solid #9e9e9e",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                  }}
+                                >
+                                  <Box
+                                    component="img"
+                                    src={item.content_image_id[0]}
+                                    height={"100%"}
+                                    width={"100%"}
+                                    alt=""
+                                    style={
+                                      {
+                                        //   padding: "10px",
+                                        //   border: "1px solid #9e9e9e",
+                                        //   borderTop: "1px solid #9e9e9e",
+                                        //   borderRight: "1px solid #9e9e9e",
+                                        //   borderBottom: "1px solid #9e9e9e",
+                                        //   borderRadius: "5px",
+                                      }
+                                    }
+                                  />
+                                  <Imports.ReusableTypography
+                                    variant="h5"
+                                    sx={{
+                                      padding: 2,
+                                      fontWeight: 500,
+                                      //   marginLeft: "-5px",
+                                    }}
+                                  >
+                                    {item.description}
+                                  </Imports.ReusableTypography>
+                                  <Imports.ReusableTypography
+                                    variant="h5"
+                                    sx={{
+                                      padding: 2,
+                                      fontWeight: 500,
+                                      //   marginLeft: "-5px",
+                                      color: "#316630",
+                                    }}
+                                  >
+                                    {item.discount}
+                                  </Imports.ReusableTypography>
+                                </Imports.ReusableBox>
+                              </Grid>
+                            );
+                          } else if (item.data === "small") {
+                            return (
+                              <Grid item xs={12} sm={6} md={6}>
+                                <Grid container>
+                                  <Grid item xs={12} sm={12} md={12}>
+                                    <Imports.ReusableBox
+                                      sx={{
+                                        //   border: "1px solid #9e9e9e",
+                                        borderTop: "1px solid #9e9e9e",
+                                        borderRight: "1px solid #9e9e9e",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <Box
+                                        component="img"
+                                        src={item.content_image_id[0]}
+                                        height={"100%"}
+                                        width={"100%"}
+                                        alt=""
+                                        style={
+                                          {
+                                            //   padding: "10px",
+                                            // borderTop: "1px solid #9e9e9e",
+                                            // borderRight: "1px solid #9e9e9e",
+                                            //   borderRadius: "5px",
+                                          }
+                                        }
+                                      />
+
+                                      <Imports.ReusableTypography
+                                        variant="h5"
+                                        sx={{
+                                          padding: 2,
+                                          fontWeight: 500,
+                                          //   marginLeft: "-5px",
+                                        }}
+                                      >
+                                        {item.description}
+                                      </Imports.ReusableTypography>
+                                      <Imports.ReusableTypography
+                                        variant="h5"
+                                        sx={{
+                                          padding: 2,
+                                          fontWeight: 500,
+                                          //   marginLeft: "-5px",
+                                          color: "#316630",
+                                        }}
+                                      >
+                                        {item.discount}
+                                      </Imports.ReusableTypography>
+                                    </Imports.ReusableBox>
+                                  </Grid>
+                                  <Grid item xs={12} sm={12} md={12}>
+                                    <Imports.ReusableBox
+                                      sx={{
+                                        //   border: "1px solid #9e9e9e",
+                                        borderTop: "1px solid #9e9e9e",
+                                        borderRight: "1px solid #9e9e9e",
+                                        borderBottom: "1px solid #9e9e9e",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <Box
+                                        component="img"
+                                        src={item.content_image_id[0]}
+                                        height={"100%"}
+                                        width={"100%"}
+                                        alt=""
+                                        style={
+                                          {
+                                            //   padding: "10px",
+                                            //   borderTop: "1px solid #9e9e9e",
+                                            //   borderRight: "1px solid #9e9e9e",
+                                            //   borderBottom: "1px solid #9e9e9e",
+                                          }
+                                        }
+                                      />
+                                      <Imports.ReusableTypography
+                                        variant="h5"
+                                        sx={{
+                                          padding: 1,
+                                          fontWeight: 500,
+                                          //   marginLeft: "-5px",
+                                        }}
+                                      >
+                                        {item.description}
+                                      </Imports.ReusableTypography>
+                                      <Imports.ReusableTypography
+                                        variant="h5"
+                                        sx={{
+                                          padding: 1,
+                                          fontWeight: 500,
+                                          //   marginLeft: "-5px",
+                                          color: "#316630",
+                                        }}
+                                      >
+                                        {item.discount}
+                                      </Imports.ReusableTypography>
+                                    </Imports.ReusableBox>
+                                  </Grid>
+                                </Grid>
+                              </Grid>
+                            );
+                          }
+                        })}                         
+                    </Grid>
+                  </Imports.ReusableBox>
+                </Grid>
+              </Grid>
+            </Grid> */}
+          {/* ))} */}
+          {/* <Grid item xs={12} md={4} lg={4}>
             <Grid container>
               <Grid item xs={12} md={12}>
                 <Imports.ReusableBox
@@ -280,199 +458,8 @@ const imageData = [
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={4} lg={4}>
-            <Grid container>
-              <Grid item xs={12} md={12}>
-                <Imports.ReusableBox
-                  sx={{
-                    backgroundColor: "#FFFFFF",
-                    borderRadius: "12px",
-                    // border: "1px solid #9e9e9e",
-                    padding: 1,
-                  }}
-                >
-                  <Imports.ReusableBox
-                    sx={{
-                      padding: 2,
-                      fontWeight: 500,
-                      marginLeft: "-5px",
-                      display: "flex",
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Imports.ReusableTypography variant="h3">
-                      You May Also Like....
-                    </Imports.ReusableTypography>
-                    <Imports.IconButton
-                      size="large"
-                      edge="start"
-                      sx={{
-                        color: "#0078db",
-                      }}
-                    >
-                      <ArrowCircleRightIcon sx={{ fontSize: "40px" }} />
-                    </Imports.IconButton>
-                  </Imports.ReusableBox>
-
-                  <Grid container p={1}>
-                    <Grid container xs={12} sm={6} md={6}>
-                      <Imports.ReusableBox
-                        sx={{
-                          border: "1px solid #9e9e9e",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src="assets/imgs/youmayImg-1.jpg"
-                          height={"100%"}
-                          width={"100%"}
-                          alt=""
-                          style={
-                            {
-                              //   padding: "10px",
-                              //   border: "1px solid #9e9e9e",
-                              //   borderTop: "1px solid #9e9e9e",
-                              //   borderRight: "1px solid #9e9e9e",
-                              //   borderBottom: "1px solid #9e9e9e",
-                              //   borderRadius: "5px",
-                            }
-                          }
-                        />
-                        <Imports.ReusableTypography
-                          variant="h5"
-                          sx={{
-                            padding: 2,
-                            fontWeight: 500,
-                            //   marginLeft: "-5px",
-                          }}
-                        >
-                          ZAVERI PEARLS For Women
-                        </Imports.ReusableTypography>
-                        <Imports.ReusableTypography
-                          variant="h5"
-                          sx={{
-                            padding: 2,
-                            fontWeight: 500,
-                            //   marginLeft: "-5px",
-                            color: "#316630",
-                          }}
-                        >
-                          85% OFF
-                        </Imports.ReusableTypography>
-                      </Imports.ReusableBox>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={6}>
-                      <Grid container>
-                        <Grid item xs={12} sm={12} md={12}>
-                          <Imports.ReusableBox
-                            sx={{
-                              //   border: "1px solid #9e9e9e",
-                              borderTop: "1px solid #9e9e9e",
-                              borderRight: "1px solid #9e9e9e",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                            }}
-                          >
-                            <img
-                              src="assets/imgs/youmayImg-2.jpg"
-                              height={"100%"}
-                              width={"100%"}
-                              alt=""
-                              style={
-                                {
-                                  //   padding: "10px",
-                                  // borderTop: "1px solid #9e9e9e",
-                                  // borderRight: "1px solid #9e9e9e",
-                                  //   borderRadius: "5px",
-                                }
-                              }
-                            />
-
-                            <Imports.ReusableTypography
-                              variant="h5"
-                              sx={{
-                                padding: 2,
-                                fontWeight: 500,
-                                //   marginLeft: "-5px",
-                              }}
-                            >
-                              Pink Crystal Shine
-                            </Imports.ReusableTypography>
-                            <Imports.ReusableTypography
-                              variant="h5"
-                              sx={{
-                                padding: 2,
-                                fontWeight: 500,
-                                //   marginLeft: "-5px",
-                                color: "#316630",
-                              }}
-                            >
-                              75% OFF
-                            </Imports.ReusableTypography>
-                          </Imports.ReusableBox>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={12}>
-                          <Imports.ReusableBox
-                            sx={{
-                              //   border: "1px solid #9e9e9e",
-                              borderTop: "1px solid #9e9e9e",
-                              borderRight: "1px solid #9e9e9e",
-                              borderBottom: "1px solid #9e9e9e",
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                            }}
-                          >
-                            <img
-                              src="assets/imgs/youmayImg-3.jpg"
-                              height={"100%"}
-                              width={"100%"}
-                              alt=""
-                              style={
-                                {
-                                  //   padding: "10px",
-                                  //   borderTop: "1px solid #9e9e9e",
-                                  //   borderRight: "1px solid #9e9e9e",
-                                  //   borderBottom: "1px solid #9e9e9e",
-                                }
-                              }
-                            />
-                            <Imports.ReusableTypography
-                              variant="h5"
-                              sx={{
-                                padding: 1,
-                                fontWeight: 500,
-                                //   marginLeft: "-5px",
-                              }}
-                            >
-                              Crystal Finger Ring
-                            </Imports.ReusableTypography>
-                            <Imports.ReusableTypography
-                              variant="h5"
-                              sx={{
-                                padding: 1,
-                                fontWeight: 500,
-                                //   marginLeft: "-5px",
-                                color: "#316630",
-                              }}
-                            >
-                              65% OFF
-                            </Imports.ReusableTypography>
-                          </Imports.ReusableBox>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Imports.ReusableBox>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} md={4} lg={4}>
-            <Grid container>
+          <Grid item xs={12} md={4} lg={4}> */}
+          {/* <Grid container>
               <Grid item xs={12} md={12}>
                 <Imports.ReusableBox
                   sx={{
@@ -509,7 +496,7 @@ const imageData = [
                     </Imports.IconButton>
                   </Imports.ReusableBox>
                   <Grid container spacing={1} p={1}>
-                    {imageData?.map((item, index) => (
+                    {imageData.map((item, index) => (
                       <Grid item xs={12} sm={6} md={6} key={index}>
                         <Imports.ReusableBox
                           // elevation={1}
@@ -548,9 +535,9 @@ const imageData = [
                           <Imports.Box
                             sx={{
                               display: "flex",
-                              alignItems:'center',
+                              alignItems: "center",
                               gap: "10px",
-                              padding:1,
+                              padding: 1,
                             }}
                           >
                             <Imports.Button
@@ -563,7 +550,7 @@ const imageData = [
                                 textDecoration: "none",
                                 textTransform: "none",
                                 borderRadius: "6px",
-                                  fontSize: "12px",
+                                fontSize: "12px",
                                 whiteSpace: "nowrap",
                                 "&:hover": {
                                   bgcolor: "#FFA500",
@@ -596,12 +583,11 @@ const imageData = [
                   </Grid>
                 </Imports.ReusableBox>
               </Grid>
-            </Grid>
-          </Grid>
+            </Grid> */}
+          {/* </Grid> */}
         </Grid>
       </Imports.ReusableBox>
     </>
   );
 };
-
 export default YouMalyLike;

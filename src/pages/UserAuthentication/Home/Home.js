@@ -8,10 +8,9 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "./Carousel";
 import GrandGlobalBrands from "./GrandGlobalBrands";
 import ShopByCategory from "./ShopByCategory";
-import FourCardsDisplay from "./FourCardsDisplay";
+import DiscountCardsDisplay from "./DiscountCardsDisplay";
 import TodaysDeals from "./TodaysDeals";
 import YouMalyLike from "./YouMalyLike";
-
 const Home = () => {
     const navigate = useNavigate();
   return (
@@ -23,7 +22,7 @@ const Home = () => {
             <Carousel />
             <GrandGlobalBrands />
             <ShopByCategory />
-            <FourCardsDisplay />
+            <DiscountCardsDisplay />
             <TodaysDeals />
             <YouMalyLike />
           </Box>
@@ -32,5 +31,4 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;

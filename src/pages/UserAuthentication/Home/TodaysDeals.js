@@ -1,77 +1,86 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { useRef, useState, useEffect } from "react";
 // // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
+import { useSelector, useDispatch } from "react-redux";
 // import required modules
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Imports from "../../../common/Imports";
+import { loadHomeTodayDealsDataInitiate } from "../../../redux/actions/home/getHomeTodayDealsActions";
 const TodaysDeals = () => {
+    const dispatch = useDispatch();
   const imageData = [
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Storite",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Storite",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Puma",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers from Top Brands",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Storite",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Storite",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Puma",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers from Top Brands",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Puma",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
     {
       img: "assets/imgs/todayImg-2.jpg",
       description: "Best offers on Puma",
       discount: "UpTo 15% Off",
-      subdec:"Limited Time Deal",
+      subdec: "Limited Time Deal",
     },
   ];
+  useEffect(() => {
+    dispatch(loadHomeTodayDealsDataInitiate());
+  }, [dispatch]);
+  const homeTodayDealsData = useSelector(
+    (state) => state.hometodaydealsdata?.data?.data
+  );
+  console.log("homeTodayDealsData", homeTodayDealsData);
   return (
     <>
       <Imports.ReusableBox
@@ -133,51 +142,53 @@ const TodaysDeals = () => {
               "--swiper-navigation-size": "10px", // Set the size you desire
             }}
           >
-            {imageData?.map((item, index) => (
-              <SwiperSlide key={index}>
-                <Imports.ReusableBox
-                  // elevation={1}
-                  sx={{
-                    margin: "2px",
-                    backgroundColor: "#FFFFFF",
-                    borderRadius: "8px",
-                    marginBottom: "50px",
-                    border: "1px solid #9e9e9e",
-                    transition: "box-shadow 0.3s",
-                    "&:hover": {
-                      // boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-                    },
-                  }}
-                >
-                  <Imports.Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "30px",
-                      paddingTop: "10px",
-                    }}
-                  >
-                    <img
-                      src={item.img}
-                      alt=""
-                      width={"50%"}
-                      height={"50%"}
-                      loading="lazy"
-                    />
-                  </Imports.Box>
+            {homeTodayDealsData?.data.map(
+              (item, index) => (
+                (
+                  <SwiperSlide key={index}>
+                    <Imports.ReusableBox
+                      // elevation={1}
+                      sx={{
+                        margin: "2px",
+                        backgroundColor: "#FFFFFF",
+                        borderRadius: "8px",
+                        marginBottom: "50px",
+                        border: "1px solid #9e9e9e",
+                        transition: "box-shadow 0.3s",
+                        "&:hover": {
+                          // boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
+                          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+                        },
+                      }}
+                    >
+                      <Imports.Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          marginBottom: "30px",
+                          paddingTop: "10px",
+                        }}
+                      >
+                        <img
+                          src={item?.content_image_id[0]}
+                          alt=""
+                          width={"50%"}
+                          height={"50%"}
+                          loading="lazy"
+                        />
+                      </Imports.Box>
 
-                  <Imports.Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      gap: "20px",
-                    }}
-                  >
-                    {/* <Imports.Link
+                      <Imports.Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          gap: "20px",
+                        }}
+                      >
+                        {/* <Imports.Link
                       component="button"
                       variant="body2"
                       underline="none"
@@ -193,44 +204,51 @@ const TodaysDeals = () => {
                     >
                       {item.discount}
                     </Imports.Link> */}
-                    <Imports.Button
-                      variant="contained"
-                      sx={{
-                        height: "25px",
-                        color: "#FFFCFC",
-                        bgcolor: "#FFA500",
-                        borderColor: "#2C7E34",
-                        textDecoration: "none",
-                        textTransform: "none",
-                        borderRadius: "6px",
-                        fontSize: "12px",
-                        whiteSpace: "nowrap",
-                        "&:hover": {
-                          bgcolor: "#FFA500",
-                        },
-                      }}
-                    >
-                      {item.discount}
-                    </Imports.Button>
-                    <Imports.ReusableTypography component="span">
-                      {item.subdec}
-                    </Imports.ReusableTypography>
-                  </Imports.Box>
-                  <Imports.Box sx={{ display: "flex", justifyContent: "left" }}>
-                    <Imports.ReusableTypography
-                      variant="h6"
-                      sx={{
-                        fontWeight: 500,
-                        padding: 1,
-                        marginLeft: "5px",
-                      }}
-                    >
-                      {item.description}
-                    </Imports.ReusableTypography>
-                  </Imports.Box>
-                </Imports.ReusableBox>
-              </SwiperSlide>
-            ))}
+                        <Imports.Button
+                          variant="contained"
+                          sx={{
+                            height: "25px",
+                            color: "#FFFCFC",
+                            bgcolor: "#FFA500",
+                            borderColor: "#2C7E34",
+                            textDecoration: "none",
+                            textTransform: "none",
+                            borderRadius: "6px",
+                            fontSize: "12px",
+                            whiteSpace: "nowrap",
+                            "&:hover": {
+                              bgcolor: "#FFA500",
+                            },
+                          }}
+                        >
+                          {item.discount}
+                        </Imports.Button>
+                        <Imports.ReusableTypography
+                          component="span"
+                          sx={{ color: "#FFA500"}}
+                        >
+                          {item.data}
+                        </Imports.ReusableTypography>
+                      </Imports.Box>
+                      <Imports.Box
+                        sx={{ display: "flex", justifyContent: "left" }}
+                      >
+                        <Imports.ReusableTypography
+                          variant="body1"
+                          sx={{
+                            fontWeight:'bold',
+                            padding: 2,
+                            marginLeft: "5px",
+                          }}
+                        >
+                          {item.description}
+                        </Imports.ReusableTypography>
+                      </Imports.Box>
+                    </Imports.ReusableBox>
+                  </SwiperSlide>
+                )
+              )
+            )}
           </Swiper>
         </Imports.ReusableGrid>
       </Imports.ReusableBox>

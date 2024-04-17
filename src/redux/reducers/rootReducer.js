@@ -9,9 +9,13 @@ import mobileOtpVerfyReducer from "./otpVerifyWithMobileReducer";
 import creatPasswordRecoveryReducer from "./passwordRecoveryReducer";
 import emailOtpVerfyReducer from "./otpVerifyWithEmailIdReducer";
 import createNewPasswordReducer from "./createNewPasswordReducer";
-import homeGrandGlobalDataReducer from "./home/getHomeGrandGlobalDataReducer";
 //Home page reducers
 import getHomeCarouselDataReducer from "./home/getHomeCarouselDataReducer"
+import homeGrandGlobalDataReducer from "./home/getHomeGrandGlobalDataReducer";
+import homeShopByCategoryDataReducer from "./home/getHomeShopByCategoryReducer";
+import homeYouMayLikeDataReducer from "./home/getHomeYouMayLikeReducer";
+import homeTodayDealsDataReducer from "./home/getHomeTodayDealsReducer";
+import homeDiscountCardsDataReducer from "./home/getHomeDiscountCardsReducer";
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
@@ -25,6 +29,10 @@ const rootReducer = combineReducers({
   createnewpassworddata: createNewPasswordReducer,
   // Home page data
   homecarouseldata: getHomeCarouselDataReducer,
+  homeyoumaylikedata: homeYouMayLikeDataReducer,
+  hometodaydealsdata: homeTodayDealsDataReducer,
   homegrandglobaldata: homeGrandGlobalDataReducer,
+  homediscountcardsdata: homeDiscountCardsDataReducer,
+  homeshopbycategorydata: homeShopByCategoryDataReducer,
 });
 export default rootReducer;
