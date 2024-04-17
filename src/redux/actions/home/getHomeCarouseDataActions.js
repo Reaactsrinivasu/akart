@@ -16,7 +16,7 @@ export const loadCaroouselDataError = (error) => ({
   type: types.LOAD_HOME_CAROUSELDATA_ERROR,
   payload: error,
 });
-export const getHomeCarouselDataInitiate = (user, navigate) => {
+export const loadHomeCarouselDataInitiate = (user, navigate) => {
   return function (dispatch) {
     dispatch(loadCaroouselDataStart());
     // dispatch(loadCaroouselDataStart(user));
@@ -30,7 +30,7 @@ export const getHomeCarouselDataInitiate = (user, navigate) => {
   };
 };
 export default {
-  getHomeCarouselDataInitiate,
+  loadHomeCarouselDataInitiate,
 };
 
 

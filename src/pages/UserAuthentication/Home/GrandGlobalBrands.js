@@ -57,7 +57,7 @@ const GrandGlobalBrands = () => {
   }, [dispatch]);
   const grandGlobalData = useSelector((state) => state.homegrandglobaldata?.data);
   const homeGrandGlobalData = grandGlobalData?.data;
-  console.log("homeGrandGlobalData", homeGrandGlobalData);
+  // console.log("homeGrandGlobalData", homeGrandGlobalData);
   return (
     <>
       <Imports.ReusableBox
@@ -121,56 +121,57 @@ const GrandGlobalBrands = () => {
           >
             {/* // console.log("grand", item.content_image_id[0]), */}
             {/* {imageData?.map((item, index) => ( */}
-            {homeGrandGlobalData && homeGrandGlobalData?.data.map((item, index) => (
-              <SwiperSlide key={index}>
-                <Imports.ReusableBox
-                  // elevation={1}
-                  sx={{
-                    margin: "2px",
-                    backgroundColor: "#FFFFFF",
-                    borderRadius: "8px",
-                    marginBottom: "50px",
-                    border: "1px solid #9e9e9e",
-                    transition: "box-shadow 0.3s",
-                    "&:hover": {
-                      // boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
-                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-                    },
-                  }}
-                >
-                  <Imports.Box
+            {homeGrandGlobalData &&
+              homeGrandGlobalData?.data.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <Imports.ReusableBox
+                    // elevation={1}
                     sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: "30px",
+                      margin: "2px",
+                      backgroundColor: "#FFFFFF",
+                      borderRadius: "8px",
+                      marginBottom: "50px",
+                      border: "1px solid #9e9e9e",
+                      transition: "box-shadow 0.3s",
+                      "&:hover": {
+                        // boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+                      },
                     }}
                   >
-                    <img
-                      src={item?.content_image_id[0]}
-                      // src={item.img}
-                      alt=""
-                      width={"70%"}
-                      height={"70%"}
-                      loading="lazy"
-                    />
-                    <Imports.ReusableTypography
-                      variant="h6"
-                      sx={{ fontWeight: 500 }}
+                    <Imports.Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginBottom: "30px",
+                      }}
                     >
-                      {item.product}
-                    </Imports.ReusableTypography>
-                    <Imports.ReusableTypography
-                      variant="h4"
-                      sx={{ fontWeight: "bold" }}
-                    >
-                      {item.discount}
-                    </Imports.ReusableTypography>
-                  </Imports.Box>
-                </Imports.ReusableBox>
-              </SwiperSlide>
-            ))}
+                      <img
+                        src={item?.content_image_id[0]}
+                        // src={item.img}
+                        alt=""
+                        width={"70%"}
+                        height={"70%"}
+                        loading="lazy"
+                      />
+                      <Imports.ReusableTypography
+                        variant="h6"
+                        sx={{ fontWeight: 500 }}
+                      >
+                        {item.description}
+                      </Imports.ReusableTypography>
+                      <Imports.ReusableTypography
+                        variant="h4"
+                        sx={{ fontWeight: "bold" }}
+                      >
+                        {item.discount}
+                      </Imports.ReusableTypography>
+                    </Imports.Box>
+                  </Imports.ReusableBox>
+                </SwiperSlide>
+              ))}
           </Swiper>
         </Imports.ReusableGrid>
       </Imports.ReusableBox>

@@ -10,8 +10,9 @@ import "swiper/css/navigation";
 import "./ImageSlider.css";
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-import { getHomeCarouselDataInitiate } from '../../../redux/actions/home/getHomeCarouseDataActions';
+import { loadHomeCarouselDataInitiate } from "../../../redux/actions/home/getHomeCarouseDataActions";
 import { useSelector, useDispatch } from "react-redux";
+// import { initiateLoadCarouselData } from '../../../redux/actions/getHomepageReusableActions';
   const items = [
     {
       image:
@@ -55,10 +56,16 @@ const Carousel = () => {
   //    .join("&");
 
      useEffect(() => {
-       dispatch(getHomeCarouselDataInitiate());
+       dispatch(loadHomeCarouselDataInitiate());
      }, [dispatch]);
       const homeCarouselData = useSelector((state) => state.homecarouseldata.data);
       // console.log("homeCarouselData", homeCarouselData?.data[0].data);
+
+    //  useEffect(() => {
+    //    dispatch(initiateLoadCarouselData());
+    //  }, [dispatch]);
+    //   const homeCarouselData = useSelector((state) => state.homecarouseldata.data);
+    //   // console.log("homeCarouselData", homeCarouselData?.data[0].data);
   return (
     <>
       <Swiper
