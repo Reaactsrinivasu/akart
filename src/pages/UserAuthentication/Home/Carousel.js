@@ -83,7 +83,7 @@ const Carousel = () => {
         modules={[Autoplay, Navigation]}
         className="mySwiper1"
       >
-        {homeCarouselData?.data.map(
+        { homeCarouselData && homeCarouselData?.data.map(
           (item, index) => (
             // console.log("item", item.data[0]),
             (

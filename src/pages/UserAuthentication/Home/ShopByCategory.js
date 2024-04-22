@@ -100,7 +100,7 @@ const ShopByCategory = () => {
                     </Imports.ReusableTypography>
                     <Grid container spacing={1} p={1}>
                       {/* {homeShopByCategoryData?.length >> 0 && */}
-                      {homeShopByCategoryData?.data
+                      {homeShopByCategoryData && homeShopByCategoryData?.data
                         .slice(index * 4, index * 4 + 4)
                         .map((item, imgIndex) => (
                           <Grid item xs={12} sm={6} md={6} key={imgIndex}>

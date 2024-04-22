@@ -54,6 +54,8 @@ const OtpVerifyForNewPassword = React.lazy(() =>
 const UpdateUserAccount = React.lazy(() =>
   import("./pages/UserAuthentication/UserAccount/UpdateUserAccount")
 );
+const OrderInvoice = React.lazy(() => import('./pages/OrderManagementPages/OrderInvoice') )
+const OrderManagement = React.lazy(() => import('./pages/OrderManagementPages/OrderManagement'))
 
 const Approutes = () => {
     //   <Suspense
@@ -104,7 +106,9 @@ const Approutes = () => {
             <Route path="/updatepassword" exact element={<UpdatePassword />} />
             <Route path="/products" exact element={<Products />} />
             <Route path="/innerproducts" exact element={<InnerProductpage />} />
-          </Routes>
+            <Route path='/orderinvoice' exact element={<OrderInvoice />} />
+            <Route path='/ordermanagement' exact element = { <OrderManagement /> } />
+           </Routes>
         </Suspense>
       </GoogleOAuthProvider>
     </>

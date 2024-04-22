@@ -142,7 +142,7 @@ const TodaysDeals = () => {
               "--swiper-navigation-size": "10px", // Set the size you desire
             }}
           >
-            {homeTodayDealsData?.data.map(
+            { homeTodayDealsData && homeTodayDealsData?.data.map(
               (item, index) => (
                 (
                   <SwiperSlide key={index}>

@@ -94,7 +94,7 @@ const DiscountCardsDisplay = () => {
                       Up to 60% off
                     </Imports.ReusableTypography>
                     <Grid container spacing={1} p={1}>
-                      {homeDiscountCardsData?.data
+                      {homeDiscountCardsData && homeDiscountCardsData?.data
                         .slice(index * 4, index * 4 + 4)
                         .map((item, imgIndex) => (
                           <Grid item xs={12} sm={6} md={6} key={imgIndex}>

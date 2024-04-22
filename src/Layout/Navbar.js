@@ -13,6 +13,7 @@ import CartIcon from "./CartIcon";
 import More from "./More";
 import BecomeSeller from "./BecomeSeller";
 import { useNavigate } from "react-router-dom";
+import DropDownData from "./DropDownData";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -89,6 +90,11 @@ const Navbar = () => {
           <Box>
             <BecomeSeller/>
           </Box>
+            
+            <Box>
+              <DropDownData />
+            </Box>
+
           {/* Cart Icon */}
           <Box
             style={{
