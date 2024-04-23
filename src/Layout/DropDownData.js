@@ -10,9 +10,9 @@ const DropDownData = () => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = (item) => {
-        navigate(item)
+    const handleClosed = (item) => {
         setAnchorEl(null);
+        navigate(item)
     };
 
     return(
@@ -26,10 +26,15 @@ const DropDownData = () => {
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
-                onClose={handleClose}
+                onClose={() => handleClosed('')}
             >
-                <MenuItem onClick={() => handleClose('/orderinvoice')}>Order Invoice</MenuItem>
-                <MenuItem onClick={() => handleClose('/ordermanagement')}>Order Management</MenuItem>
+                <MenuItem onClick={() => handleClosed('/orderinvoice')}>Order Invoice</MenuItem>
+                <MenuItem onClick={() => handleClosed('/ordermanagement')}>Order Management</MenuItem>
+                <MenuItem onClick={() => handleClosed('/producttracking')}>Product Tracking</MenuItem>
+                <MenuItem onClick={() => handleClosed('/changedeliveryaddress')}>Change Delivery Address</MenuItem>
+                <MenuItem onClick={() => handleClosed('/changecontactnumber')}>Change Contact Number</MenuItem>
+                <MenuItem onClick={() => handleClosed('/shareorderdetails')}>Share Order Details</MenuItem>
+                <MenuItem onClick={() => handleClosed('/changedate')}>Change Date</MenuItem>
                  
             </Menu>
         </>

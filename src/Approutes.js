@@ -56,6 +56,11 @@ const UpdateUserAccount = React.lazy(() =>
 );
 const OrderInvoice = React.lazy(() => import('./pages/OrderManagementPages/OrderInvoice') )
 const OrderManagement = React.lazy(() => import('./pages/OrderManagementPages/OrderManagement'))
+const ProductTracking = React.lazy(() => import('./pages/OrderManagementPages/ProductTracking'))
+const ChangeDelivery = React.lazy(()=> import('./pages/OrderManagementPages/ChangeDeliveryAddress'))
+const ChangeContact = React.lazy(() => import('./pages/OrderManagementPages/ChangeContactNumber'))
+const ShareOrder = React.lazy(() => import('./pages/OrderManagementPages/ShareOrderDetails'))
+const ChangeDatePage = React.lazy(() => import('./pages/OrderManagementPages/ChangeData'));
 
 const Approutes = () => {
     //   <Suspense
@@ -108,6 +113,11 @@ const Approutes = () => {
             <Route path="/innerproducts" exact element={<InnerProductpage />} />
             <Route path='/orderinvoice' exact element={<OrderInvoice />} />
             <Route path='/ordermanagement' exact element = { <OrderManagement /> } />
+            <Route path='/producttracking' exact element = {<ProductTracking />} />
+            <Route path="/changedeliveryaddress" exact element = {<ChangeDelivery />} />
+            <Route path='/changecontactnumber' exact element = {<ChangeContact />} />
+            <Route path='/shareorderdetails' exact element = {<ShareOrder />} />
+            <Route path='/changedate' exact element = {<ChangeDatePage />} />
            </Routes>
         </Suspense>
       </GoogleOAuthProvider>
