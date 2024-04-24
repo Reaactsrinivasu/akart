@@ -54,7 +54,7 @@ const ProductTracking = () => {
                     </Grid>
                 </Grid>
 
-                <Grid container sx={{ justifyContent: 'center', marginTop: '70px' }}>
+                <Grid container sx={{ justifyContent: 'center', marginTop:{xs:'30px', sm:'70px' }  }}>
                     <Grid item xs={12} md={11} lg={10} sx={{ padding: '20px 0px', backgroundColor: '#FFFFFF', display: { xs: 'block', sm: 'flex' }, borderRadius:'5px' }}>
                         <Grid item xs={12} sm={4} md={2}  >
                             <img src='./assets/imgs/phone1.png' style={{ maxWidth: '100%', height: 'auto' }} />
@@ -117,12 +117,13 @@ const ProductTracking = () => {
                 </Grid>
 
 
-                <Grid container sx={{ justifyContent: 'center', marginTop: '70px' }}>
+                <Grid container sx={{ justifyContent: 'center', marginTop:{xs:'30px', sm:'70px' } }}>
                     <Grid item xs={12} md={11} lg={10} sx={{ padding: '40px 0px', backgroundColor: '#FFFFFF', borderRadius:'5px'}}>
                         <Grid sx={{paddingLeft:'30px'}}>
                             <Typography sx={{fontSize:'18px', fontFamily:'Lato'}}>Help India make good choices</Typography>
                         </Grid>
-                        <Grid sx={{paddingLeft:'30px', marginTop:'10px'}}>
+                        <Grid sx={{paddingLeft:'30px', marginTop:'10px', display:'flex', alignItems:'center'}}>
+                            <img src="./assets/imgs/thumb_Icon.png" style={{width:'30px', height:'30px', marginRight:'10px'}}  />
                             <Typography sx={{fontSize:'18px', color:'#FFA500', fontFamily:'Lato'}}>Did you find this page helpful?›</Typography>
                         </Grid>
                     </Grid>

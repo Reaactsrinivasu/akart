@@ -1,7 +1,7 @@
 import * as React from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Routes, Route } from "react-router-dom";
-import { Suspense, useLayoutEffect } from "react";
+import { Suspense} from "react"
 // import Loader from "./common/Loader";
 const InnerProductpage = React.lazy(() =>
   import("./pages/Products/InnerProducts/InnerProductpage")
@@ -61,6 +61,12 @@ const ChangeDelivery = React.lazy(()=> import('./pages/OrderManagementPages/Chan
 const ChangeContact = React.lazy(() => import('./pages/OrderManagementPages/ChangeContactNumber'))
 const ShareOrder = React.lazy(() => import('./pages/OrderManagementPages/ShareOrderDetails'))
 const ChangeDatePage = React.lazy(() => import('./pages/OrderManagementPages/ChangeData'));
+const NeedHelpPage = React.lazy(() => import('./pages/OrderManagementPages/NeedHelp'));
+const DidYouFindPage = React.lazy(() => import('./pages/OrderManagementPages/DidYouFindThisPage'));
+const TermsOfUsePage = React.lazy(() => import('./pages/OrderManagementPages/TermsOfUse'));
+const PrivacyPolicyPage = React.lazy(() => import('./pages/OrderManagementPages/PrivacyPolicy'));
+const CheckOutPage = React.lazy(() => import('./pages/OrderManagementPages/CheckOut'));
+const CancleOrderPage = React.lazy(() => import('./pages/OrderManagementPages/CancleOrder'));
 
 const Approutes = () => {
     //   <Suspense
@@ -118,6 +124,12 @@ const Approutes = () => {
             <Route path='/changecontactnumber' exact element = {<ChangeContact />} />
             <Route path='/shareorderdetails' exact element = {<ShareOrder />} />
             <Route path='/changedate' exact element = {<ChangeDatePage />} />
+            <Route path='/needhelp' exact element = {<NeedHelpPage />} />
+            <Route path='/didyoufindthispage' exact element = {<DidYouFindPage />} />
+            <Route path='/termsofuse' exact element = {<TermsOfUsePage />} />
+            <Route path='/privacypolicy' exact element = {<PrivacyPolicyPage />} />
+            <Route path='/checkout' exact element = {<CheckOutPage />} />
+            <Route path='/cancleorder' exact element = {<CancleOrderPage />} />
            </Routes>
         </Suspense>
       </GoogleOAuthProvider>

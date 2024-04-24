@@ -17,7 +17,8 @@ import ReusableSlider from "./ReusableSlider";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { useSelector, useDispatch } from "react-redux";
 import { loadHomeYouMayLikeDataInitiate } from "../../../redux/actions/home/getHomeYouMayLikeActions";
-const YouMalyLike = () => {
+const 
+YouMalyLike = () => {
   const dispatch = useDispatch();
   
   const imageData = [

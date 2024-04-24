@@ -2,6 +2,8 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import Layout from "../../Layout/Layout";
 import CloseIcon from '@mui/icons-material/Close';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
+
 
 const OrderInvoice = () => {
     return (
@@ -9,8 +11,9 @@ const OrderInvoice = () => {
             <Layout>
                 <Grid container sx={{ justifyContent: 'center' }}>
                     <Grid item xs={12} sm={10} sx={{ marginTop: '20px', backgroundColor: '#FFFFFF', borderRadius: '5px', }}>
-                        <Grid sx={{ padding: '5px 5px 0px 0px', display: 'flex', justifyContent: 'flex-end' }}>
-                            <CloseIcon sx={{ fontSize: '20px', color: 'grey' }} />
+                        <Grid sx={{ padding: '10px 5px 20px 0px', display: 'flex', justifyContent: 'flex-end', cursor:'pointer' }}>
+                            <FileDownloadIcon sx={{color: 'green', marginRight:'20px' }}  />
+                            <CloseIcon sx={{  color: 'grey' }} />
                         </Grid>
                         <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
                             <Grid item xs={12} md={5.5}>
@@ -48,7 +51,7 @@ const OrderInvoice = () => {
 
                         <Grid container sx={{ marginTop: '50px', justifyContent: 'center' }}>
                             <Grid item xs={12} md={11} sx={{ border: '1px solid #000000' }}>
-                                <Grid sx={{ display: 'flex', backgroundColor:'#D9D9D9', color:'#000000' }}>
+                                <Grid sx={{ display: 'flex', backgroundColor:'#D9D9D9', color:'#000000', }}>
                                     <Grid item xs={1} sx={{ border: '1px solid black', padding:'5px' }}>
                                         <Typography sx={{fontWeight:700, fontSize:'14px', fontFamily:'Lato'}}>SI.NO</Typography>
                                     </Grid>

@@ -35,6 +35,13 @@ const DropDownData = () => {
                 <MenuItem onClick={() => handleClosed('/changecontactnumber')}>Change Contact Number</MenuItem>
                 <MenuItem onClick={() => handleClosed('/shareorderdetails')}>Share Order Details</MenuItem>
                 <MenuItem onClick={() => handleClosed('/changedate')}>Change Date</MenuItem>
+                <MenuItem onClick={() => handleClosed('/needhelp')}>Need Help</MenuItem>
+                <MenuItem onClick={() => handleClosed('/didyoufindthispage')}>Did You Find this Page</MenuItem>
+                <MenuItem onClick={() => handleClosed('/termsofuse')}>Terms of Use</MenuItem>
+                <MenuItem onClick={() => handleClosed('/privacypolicy')}>Privacy Policy</MenuItem>
+                <MenuItem onClick={() => handleClosed('/checkout')}>Check Out</MenuItem>
+                <MenuItem onClick={() => handleClosed('/cancleorder')}>Cancle Order</MenuItem>
+                
                  
             </Menu>
         </>
