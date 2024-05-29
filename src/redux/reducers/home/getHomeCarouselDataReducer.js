@@ -6,7 +6,10 @@ const initialState = {
     loading: false,
   },
 };
-const homeCarouselDataReducer = (state = initialState.loadHomeCarouselData, action) => {
+const homeCarouselDataReducer = (
+  state = initialState.loadHomeCarouselData,
+  action
+) => {
   switch (action.type) {
     case types.LOAD_HOME_CAROUSELDATA_START:
       return {
@@ -14,6 +17,7 @@ const homeCarouselDataReducer = (state = initialState.loadHomeCarouselData, acti
         loading: true,
       };
     case types.LOAD_HOME_CAROUSELDATA_SUCCESS:
+      console.log("action", action);
       return {
         ...state,
         loading: false,

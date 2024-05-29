@@ -6,6 +6,7 @@ export const getApi = async ({endPoints,subEndPoints}) => {
     try {
       const result = await api.get(`${endPoints}?title=${subEndPoints}`);
       resolve(result.data);
+      // resolve(result);
     } catch (error) {
       reject(error);
     }

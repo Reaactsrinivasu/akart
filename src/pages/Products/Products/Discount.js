@@ -10,7 +10,7 @@ const Discount = () => {
   ];
   return (
     <>
-      <ReusableList list={list} title="DISCOUNT" />
+      <ReusableList  list={list} title="DISCOUNT" />
     </>
   );
 };

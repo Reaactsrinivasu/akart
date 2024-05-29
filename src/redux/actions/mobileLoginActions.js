@@ -28,7 +28,8 @@ export const loginWithMobileInitiate = (user, navigate) => {
        localStorage.setItem("token", token);
        dispatch(createLoginWithMobileSuccess(res));
        if (res.status === 200) {
-         navigate("/welcomepage");
+        //  navigate("/welcomepage");
+         navigate("/");
        }
       })
       .catch((error) => dispatch(createLoginWithMobileError(error.message)));

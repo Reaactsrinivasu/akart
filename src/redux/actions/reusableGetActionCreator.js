@@ -29,6 +29,5 @@ const createActionCreators = ({ actionTypes, title }) => {
     }),
   };
 };
-
 export default createActionCreators;
 

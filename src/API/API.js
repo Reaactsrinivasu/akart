@@ -1,6 +1,7 @@
 import axios from "axios";
 import { STATUS_CODE, BASE_URL } from "./Constants";
 import { toast } from "react-toastify";
+import { WindowSharp } from "@mui/icons-material";
 // Request Methods
 const METHOD = {
   GET: "get",
@@ -70,7 +71,7 @@ class API {
       axiosConfig.method = method;
       axiosConfig.url = this.baseURL + url;
       axiosConfig.headers = this.setHeaders(data);
-       console.log("axiosConfig.headers", axiosConfig.headers);
+      //  console.log("axiosConfig.headers", axiosConfig.headers);
       if (data) {
         // if (data) axiosConfig.params = data;
         if (data) axiosConfig.data = data;
@@ -87,7 +88,7 @@ class API {
             // resolve(response.data);  
             resolve(response);
             if (response) {
-              console.log('response', response);
+              // console.log('response', response);
               toast.success(response.data?.messages); 
             }
             // else if (response.status === 200) {

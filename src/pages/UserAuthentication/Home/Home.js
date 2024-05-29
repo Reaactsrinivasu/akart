@@ -19,12 +19,28 @@ const Home = () => {
         <CssBaseline />
         <Box>
           <Box component="main" sx={{ padding: "5px" }}>
-            <Carousel />
-            <GrandGlobalBrands />
-            <ShopByCategory />
-            <DiscountCardsDisplay />
-            <TodaysDeals />
-            <YouMalyLike />
+            <Box sx={{ margin: "10px 0px" }}>
+              <Carousel />
+            </Box>
+            <Box sx={{ margin: "20px 0px" }}>
+              <GrandGlobalBrands />
+            </Box>
+            <Box sx={{ margin: "20px 0px" }}>
+              {" "}
+              <ShopByCategory />
+            </Box>
+            <Box sx={{ margin: "20px 0px" }}>
+              {" "}
+              <DiscountCardsDisplay />
+            </Box>
+            <Box sx={{ margin: "20px 0px" }}>
+              {" "}
+              <TodaysDeals />
+            </Box>
+            <Box sx={{ margin: "20px 0px" }}>
+              {" "}
+              {/* <YouMalyLike /> */}
+            </Box>
           </Box>
         </Box>
       </Layout>

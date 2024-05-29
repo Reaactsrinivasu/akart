@@ -50,9 +50,9 @@ let theme = createTheme({
       // default: "#f3f6f999",
       default: "#f1f3f6",
     },
-    primary: {
-      main: "#FF5733", // Your primary color
-    },
+    // primary: {
+    //   main: "#FF5733", // Your primary color
+    // },
     secondary: {
       main: "#FF4081", // Your secondary color
     },
@@ -138,7 +138,7 @@ let theme = createTheme({
 });
 // let theme = createTheme();
 theme = responsiveFontSizes(theme);
-console.log("theme", theme);
+// console.log("theme", theme);
 root.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />

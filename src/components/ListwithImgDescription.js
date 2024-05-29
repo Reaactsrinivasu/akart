@@ -22,7 +22,7 @@ const ReusableListwithImgDescription = (props) => {
     const toggleShowAll = () => {
       setShowAll(!showAll);
     };
-    console.log(props);
+    // console.log(props);
    return (
      <>
        {/* <Box sx={{ pl: 0, pt: 0, pb: 0 }}> */}

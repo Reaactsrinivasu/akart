@@ -15,7 +15,8 @@ const BecomeSeller = () => {
         fontSize: "20px",
       }}
     >
-      Become a Seller
+      {/* Become a Seller */}
+      Products
     </Typography>
   );
 }

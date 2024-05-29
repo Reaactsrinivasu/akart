@@ -56,7 +56,13 @@ const Footer = () => {
   const theme = useTheme();
   return (
     <FooterContainer>
-      <Container maxWidth="xlg" sx={{ bgcolor: "#F39221" }}>
+      <Container
+        maxWidth="xlg"
+        sx={{
+          // bgcolor: "#fb8c00",
+          bgcolor: "#90caf9",
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <FooterItem>
@@ -152,7 +158,7 @@ const Footer = () => {
                   </Typography>
 
                   <img
-                    src="assets/imgs/googleFooterIcon.png"
+                    src="/assets/imgs/googleFooterIcon.png"
                     alt="1"
                     width="211px"
                     height="58px"
@@ -161,7 +167,7 @@ const Footer = () => {
                   />
 
                   <img
-                    src="assets/imgs/appleFooterIcon.png"
+                    src="/assets/imgs/appleFooterIcon.png"
                     alt="1"
                     width="211px"
                     height="58px"
@@ -207,7 +213,7 @@ const Footer = () => {
                     }}
                   >
                     <img
-                      src="assets/imgs/original.png"
+                      src="/assets/imgs/original.png"
                       alt="1"
                       loading="lazy"
                       width="100px"
@@ -240,7 +246,7 @@ const Footer = () => {
                     }}
                   >
                     <img
-                      src="assets/imgs/calender.png"
+                      src="/assets/imgs/calender.png"
                       alt="1"
                       loading="lazy"
                       width="100px"
@@ -270,7 +276,6 @@ const Footer = () => {
           display="flex"
           flexDirection="row"
           justifyContent="space-between"
-          
         >
           <Grid item xs={12} sm={4} md={4}>
             <Typography variant="h4">

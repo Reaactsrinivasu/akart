@@ -16,6 +16,17 @@ import homeShopByCategoryDataReducer from "./home/getHomeShopByCategoryReducer";
 import homeYouMayLikeDataReducer from "./home/getHomeYouMayLikeReducer";
 import homeTodayDealsDataReducer from "./home/getHomeTodayDealsReducer";
 import homeDiscountCardsDataReducer from "./home/getHomeDiscountCardsReducer";
+// product page reducers
+import productDataReducer from "./Product/getProductWtihSubCategoryReducer";
+// inner product page reducers
+import innerProductDataReducer from "./InnerProduct/getInnerProductWithIdReducer";
+// wishlist page reducer
+import wishListDataReducer from "./wishList/wishListDataReducer";
+// add to cart data
+import addProductToCartDataReducer from "./addToCart/addToCartDataReducer";
+// save for later data
+import saveProductForLaterDataReducer from "./saveProductLater/saveProductLaterDataReducer";
+
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
@@ -34,5 +45,15 @@ const rootReducer = combineReducers({
   homegrandglobaldata: homeGrandGlobalDataReducer,
   homediscountcardsdata: homeDiscountCardsDataReducer,
   homeshopbycategorydata: homeShopByCategoryDataReducer,
+  // product page data
+  productdata: productDataReducer,
+  // innerproduct page data
+  innerproductdata: innerProductDataReducer,
+  // wishlist page data
+  wishlistdata: wishListDataReducer,
+  // add to cart page data
+  addtocartdata: addProductToCartDataReducer,
+  // save for later data
+  saveforlaterdata: saveProductForLaterDataReducer,
 });
 export default rootReducer;
