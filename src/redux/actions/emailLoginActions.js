@@ -30,7 +30,8 @@ export const loginWithEmailInitiate = (user, navigate) => {
         localStorage.setItem("token", token);
         dispatch(createLoginWithEmailIdSuccess(res));
         if (res.status === 200) {
-          navigate("/welcomepage");
+          // navigate("/welcomepage");
+          navigate("/");
         }
       })
       .catch((error) => dispatch(createLoginWithEmailIdError(error.message)));

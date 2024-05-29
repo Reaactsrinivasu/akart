@@ -1,73 +1,52 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 // // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
+import { Link } from "react-router-dom";
 // import required modules
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Imports from "../../../common/Imports";
 import { getHomeGrandGlobalDataInitiate } from "../../../redux/actions/home/getHomeGrandGlobalActions";
+import { Category } from "@mui/icons-material";
+import { Box, textFieldClasses, IconButton } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 const GrandGlobalBrands = () => {
   const dispatch = useDispatch();
- 
-  const imageData = [
-    {
-      img: "assets/imgs/glb-5.jpg",
-      discount: "UpTo 40% Off",
-      product: "Hottest Pairs",
-    },
-    {
-      img: "assets/imgs/glb-6.jpg",
-      discount: "UpTo 30% Off",
-      product: "Stunning Footwear",
-    },
-    {
-      img: "assets/imgs/glb-7.jpg",
-      discount: "UpTo 15% Off",
-      product: "Sneakers & More",
-    },
-    {
-      img: "assets/imgs/glb-5.jpg",
-      discount: "UpTo 40% Off",
-      product: "Laid back styles",
-    },
-    {
-      img: "assets/imgs/glb-6.jpg",
-      discount: "UpTo 30% Off",
-      product: "Fitty Pairs",
-    },
-    {
-      img: "assets/imgs/glb-7.jpg",
-      discount: "UpTo 15% Off",
-      product: "Big deal day",
-    },
-  ];
-
-  // const queryString = contentNames
-  //   .map((name, index) => `content_name[]=${name}`)
-  //   .join("&");
-
+  const navigate = Imports.useNavigate();
   useEffect(() => {
     dispatch(getHomeGrandGlobalDataInitiate());
   }, [dispatch]);
-  const grandGlobalData = useSelector((state) => state.homegrandglobaldata?.data);
+  const grandGlobalData = useSelector((state) => state.homegrandglobaldata?.data?.data);
   const homeGrandGlobalData = grandGlobalData?.data;
-  // console.log("homeGrandGlobalData", homeGrandGlobalData);
+  console.log("homeGrandGlobalData", homeGrandGlobalData);
+  const getProductHandler = (item) => {
+    //  localStorage.setItem("sub_category", item);
+    // console.table('redirecting grand global product page',item);
+    if (item) {
+      navigate(
+        `/products/sub_category_filter?sub_category_name=${item}`,
+      );
+    }
+  }
   return (
     <>
       <Imports.ReusableBox
         sx={{
-          mt: 1,
-          backgroundColor: "#f3f6f999",
+          // mt: 1,
+          // backgroundColor: "#f3f6f999",
+          backgroundColor: "#FFFFFF",
           width: "100%",
-          height: "auto",
-          padding: "30px",
-          marginBottom: "1px",
+          padding: "10px",
+          // height: "auto",
+          // padding: "30px",
+          // marginBottom: "1px",
         }}
       >
         <Imports.ReusableTypography
@@ -90,7 +69,7 @@ const GrandGlobalBrands = () => {
               },
               // Large devices (lg)
               1024: {
-                slidesPerView: 3,
+                slidesPerView: 4,
                 //   autoplay: false,
               },
               // Medium devices (md)
@@ -113,7 +92,7 @@ const GrandGlobalBrands = () => {
             loop={true}
             navigation={true}
             // watchSlidesProgress={true}
-            modules={[Navigation, Autoplay]}
+            // modules={[Navigation, Autoplay]}
             className="mySwiper3"
             style={{
               "--swiper-navigation-size": "10px", // Set the size you desire
@@ -127,18 +106,29 @@ const GrandGlobalBrands = () => {
                   <Imports.ReusableBox
                     // elevation={1}
                     sx={{
-                      margin: "2px",
+                      // marginLeft: "0px",
                       backgroundColor: "#FFFFFF",
-                      borderRadius: "8px",
+                      // borderRadius: "8px",
                       marginBottom: "50px",
-                      border: "1px solid #9e9e9e",
+                      // border: "1px solid #9e9e9e",
+                      border: "1px solid",
+                      borderColor: "divider",
+                      borderRadius: "5px",
+                      cursor: "pointer",
                       transition: "box-shadow 0.3s",
                       "&:hover": {
                         // boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
-                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                       },
                     }}
                   >
+                    {/* <Link
+                      style={{
+                        textDecoration: "none",
+                      }}
+                      // to={params.category=item.sub_category}
+                      // to={`/product/sub_category_filter?sub_category_name=${item.sub_category}`}
+                    > */}
                     <Imports.Box
                       sx={{
                         display: "flex",
@@ -147,28 +137,35 @@ const GrandGlobalBrands = () => {
                         alignItems: "center",
                         marginBottom: "30px",
                       }}
-                    >
-                      <img
-                        src={item?.content_image_id[0]}
+                    >                      
+                      <Box
+                        component="img"
+                        // src={item?.content_image_id[0]}
+                        src={item?.content_image_id[1]}
                         // src={item.img}
                         alt=""
-                        width={"70%"}
-                        height={"70%"}
+                        // width={"70%"}
+                        // height={"70%"}
                         loading="lazy"
+                        style={{ width: "100%", height: "100%" }}
+                        onClick={() => {
+                          getProductHandler(item.sub_category);
+                        }}
                       />
                       <Imports.ReusableTypography
                         variant="h6"
-                        sx={{ fontWeight: 500 }}
+                        sx={{ fontWeight: 500, color: "#222" }}
                       >
                         {item.description}
                       </Imports.ReusableTypography>
                       <Imports.ReusableTypography
-                        variant="h4"
-                        sx={{ fontWeight: "bold" }}
+                        variant="h5"
+                        sx={{ fontWeight: "bold", color: "green" }}
                       >
                         {item.discount}
                       </Imports.ReusableTypography>
                     </Imports.Box>
+                    {/* </Link> */}
                   </Imports.ReusableBox>
                 </SwiperSlide>
               ))}

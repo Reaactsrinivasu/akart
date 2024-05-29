@@ -56,7 +56,6 @@ const ProductsPage = () => {
                   Showing 1 – 24 of 749 results for "new launch Laptop"
                 </Typography>
                 <Divider variant="fullWidth" />
-
                 <ProductsDisplay />
               </Box>
             </Grid>

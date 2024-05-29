@@ -9,7 +9,7 @@ export const loadGrandGlobalDataSuccess = (data) => {
     type: types.LOAD_HOME_GRAND_GLOBAL_DATA_SUCCESS,
     payload: data,
   };
-  console.log("data:", data); // Log the action
+  // console.log("data:", data); // Log the action
   return action;
 };
 export const loadGrandGlobalDataError = (error) => ({
@@ -24,6 +24,8 @@ export const getHomeGrandGlobalDataInitiate = (user, navigate) => {
     loadHomeGrandGlobalDataApi()
       .then((res) => {
         console.log(res);
+        // console.log('res action type checking --------',loadGrandGlobalDataSuccess(res));
+
         dispatch(loadGrandGlobalDataSuccess(res));
       })
       .catch((error) => dispatch(loadGrandGlobalDataError(error.message)));

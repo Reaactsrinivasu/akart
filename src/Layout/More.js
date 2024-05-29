@@ -7,7 +7,7 @@ const More = () => {
         sx={{
           color: "blue",
           fontWeight: "bold",
-          color: "#ff7e00",
+          // color: "#ff7e00",
             marginLeft: "20px",
           fontSize:'20px'
         }}

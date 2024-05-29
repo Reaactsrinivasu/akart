@@ -23,3 +23,4 @@ export const initiateLoadCarouselData = createInitiator(
 //   endPoints: "contents",
 //   subEndPoints: "home_carousel_data",
 // });
+initiateLoadCarouselData(apiTerms);

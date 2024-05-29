@@ -17,13 +17,15 @@
 //   };
 // };
 const createInitiator = (actionCreators, apiCall, title) => {
-  console.log("actionCreators", title, actionCreators);
+  // console.log("actionCreators", title, actionCreators);
+  
   return (user, navigate) => {
     return function (dispatch) {
       dispatch(actionCreators[`${title}Start`]()); // Start action
       apiCall()
         .then((res) => {
-          // console.log(title, "res", res.data);
+          // console.log("res in get initiate", title, res.data);
+          console.log("action types ", actionCreators[`${title}Success`](res));
           dispatch(actionCreators[`${title}Success`](res)); // Success action
         })
         .catch((error) => {

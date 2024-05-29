@@ -1,6 +1,7 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef, useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 // // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,87 +11,34 @@ import { useSelector, useDispatch } from "react-redux";
 import { FreeMode, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Imports from "../../../common/Imports";
 import { loadHomeTodayDealsDataInitiate } from "../../../redux/actions/home/getHomeTodayDealsActions";
+import { Box } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 const TodaysDeals = () => {
     const dispatch = useDispatch();
-  const imageData = [
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Storite",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Storite",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Puma",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers from Top Brands",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Storite",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Storite",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Puma",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers from Top Brands",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Puma",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-    {
-      img: "assets/imgs/todayImg-2.jpg",
-      description: "Best offers on Puma",
-      discount: "UpTo 15% Off",
-      subdec: "Limited Time Deal",
-    },
-  ];
+    const navigate = useNavigate();
   useEffect(() => {
     dispatch(loadHomeTodayDealsDataInitiate());
   }, [dispatch]);
   const homeTodayDealsData = useSelector(
-    (state) => state.hometodaydealsdata?.data?.data
+    (state) => state.hometodaydealsdata?.data?.data?.data || []
   );
-  console.log("homeTodayDealsData", homeTodayDealsData);
+ const getProductHandler = (item) => {
+   if (item) {
+     navigate(`/products/sub_category_filter?sub_category_name=${item}`);
+   }
+ };
   return (
     <>
       <Imports.ReusableBox
         sx={{
           mt: 1,
-          backgroundColor: "#f3f6f999",
+          backgroundColor: "#FFFFFF",
           width: "100%",
-          height: "auto",
-          padding: "30px",
-          marginBottom: "1px",
+          padding: "10px",
         }}
       >
         <Imports.ReusableTypography
@@ -105,15 +53,15 @@ const TodaysDeals = () => {
             // onSwiper={setThumbsSwiper}
             // loop={true}
             spaceBetween={10}
-            slidesPerView={4}
+            slidesPerView={6}
             breakpoints={{
               1440: {
-                slidesPerView: 4,
+                slidesPerView: 6,
                 // autoplay: false,
               },
               // Large devices (lg)
               1024: {
-                slidesPerView: 3,
+                slidesPerView: 4,
                 //   autoplay: false,
               },
               // Medium devices (md)
@@ -136,59 +84,81 @@ const TodaysDeals = () => {
             loop={true}
             navigation={true}
             // watchSlidesProgress={true}
-            modules={[Navigation, Autoplay]}
+            // modules={[Navigation, Autoplay]}
             className="mySwiper3"
             style={{
               "--swiper-navigation-size": "10px", // Set the size you desire
             }}
           >
-            {homeTodayDealsData?.data.map(
-              (item, index) => (
-                (
-                  <SwiperSlide key={index}>
-                    <Imports.ReusableBox
-                      // elevation={1}
+            {/* {homeTodayDealsData?.data.map( */}
+            {homeTodayDealsData &&
+              homeTodayDealsData?.data?.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <Imports.ReusableBox
+                    // elevation={1}
+                    sx={{
+                      backgroundColor: "#FFFFFF",
+                      borderRadius: "8px",
+                      marginBottom: "20px",
+                      border: "1px solid",
+                      borderColor: "divider",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      transition: "box-shadow 0.3s",
+                      "&:hover": {
+                        // boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                        // boxShadow: "0 2px 5px 0 rgba(213,217,217,.5)",
+                      },
+                    }}
+                  >
+                    <Imports.Box
                       sx={{
-                        margin: "2px",
-                        backgroundColor: "#FFFFFF",
-                        borderRadius: "8px",
-                        marginBottom: "50px",
-                        border: "1px solid #9e9e9e",
-                        transition: "box-shadow 0.3s",
-                        "&:hover": {
-                          // boxShadow: "0px 8px 8px rgba(0, 0, 0, 0.1)",
-                          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-                        },
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginBottom: "30px",
+                        paddingTop: "10px",
                       }}
                     >
-                      <Imports.Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          marginBottom: "30px",
-                          paddingTop: "10px",
-                        }}
-                      >
-                        <img
-                          src={item?.content_image_id[0]}
-                          alt=""
-                          width={"50%"}
-                          height={"50%"}
-                          loading="lazy"
+                      {/* <IconButton>
+                        <FavoriteOutlinedIcon
+                          disableRipple
+                          sx={{
+                            position: "absolute",
+                            zIndex: 1,
+                            left: "76px",
+                            top: "2px",
+                            color: "#c2c2c2",
+                            width: "30px",
+                            height: "30px",
+                          }}
                         />
-                      </Imports.Box>
-
-                      <Imports.Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "center",
-                          gap: "20px",
+                      </IconButton> */}
+                      <Box
+                        component="img"
+                        // src={item?.content_image_id[0]}
+                        src={item?.content_image_id[2]}
+                        // src={item.img}
+                        alt=""
+                        loading="lazy"
+                        style={{ width: "94%", height: "11rem" }}
+                        onClick={() => {
+                          getProductHandler(item.sub_category);
                         }}
-                      >
-                        {/* <Imports.Link
+                      />
+                    </Imports.Box>
+                    <Imports.Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "10px",
+                      }}
+                    >
+                      {/* <Imports.Link
                       component="button"
                       variant="body2"
                       underline="none"
@@ -204,51 +174,58 @@ const TodaysDeals = () => {
                     >
                       {item.discount}
                     </Imports.Link> */}
-                        <Imports.Button
-                          variant="contained"
-                          sx={{
-                            height: "25px",
-                            color: "#FFFCFC",
+                      <Imports.Button
+                        variant="contained"
+                        sx={{
+                          padding: "5px 10px",
+                          // height: "25px",
+                          color: "#FFFCFC",
+                          bgcolor: "#FFA500",
+                          borderColor: "#2C7E34",
+                          textDecoration: "none",
+                          textTransform: "none",
+                          borderRadius: "8px",
+                          fontSize: "10px",
+                          whiteSpace: "nowrap",
+                          // boxShadow: "0 2px 5px 0 rgba(213,217,217,.5)",
+                          "&:hover": {
                             bgcolor: "#FFA500",
-                            borderColor: "#2C7E34",
-                            textDecoration: "none",
-                            textTransform: "none",
-                            borderRadius: "6px",
-                            fontSize: "12px",
-                            whiteSpace: "nowrap",
-                            "&:hover": {
-                              bgcolor: "#FFA500",
-                            },
-                          }}
-                        >
-                          {item.discount}
-                        </Imports.Button>
-                        <Imports.ReusableTypography
-                          component="span"
-                          sx={{ color: "#FFA500"}}
-                        >
-                          {item.data}
-                        </Imports.ReusableTypography>
-                      </Imports.Box>
-                      <Imports.Box
-                        sx={{ display: "flex", justifyContent: "left" }}
+                            boxShadow: "0 2px 5px 0 rgba(213,217,217,.5)",
+                          },
+                        }}
                       >
-                        <Imports.ReusableTypography
-                          variant="body1"
-                          sx={{
-                            fontWeight:'bold',
-                            padding: 2,
-                            marginLeft: "5px",
-                          }}
-                        >
-                          {item.description}
-                        </Imports.ReusableTypography>
-                      </Imports.Box>
-                    </Imports.ReusableBox>
-                  </SwiperSlide>
-                )
-              )
-            )}
+                        {item.discount}
+                      </Imports.Button>
+                      <Imports.ReusableTypography
+                        // component="span"
+                        variant="subtitle2"
+                        sx={{ color: "#FFA500" }}
+                      >
+                        {item.data}
+                      </Imports.ReusableTypography>
+                    </Imports.Box>
+                    <Imports.Box
+                      sx={{ display: "flex", justifyContent: "left" }}
+                    >
+                      <Imports.ReusableTypography
+                        variant="body1"
+                        sx={{
+                          width: "auto",
+                          fontWeight: "bold",
+                          padding: 2,
+                          marginLeft: "5px",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          color: "blue",
+                        }}
+                      >
+                        {item.description}
+                      </Imports.ReusableTypography>
+                    </Imports.Box>
+                  </Imports.ReusableBox>
+                </SwiperSlide>
+              ))}
           </Swiper>
         </Imports.ReusableGrid>
       </Imports.ReusableBox>
