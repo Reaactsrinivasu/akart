@@ -4,7 +4,10 @@ import { Routes, Route } from "react-router-dom";
 import { Suspense, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 // import Loader from "./common/Loader";
-
+const PaymementStatus = React.lazy(() =>
+  import("./pages/Payments/PaymementStatus")
+);
+const CheckoutPage = React.lazy(() => import("./pages/Payments/CheckoutPage"));
 const Payments = React.lazy(() =>
   import("./pages/Payments/Payments")
 );
@@ -116,21 +119,23 @@ const Approutes = () => {
               element={<PasswordRecoveryWithMobile />}
             />
             <Route path="/updatepassword" exact element={<UpdatePassword />} />
-            <Route
-              path='products/:category'
-              exact
-              element={<Products />}
-            />
+            <Route path="products/:category" exact element={<Products />} />
             {/* <Route path="innerproducts/:category/:id" exact element={<InnerProductpage />} /> */}
             {/* <Route path='innerproducts/:product_name' exact element={<InnerProductpage />} /> */}
-            <Route path='innerproducts/:link_name' exact element={<InnerProductpage />} />
+            <Route
+              path="innerproducts/:link_name"
+              exact
+              element={<InnerProductpage />}
+            />
             {/* <Route path='innerproducts/:category/:product_id' exact element={<InnerProductpage />} /> */}
             <Route path="/wishlist" exact element={<WishList />} />
             <Route path="/addtocart" exact element={<AddtoCart />} />
             <Route path="/myprofile" exact element={<MyProfile />} />
             <Route path="/orders" exact element={<Orders />} />
             <Route path="/vieworders" exact element={<ViewOrder />} />
+            <Route path="/checkout" exact element={<CheckoutPage />} />
             <Route path="/payments" exact element={<Payments />} />
+            <Route path="/paymentstatus" exact element={<PaymementStatus />} />
           </Routes>
         </Suspense>
       </GoogleOAuthProvider>

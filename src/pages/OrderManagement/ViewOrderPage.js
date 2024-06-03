@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -14,15 +16,33 @@ import {
 } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
-import {useNavigate} from "react-router-dom";
-import ReusableOpenOrdersList from '../../components/OpenOrdersList';
+// import { useNavigate } from "react-router-dom";
+import ReusableOpenOrdersList from "../../components/OpenOrdersList";
 import CloseIcon from "@mui/icons-material/Close";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import ReusableLink from '../../components/Link';
+import ReusableLink from "../../components/Link";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
-import { Navigate } from 'react-router-dom';
-const OrderDetails = () => {
+import { Navigate } from "react-router-dom";
+const ViewOrderDetails = (data) => {
+  const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const viewOrderData = location?.state;
+  console.log("view order details", viewOrderData);
+  const {
+    actual_price,
+    created_at,
+    discount,
+    discount_price,
+    id,
+    product_id,
+    product_images_urls,
+    product_name,
+    quantity,
+    status,
+    updated_at
+  } = viewOrderData;
+  let shippingCost = 100.0;
   return (
     <>
       <Box
@@ -102,16 +122,19 @@ const OrderDetails = () => {
                         }}
                       >
                         <Typography variant="h4" color="text.secondary">
-                          Items Subtotal : 12,000.00
+                          {/* Items Subtotal : 12,000.00 */}
+                          Items Subtotal : {discount_price}
                         </Typography>
                         <Typography variant="h4" color="text.secondary">
-                          Shipping Cost :100.00
+                          {/* Shipping Cost :100.00 */}
+                          Shipping Cost :{shippingCost}
                         </Typography>
                         <Typography variant="h4" color="text.secondary">
-                          Total :12100.00
+                          Total :{actual_price - discount_price}
                         </Typography>
                         <Typography variant="h4" color="text.secondary">
-                          Grand Total :121000.00
+                          Grand Total :
+                          {shippingCost + actual_price - discount_price}
                         </Typography>
                       </Box>
                     </Grid>
@@ -168,8 +191,8 @@ const OrderDetails = () => {
                     fontSize: "18px",
                     fontWeight: "bold",
                   }}
-                  primary="Delivered"
-                  secondary="On Wed, 19th Jan 2024"
+                  primary={status}
+                  secondary={updated_at}
                   p={2}
                 />
                 {/* <KeyboardArrowRightIcon /> */}
@@ -177,8 +200,9 @@ const OrderDetails = () => {
               <Grid container spacing={1} p={3}>
                 <Grid item xs={12} sm={12} md={3} p={1}>
                   <img
-                    src="assets/imgs/phone-2.png"
-                    alt=""
+                    // src="assets/imgs/phone-2.png"
+                    src={product_images_urls[0]}
+                    alt="2"
                     style={{
                       width: "70%",
                       height: "auto",
@@ -190,7 +214,7 @@ const OrderDetails = () => {
                   <Grid container p={2} spacing={0} mt={0}>
                     <Grid item xs={12} sm={12} md={12} p={1}>
                       <Typography variant="h4" sx={{ fontWeight: 600 }}>
-                        ONEPLUS 12R Lite PRO
+                        {product_name}
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} p={1}>
@@ -206,7 +230,7 @@ const OrderDetails = () => {
                         variant="h4"
                         sx={{ color: "#6B6767", fontWeight: 600 }}
                       >
-                        Sale PRICE : 1,30,000/-
+                        Sale PRICE : {discount_price}/-
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} p={1}>
@@ -214,7 +238,7 @@ const OrderDetails = () => {
                         variant="h6"
                         sx={{ color: "#6B6767", fontWeight: 600 }}
                       >
-                        Exchange/Return Window closed on wed,19 Jan 2024
+                        Exchange/Return Window closed on {updated_at}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -227,4 +251,4 @@ const OrderDetails = () => {
     </>
   );
 };
-export default OrderDetails;
+export default ViewOrderDetails;

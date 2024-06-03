@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Grid, Typography, Divider, IconButton } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Radio from "@mui/material/Radio";
@@ -13,10 +15,17 @@ import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
 const PaymentOptions = () => {
-    const [selectedValue, setSelectedValue] = useState("");
-    const handleChange = (event) => {
-      setSelectedValue(event.target.value);
-    };
+  const navigate = useNavigate();
+  const [selectedValue, setSelectedValue] = useState("");
+  const [disable, setDisable] = useState(false);
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const radioButtonHandler = (event) => {
+    const newValue = event.target.value;
+    setSelectedValue(newValue);
+  };
   const imageList = [
     { img: "assets/imgs/visa.png" },
     { img: "assets/imgs/rupay.png" },
@@ -32,23 +41,23 @@ const PaymentOptions = () => {
     ...theme.typography.body2,
     //   textAlign: "center",
   }));
-    const TextLink = ({ title }) => {
-      return (
-        <ReusableLink
-          variant="subtitle2"
-          underline="none"
-          sx={{
-            cursor: "pointer",
-            color: "blue",
-            // m: 3,
-            transition: "0.3s",
-            fontWeight: 500,
-          }}
-        >
-          {title}
-        </ReusableLink>
-      );
-    };
+  const TextLink = ({ title }) => {
+    return (
+      <ReusableLink
+        variant="subtitle2"
+        underline="none"
+        sx={{
+          cursor: "pointer",
+          color: "blue",
+          // m: 3,
+          transition: "0.3s",
+          fontWeight: 500,
+        }}
+      >
+        {title}
+      </ReusableLink>
+    );
+  };
   return (
     <>
       <DemoPaper variant="outlined">
@@ -67,6 +76,7 @@ const PaymentOptions = () => {
                   value="Credit or debit card"
                   control={
                     <Radio
+                      disabled
                       sx={{
                         color: "blue",
                         "& .MuiSvgIcon-root": {
@@ -98,14 +108,14 @@ const PaymentOptions = () => {
                 pl={7}
               >
                 {imageList?.map((item, index) => (
-                    <img
-                      key={index}
-                      src={item.img}
-                      alt="1"
-                      width="6%"
-                      height="40%"
-                      style={{ objectFit: "cover" }}
-                    />
+                  <img
+                    key={index}
+                    src={item.img}
+                    alt="1"
+                    width="6%"
+                    height="40%"
+                    style={{ objectFit: "cover" }}
+                  />
                 ))}
               </Stack>
               {selectedValue ? (
@@ -156,6 +166,7 @@ const PaymentOptions = () => {
                   value="Net Banking"
                   control={
                     <Radio
+                      disabled
                       sx={{
                         color: "blue",
                         "& .MuiSvgIcon-root": {
@@ -207,6 +218,7 @@ const PaymentOptions = () => {
                     value="Other UPI Apps"
                     control={
                       <Radio
+                        disabled
                         sx={{
                           color: "blue",
                           "& .MuiSvgIcon-root": {
@@ -242,6 +254,7 @@ const PaymentOptions = () => {
                     value="EMI Availability Why ?"
                     control={
                       <Radio
+                        disabled
                         sx={{
                           color: "blue",
                           "& .MuiSvgIcon-root": {
@@ -270,13 +283,18 @@ const PaymentOptions = () => {
                 <RadioGroup
                   aria-labelledby="demo-radio-buttons-group-label"
                   //   defaultValue="Cash on delivery/Pay on delivery"
-                  name="radio-buttons-group"
+                  // name="radio-buttons-group"
                   sx={{ padding: "15px 30px 8px" }}
+                  aria-label="payment method"
+                  name="paymentMethod"
+                  value={selectedValue}
+                  onChange={radioButtonHandler}
                 >
                   <FormControlLabel
                     value="Cash on delivery/Pay on delivery"
                     control={
                       <Radio
+                        onChange={radioButtonHandler}
                         sx={{
                           color: "blue",
                           "& .MuiSvgIcon-root": {
@@ -318,9 +336,11 @@ const PaymentOptions = () => {
                 }}
               >
                 <Box
+                  onClick={() => navigate("/paymentstatus")}
                   component="button"
+                  disabled={selectedValue === ""}
                   sx={{
-                    backgroundColor: "#ff9f00",
+                    backgroundColor: selectedValue ? "#ff9f00" : "disable",
                     border: "1px solid #ff9f00",
                     fontWeight: "bold",
                     fontSize: "13px",

@@ -16,8 +16,11 @@ const AddtoCartPriceDetails = ({paymentData}) => {
         <UserDisplayInAddtoCart />
       </Box> */}
       <Box sx={{ width: "100%", height: "100%", backgroundColor: "#FFFFFF" }}>
-        <Grid container gap={2} p={1} mt={0.5}>
+        <Grid container gap={3} p={2} mt={0.1}>
           <Typography textAlign="left">PRICE DETAILS</Typography>
+          <Divider
+            sx={{ width: "100%", borderBottomWidth: 1, borderColor: "#111" }}
+          />
           <Grid item xs={12} sm={12} md={12}>
             <Box
               sx={{
@@ -53,7 +56,7 @@ const AddtoCartPriceDetails = ({paymentData}) => {
               }}
             >
               <Typography textAlign="left">Delivery Charges</Typography>
-              <Typography textAlign="left">₹{deliveryCharges}</Typography>
+              <Typography textAlign="left">+ ₹{deliveryCharges}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -65,9 +68,14 @@ const AddtoCartPriceDetails = ({paymentData}) => {
               }}
             >
               <Typography textAlign="left">Secured Package Fee</Typography>
-              <Typography textAlign="left">₹{securedPackageCharges}</Typography>
+              <Typography textAlign="left">
+                + ₹{securedPackageCharges}
+              </Typography>
             </Box>
           </Grid>
+          <Divider
+            sx={{ width: "100%", borderBottomWidth: 1, borderColor: "#111" }}
+          />
           <Grid item xs={12} sm={12} md={12}>
             <Box
               sx={{
@@ -76,11 +84,22 @@ const AddtoCartPriceDetails = ({paymentData}) => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography textAlign="left">Total Amount</Typography>
-              <Typography textAlign="left">₹{ }</Typography>
+              <Typography variant="h5" textAlign="left" fontWeight="bold">
+                Total Amount
+              </Typography>
+              <Typography variant="h5" textAlign="left" fontWeight="bold">
+                ₹
+                {deliveryCharges +
+                  securedPackageCharges +
+                  totalActualPrice -
+                  totalDiscountPrice}
+              </Typography>
             </Box>
           </Grid>
-          {/* <Divider variant="fullWidth" /> */}
+          <Divider
+            sx={{ width: "100%", borderBottomWidth: 1, borderColor: "#111" }}
+          />
+          <Divider variant="fullWidth" />
         </Grid>
       </Box>
     </>

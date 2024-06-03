@@ -12,7 +12,6 @@ import InnerComparingProducts from "./InnerComparingProducts";
 import InnerProductRatingAndReviews from "./InnerProductRatingAndReviews";
 const InnerProductDetails = () => {
   const navigate = useNavigate();
-
   return (
     <>
       <Box sx={{ p: 0.5 }}>
@@ -25,7 +24,7 @@ const InnerProductDetails = () => {
           }}
         >
           {/* Magnifier component  */}
-            <InnerProductMagnifier />
+            {/* <InnerProductMagnifier /> */}
           {/* Comparing Products  */}
           <InnerComparingProducts/>
           {/* Rating Reviews */}
