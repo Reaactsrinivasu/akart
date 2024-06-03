@@ -84,19 +84,17 @@ class API {
           ) {
             toast.error("Something went wrong!!");
           } else {
-            // resolve(response.data);  
+            // resolve(response.data);
             resolve(response);
             if (response) {
               // console.log('response', response);
-              // stopping this 
-              // toast.success(response.data?.messages); 
-              // stopping above
+              toast.success(response.data?.messages);
             }
             // else if (response.status === 200) {
-            //   toast.success(response.data?.message); 
+            //   toast.success(response.data?.message);
             // }
             // else {
-            //   toast.success("Something went wrong"); 
+            //   toast.success("Something went wrong");
             // }
           }
           // console.log("response", response);
@@ -130,30 +128,28 @@ class API {
           // if (error.response.data?.email[0] === 'has already been taken') {
           // toast.error(`email ${error.response.data?.email[0]}`);
           // }
-          // stopping from here 
-          // if (
-          //   error.response.data?.email &&
-          //   error.response.data.email.length > 0
-          // ) {
-          //   toast.error(`Email ${error.response.data.email[0]}`);
-          // } else if (
-          //   error.response.data?.phone_number &&
-          //   error.response.data.phone_number.length > 0
-          // ) {
-          //   toast.error(`Mobile Number ${error.response.data.phone_number[0]}`);
-          // } else if (
-          //   error.response.data.message &&
-          //   error.response.data.message.length > 0
-          // ) {
-          //   toast.error(`${error.response.data.message}`);
-          // } else if(err?.status===401){
-          //   toast.error(`${errData.errors}`);
-          // } else if (err?.status === 422) {
-          //   toast.error(`${error.response.data.errors}`);
-          // }else {
-          //   toast.error("An error occurred");
-          // }
-          // stopping up to here
+          if (
+            error.response.data?.email &&
+            error.response.data.email.length > 0
+          ) {
+            toast.error(`Email ${error.response.data.email[0]}`);
+          } else if (
+            error.response.data?.phone_number &&
+            error.response.data.phone_number.length > 0
+          ) {
+            toast.error(`Mobile Number ${error.response.data.phone_number[0]}`);
+          } else if (
+            error.response.data.message &&
+            error.response.data.message.length > 0
+          ) {
+            toast.error(`${error.response.data.message}`);
+          } else if (err?.status === 401) {
+            toast.error(`${errData.errors}`);
+          } else if (err?.status === 422) {
+            toast.error(`${error.response.data.errors}`);
+          } else {
+            toast.error("An error occurred");
+          }
           //DEFAULT ERROR HANDLING
         });
     });

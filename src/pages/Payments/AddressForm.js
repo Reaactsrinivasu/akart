@@ -31,8 +31,8 @@ const AddressForm = () => {
        const [isModalOpen, setIsModalOpen] = useState(false);
        const [show, setShow] = useState(false);
        const [open, setOpen] = useState(false);
+       
   
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -111,6 +111,7 @@ const AddressForm = () => {
                           value="User Address"
                           control={
                             <Radio
+                              disabled
                               sx={{
                                 color: "blue",
                                 "& .MuiSvgIcon-root": {
@@ -138,15 +139,18 @@ const AddressForm = () => {
                           sx={{ fontSize: "13px", marginLeft: "-10px" }}
                           // component="span"
                         >
-                          D.no, Street Name, Mandal Name, City Name, District
-                          ,Pincode.
+                          {/* D.no, Street Name, Mandal Name, City Name, District
+                          ,Pincode. */}
+                          57-5-7, bade vari street,Jagannadhapuram , Kakinada ,
+                          Near chinna Market, East Godavari, ,
                         </Typography>
                         <Typography
                           variant="subtitle2"
                           sx={{ marginLeft: "17%", color: "#!21212" }}
                           //   component="span"
                         >
-                          State Name, Country Name. |{" "}
+                          {/* State Name, Country Name. |{" "} */}
+                          Andhra Pradesh, India - 533002. |{" "}
                           <TextLink title="Edit Address" /> |{" "}
                           <TextLink title=" Add Delivery Instructions" />
                         </Typography>
@@ -193,8 +197,10 @@ const AddressForm = () => {
           >
             <Box
               component="button"
+              disabled
               sx={{
-                backgroundColor: "#ff9f00",
+                // backgroundColor: "#ff9f00",
+                backgroundColor: "disable",
                 // backgroundColor: "#FFD814",
                 border: "1px solid #ff9f00",
                 // border: "1px solid #FCD200;",

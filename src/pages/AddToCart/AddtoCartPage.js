@@ -34,13 +34,9 @@ const AddtoCartPage = () => {
   const paymentData = {
     itemNumber: addtoCartData?.length,
     totalActualPrice: addtoCartData.reduce(
-      (total, item) => total + item.actual_price,
-      0
-    ),
+      (total, item) => total + parseFloat(item.actual_price || 0),0),
     totalDiscountPrice: addtoCartData.reduce(
-      (total, item) => total + item.discount_price,
-      0
-    ),
+      (total, item) => total + parseFloat(item.discount_price || 0),0),
     deliveryCharges: 100,
     securedPackageCharges: 100,
   };

@@ -16,8 +16,6 @@ const WishListProductsDisplay = () => {
 
   const deleteHandler = async (status,itemId) => {
     // const index = wishListData?.data?.findIndex((item) => item.id === itemId);
-    alert(itemId);
-    alert(status);
      if (status === true && itemId) {
        await dispatch(deleteWishListDataInitiate(itemId));
        setTimeout(() => {
@@ -71,7 +69,7 @@ const WishListProductsDisplay = () => {
                           >
                             {item.product_name}
                           </Typography>
-                          <IconButton onClick={() => deleteHandler(item.in_wishlist,item.id)}>
+                          <IconButton onClick={() => deleteHandler(item.in_wishlist,item.product_id)}>
                             <DeleteRoundedIcon
                               color="disabled"
                               sx={{

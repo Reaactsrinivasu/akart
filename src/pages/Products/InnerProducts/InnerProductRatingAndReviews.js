@@ -19,7 +19,7 @@ return (
     >
       <Grid container spacing={1}>
         <Grid item xs={12} sm={6} md={6}>
-          <Typography variant="h4">Rating & Reviews</Typography>
+          <Typography variant="h4">Rating & Reviews </Typography>
         </Grid>
         <Grid item xs={12} sm={6} md={6} sx={{ textAlign: "right" }}>
           <Imports.ReusableLink

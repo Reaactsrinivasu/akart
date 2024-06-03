@@ -26,6 +26,8 @@ import wishListDataReducer from "./wishList/wishListDataReducer";
 import addProductToCartDataReducer from "./addToCart/addToCartDataReducer";
 // save for later data
 import saveProductForLaterDataReducer from "./saveProductLater/saveProductLaterDataReducer";
+// order data 
+import orderDataReducer from "./orderDetails/orderDeatilsReducer";
 
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
@@ -55,5 +57,7 @@ const rootReducer = combineReducers({
   addtocartdata: addProductToCartDataReducer,
   // save for later data
   saveforlaterdata: saveProductForLaterDataReducer,
+  // order details
+  orderdata: orderDataReducer,
 });
 export default rootReducer;

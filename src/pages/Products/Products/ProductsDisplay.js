@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
@@ -27,8 +27,9 @@ import WishlistIcon from "../../../components/WishlistIcon";
 import {
   deleteWishListDataInitiate,
   createWishListDataInitiate,
+  loadWishListDataInitiate,
 } from "../../../redux/actions/wishLIst/wishListDataActions";
-const ProductsDisplay = () => {
+const ProductsDisplay = React.memo(() => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,22 +53,43 @@ const ProductsDisplay = () => {
      );
    }
   };
-    const handleWishlistToggle = (status,itemId) => {
-      // if (status) {
-      //   dispatch(deleteWishListDataInitiate(itemId));
-      //   dispatch(loadProductDataInitiate(subCategoryName));
-      // } else {
-      //   dispatch(createWishListDataInitiate(itemId));
-      //   dispatch(loadProductDataInitiate(subCategoryName));
-      // }
-      if (status) {
-        dispatch(deleteWishListDataInitiate(itemId));
-      } else {
-        dispatch(createWishListDataInitiate(itemId));
-      }
-      dispatch(loadProductDataInitiate(subCategoryName));
-    };
+   const wishListData = useSelector((state) => state.wishlistdata?.data?.data?.data || []);
+   console.log("wishListData", wishListData);
+   useEffect(() => {
+     dispatch(loadWishListDataInitiate());
+    }, [dispatch]);
+    const isInWishlist = wishListData?.some(
+      item => item.product_id === productsData?.id
+    );
+    console.log("isInWishlist", isInWishlist);
 
+  // const addWishListHandler = (itemId) => {
+  //       dispatch(createWishListDataInitiate(itemId));
+  //       dispatch(loadProductDataInitiate(subCategoryName));
+  //   };
+  // const deleteWishListHandler = (itemId) => {
+  //         dispatch(deleteWishListDataInitiate(itemId));
+  //       dispatch(loadProductDataInitiate(subCategoryName));
+  //   };
+const addWishListHandler = useCallback(
+  (itemId) => {
+    dispatch(createWishListDataInitiate(itemId));
+    setTimeout(() => {
+      dispatch(loadProductDataInitiate(subCategoryName));
+    }, 200);
+  },
+  [dispatch]
+);
+
+const deleteWishListHandler = useCallback(
+  (itemId) => {
+    dispatch(deleteWishListDataInitiate(itemId));
+      setTimeout(() => {
+      dispatch(loadProductDataInitiate(subCategoryName));
+    }, 200);
+  },
+  [dispatch]
+);
   return (
     <>
       {/* {productDetails?.map((item, index) => ( */}
@@ -111,13 +133,15 @@ const ProductsDisplay = () => {
                     isWished={item.in_wishlist}
                   /> */}
                   <IconButton
-                    onClick={() =>
-                      handleWishlistToggle(item.in_wishlist, item.id)
-                    }
-                    //   onClick={() => handleWishlistToggle()}
-                    //   sx={{ ...props.sx }}
+                    onClick={() => {
+                      if (item.in_wishlist) {
+                        deleteWishListHandler(item.id);
+                      } else {
+                        addWishListHandler(item.id);
+                      }
+                    }}
                   >
-                    {item?.in_wishlist ? (
+                    {item?.in_wishlist ? 
                       <FavoriteIcon
                         sx={{
                           color: "#f50057",
@@ -125,11 +149,11 @@ const ProductsDisplay = () => {
                           height: "35px",
                         }}
                       />
-                    ) : (
+                     : 
                       <FavoriteBorderIcon
                         sx={{ width: "35px", height: "35px" }}
                       />
-                    )}
+                    }
                   </IconButton>
                   <Box
                     component="img"
@@ -261,6 +285,6 @@ const ProductsDisplay = () => {
         ))}
     </>
   );
-};
+});
 
 export default ProductsDisplay;

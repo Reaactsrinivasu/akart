@@ -41,7 +41,7 @@ const PaymentMethods = () => {
         >
           <Grid item xs={12} sm={12} md={12} textAlign="center">
             <Typography variant="h2" sx={{ color: "#0F1111", fontWeight: 400 }}>
-              Checkout
+              Payments
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={10}>
@@ -90,7 +90,7 @@ const PaymentMethods = () => {
                 </Grid>
                 {/* payment statement */}
                 <Grid item xs={12} sm={12} md={3}>
-                  <PaymentStatement />
+                  {/* <PaymentStatement /> */}
                 </Grid>
               </Grid>
             </Box>
