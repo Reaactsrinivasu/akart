@@ -28,7 +28,8 @@ import addProductToCartDataReducer from "./addToCart/addToCartDataReducer";
 import saveProductForLaterDataReducer from "./saveProductLater/saveProductLaterDataReducer";
 // order data 
 import orderDataReducer from "./orderDetails/orderDeatilsReducer";
-
+// my profile user data
+import getUserDataReducer from "./getUserReducer";
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
@@ -59,5 +60,7 @@ const rootReducer = combineReducers({
   saveforlaterdata: saveProductForLaterDataReducer,
   // order details
   orderdata: orderDataReducer,
+  // getting user account data into My profile dashboard
+  myprofileuserdata: getUserDataReducer,
 });
 export default rootReducer;

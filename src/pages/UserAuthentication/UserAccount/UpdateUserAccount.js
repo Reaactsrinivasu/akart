@@ -48,9 +48,12 @@ const UpdateUserAccount = () => {
     "first_name",
     "last_name",
     "phone_number",
+    "alternate_phone_number",
     "email",
     "password",
     "password_confirmation",
+    "location",
+    "nick_name",
   ];
   const validationSchema = generateValidationSchema(formFields);
 
@@ -59,9 +62,12 @@ const UpdateUserAccount = () => {
       first_name: "",
       last_name: "",
       phone_number: "",
+      alternate_phone_number: "",
       email: "",
       password: "",
       password_confirmation: "",
+      location: "",
+      nick_name: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => handleSubmit(values),
@@ -217,6 +223,43 @@ const UpdateUserAccount = () => {
                     fontSize: "15px",
                   }}
                 >
+                  Alternate Mobile Number
+                </FormLabel>
+                <TextField
+                  type="text"
+                  id="alternate_phone_number"
+                  name="alternate_phone_number"
+                  size="small"
+                  // disabled={receivedData?.phone_number ? true : false}
+                  // value={
+                  //   receivedData?.phone_number
+                  //     ? (formik.values.phone_number =
+                  //         receivedData?.phone_number)
+                  //     : formik.values.phone_number
+                  // }
+                  // value={formik.values.phone_number}
+                  value={formik.values.alternate_phone_number}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.alternate_phone_number &&
+                    Boolean(formik.errors.alternate_phone_number)
+                  }
+                  helperText={
+                    formik.touched.alternate_phone_number &&
+                    formik.errors.alternate_phone_number
+                  }
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ marginBottom: "10px" }}>
+                <FormLabel
+                  sx={{
+                    marginBottom: "5px",
+                    color: "#000",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                  }}
+                >
                   Your Email Id
                 </FormLabel>
                 <TextField
@@ -235,9 +278,7 @@ const UpdateUserAccount = () => {
                   // value={formik.values.email}
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  error={
-                    formik.touched.email && Boolean(formik.errors.email)
-                  }
+                  error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                 />
               </FormControl>
@@ -295,30 +336,65 @@ const UpdateUserAccount = () => {
                   }
                 />
               </FormControl>
-              {/* <FormControl fullWidth>
+              <FormControl fullWidth sx={{ marginBottom: "10px" }}>
                 <FormLabel
                   sx={{
-                    marginTop: "13px",
-                    marginBottom: "10px",
+                    marginBottom: "5px",
                     color: "#000",
                     fontWeight: 400,
                     fontSize: "15px",
                   }}
                 >
-                  Enter Your Password
+                  Location 
                 </FormLabel>
-                <OutlinedInput
-                  placeholder="password"
-                  id="password"
-                  name="password"
+                <TextField
+                  type="text"
+                  id="location"
+                  name="location"
                   size="small"
-                  type="password"
-                  // value={password}
-                  // value={emailLoginData.password || ""}
-                  // onChange={onInputChange}
-                  // onChange={(e) => setPassword(e.target.value)}
+                  value={formik.values.location}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.location &&
+                    Boolean(formik.errors.location)
+                  }
+                  helperText={
+                    formik.touched.location &&
+                    formik.errors.location
+                  }
                 />
-              </FormControl> */}
+              </FormControl>
+              <FormControl fullWidth sx={{ marginBottom: "10px" }}>
+                <FormLabel
+                  sx={{
+                    marginBottom: "5px",
+                    color: "#000",
+                    fontWeight: 400,
+                    fontSize: "15px",
+                  }}
+                >
+                  Nick Name
+                </FormLabel>
+                <TextField
+                  type="text"
+                  id="nick_name"
+                  name="nick_name"
+                  size="small"
+                  value={formik.values.nick_name}
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.nick_name &&
+                    Boolean(formik.errors.nick_name)
+                  }
+                  helperText={
+                    formik.touched.nick_name &&
+                    formik.errors.nick_name
+                  }
+                />
+              </FormControl>
+
               <Button
                 type="submit"
                 sx={{

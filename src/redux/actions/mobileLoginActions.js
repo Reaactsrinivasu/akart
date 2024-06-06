@@ -23,9 +23,9 @@ export const loginWithMobileInitiate = (user, navigate) => {
       .then((res) => {
        console.log(res);
        console.log("res in api", res.status);
-       const token = res?.data.token;
+        const token = res?.data.token;
        console.log("res token", token);
-       localStorage.setItem("token", token);
+        localStorage.setItem("token", token);
        dispatch(createLoginWithMobileSuccess(res));
        if (res.status === 200) {
         //  navigate("/welcomepage");
