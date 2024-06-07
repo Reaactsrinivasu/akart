@@ -20,12 +20,9 @@ const MyProfileDashboard = () => {
     const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const handleItemClick = () => {
-    // if (item.path) {
-    //   navigate(item.path); // Navigate to the specified path if it exists
-    // }
-  };
-  // /myprofile/myorders
+  useEffect(() => {
+    navigate(`/myprofile/accounts`);
+  }, []);
   const listData = [
     {
       id: 1,
@@ -83,7 +80,11 @@ const MyProfileDashboard = () => {
     },
   ];
     const handleListItemClick = (index, path,name) => {
-      if (path!=='orders') {
+      if (
+        path !== "orders" &&
+        path !== "termsofuse" &&
+        path !== "privacypolicy"
+      ) {
         navigate(`/myprofile/${path}`);
       } else if (path === "") {
         localStorage.removeItem("token");
@@ -91,6 +92,10 @@ const MyProfileDashboard = () => {
         window.location.reload(false);
       } else if (path === "orders") {
         navigate("/orders");
+      } else if (path === "termsofuse") {
+        navigate("/termsofuse");
+      } else if (path === "privacypolicy") {
+        navigate("/privacypolicy");
       }
       setSelectedIndex(index);
     };

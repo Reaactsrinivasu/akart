@@ -97,7 +97,8 @@ const OtpVerifyForNewPassword = React.lazy(() =>
 const UpdateUserAccount = React.lazy(() =>
   import("./pages/UserAuthentication/UserAccount/UpdateUserAccount")
 );
-
+const TermsOfUse = React.lazy(() => import("./pages/Others/TermsOfUse"));
+const PrivacyPolicy = React.lazy(() => import("./pages/Others/PrivacyPolicy"));
 const Approutes = () => {
     //   <Suspense
     //       fallback={
@@ -161,16 +162,10 @@ const Approutes = () => {
             <Route path="/checkout" exact element={<CheckoutPage />} />
             <Route path="/payments" exact element={<Payments />} />
             <Route path="/paymentstatus" exact element={<PaymementStatus />} />
+            <Route path="/termsofuse" exact element={<TermsOfUse />} />
+            <Route path="/privacypolicy" exact element={<PrivacyPolicy />} />
 
-            <Route path="/myprofile" exact element={<MyProfile />}>           
-              <Route
-                path="/myprofile/privacypolicy"
-                element={<MyProfilePrivacyPolicy />}
-              />
-              <Route
-                path="/myprofile/termsofuse"
-                element={<MyProfileTermsofUse />}
-              />
+            <Route path="/myprofile" exact element={<MyProfile />}>
               <Route path="/myprofile/aboutus" element={<MyProfileAboutUs />} />
               <Route
                 path="/myprofile/notificationprefereances"

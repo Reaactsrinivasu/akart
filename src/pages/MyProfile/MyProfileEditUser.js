@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch, } from "react-redux";
+import { useNavigate} from "react-router-dom";
 import {Button,Box,Grid} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
@@ -15,7 +16,10 @@ import {
   initialValues,
   generateValidationSchema,
 } from "../../../src/common/Validations";
-import { updateMyProfileUserDetailsInitiate } from "../../redux/actions/updateUserActions";
+import {
+  updateMyProfileUserDetailsInitiate,
+  getUserDetailsInitiate,
+} from "../../redux/actions/updateUserActions";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
         padding: theme.spacing(2),
@@ -26,11 +30,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 const MyProfileEditUser = React.memo(
-  ({ closeModal, getUserData, handleClose }) => {
+  ({ closeModal, getUserData}) => {
     const [userInfo, setUserInfo] = useState({});
     const [editMode, setEditMode] = useState(false);
     const dispatch = useDispatch();
-    console.log("getUserData in edit profile", getUserData);
+    const navigate = useNavigate();
     useEffect(() => {
       if (getUserData) {
         setEditMode(true);
@@ -63,6 +67,7 @@ const MyProfileEditUser = React.memo(
         gender: "",
       },
       validationSchema: validationSchema,
+      enableReinitialize: true,
       onSubmit: (values) => handleSubmit(values),
     });
     // const handleSubmit = async (values, resetForm) => {
@@ -77,13 +82,16 @@ const MyProfileEditUser = React.memo(
     //   handleClose();
     // };
 const handleSubmit = useCallback(
-  async (values, resetForm) => {
+  async (values) => {
     const userId = getUserData?.id;
     const data = {
       ...values,
       password_digest: getUserData?.password_digest,
     };
-    dispatch(updateMyProfileUserDetailsInitiate(userId, data));
+        dispatch(updateMyProfileUserDetailsInitiate(userId, data));
+        formik.resetForm();
+        dispatch(getUserDetailsInitiate());
+        closeModal();
   },
   [dispatch, getUserData]
 );
@@ -269,6 +277,41 @@ const handleSubmit = useCallback(
                   }}
                   gap={2}
                 >
+                  {/* <Grid item xs={12} sm={6}>
+                    <Typography sx={{ fontSize: "15px", fontFamily: "Lato" }}>
+                      Gender
+                    </Typography>
+                    <FormControl
+                      component="fieldset"
+                      error={
+                        formik.touched.gender && Boolean(formik.errors.gender)
+                      }
+                    >
+                      <RadioGroup
+                        row
+                        aria-labelledby="gender-radio-buttons-group-label"
+                        name="gender"
+                        value={formik.values.gender}
+                        onChange={formik.handleChange}
+                      >
+                        <FormControlLabel
+                          value="female"
+                          control={<Radio />}
+                          label="Female"
+                        />
+                        <FormControlLabel
+                          value="male"
+                          control={<Radio />}
+                          label="Male"
+                        />
+                      </RadioGroup>
+                      {formik.touched.gender && formik.errors.gender && (
+                        <Typography variant="caption" color="error">
+                          {formik.errors.gender}
+                        </Typography>
+                      )}
+                    </FormControl>
+                  </Grid> */}
                   <Grid item xs={12} sm={6}>
                     <Typography sx={{ fontSize: "15px", fontFamily: "Lato" }}>
                       Gender

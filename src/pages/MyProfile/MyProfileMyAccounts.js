@@ -5,6 +5,7 @@ import { Typography, Grid, Box, Divider, Paper, Card } from "@mui/material";
 import MyProfileEditUser from "./MyProfileEditUser";
 import { getUserDetailsInitiate } from "../../redux/actions/updateUserActions";
 const MyProfileMyAccounts = () => {
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
@@ -42,8 +43,12 @@ const MyProfileMyAccounts = () => {
           borderColor: "divider",
         }}
       >
-        <Typography>Personal Information</Typography>
-        <Grid container spacing={2} mt={2} p={3}>
+        <Typography
+          sx={{ fontWeight: 700, fontFamily: "Lato", fontSize: "19px" }}
+        >
+          Personal Information
+        </Typography>
+        <Grid container spacing={2} mt={1} p={1}>
           <Grid item xs={12} sm={8} md={6}>
             <Typography>Full Name</Typography>
           </Grid>
@@ -98,6 +103,7 @@ const MyProfileMyAccounts = () => {
             onClick={handleOpenModal}
             component="button"
             sx={{
+              mt:1,
               width: "20%",
               height: "100%",
               backgroundColor: "#ff9f00",
@@ -118,7 +124,6 @@ const MyProfileMyAccounts = () => {
       {isModalOpen && (
         <MyProfileEditUser
           // show={show}
-          handleClose={handleClose}
           getUserData={getUserData}
           closeModal={() => setIsModalOpen(false)}
         />

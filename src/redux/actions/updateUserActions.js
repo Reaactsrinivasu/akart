@@ -1,5 +1,8 @@
 import * as types from "./actionTypes";
-import { updateUserAccountApi } from "../apis/updateUserApi";
+import {
+  updateUserAccountApi,
+  updateMyProfileUserAccountApi,
+} from "../apis/updateUserApi";
 import { getUserAccountApi } from "../apis/getUserApi";
 
 //loading wishlist details
@@ -61,7 +64,7 @@ export const getUserDetailsInitiate = (navigate) => {
 export const updateMyProfileUserDetailsInitiate = (userId, user, navigate) => {
  return function (dispatch) {
    dispatch(updateUserStart(userId, user));
-   updateUserAccountApi(userId, user)
+   updateMyProfileUserAccountApi(userId, user)
      .then((res) => {
        // let userData = res?.data;
        console.log(res);
