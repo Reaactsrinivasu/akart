@@ -36,8 +36,9 @@ const Navbar = () => {
   const navigate = useNavigate();
   
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+    // <Box sx={{ display: "flex" }}>
+    <Box>
+      {/* <CssBaseline /> */}
       <AppBar
         component="nav"
         elevation={0}

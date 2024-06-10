@@ -67,9 +67,10 @@ const CheckoutPage = () => {
                       >
                         LOGIN
                       </Imports.Typography>
-                      <Imports.Typography>+91 9440609464</Imports.Typography>
+                      <Imports.Typography>Aripaka Bhagya Srinivasu</Imports.Typography>
                     </Imports.Paper>
-                    <Imports.Paper
+                    {/* user address component */}
+                    {/* <Imports.Paper
                       // variant="outlined"
                       elevation={1}
                       sx={{
@@ -112,7 +113,7 @@ const CheckoutPage = () => {
                       >
                         533002
                       </Imports.Typography>
-                    </Imports.Paper>
+                    </Imports.Paper> */}
                     <Imports.Paper
                       // variant="outlined"
                       elevation={1}
@@ -255,31 +256,19 @@ const CheckoutPage = () => {
 
                       {/* <Imports.Typography>+91 9440609464</Imports.Typography> */}
                     </Imports.Paper>
-                    <Imports.Paper
-                      // variant="outlined"
+                    {/* user GST Invoices */}
+                    {/* <Imports.Paper
                       elevation={1}
                       sx={{
                         width: "100%",
                         height: "auto",
                         backgroundColor: "#FFFFFF",
-                        // boxShadow: "10px",
                         padding: 2,
                         mt: 3,
                       }}
                     >
-                      {/* <Imports.Typography
-                        variant="h5"
-                        sx={{
-                          letterSpacing: "0.5px",
-                          color: "#878787",
-                          fontWeight: "bold",
-                          mb: 1,
-                        }}
-                      >
-                        LOGIN
-                      </Imports.Typography> */}
                       <Imports.Typography>+ Use GST Invoice</Imports.Typography>
-                    </Imports.Paper>
+                    </Imports.Paper> */}
                     <Imports.Paper
                       // variant="outlined"
                       elevation={1}

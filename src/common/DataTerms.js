@@ -52,6 +52,7 @@ const OldPaswordLabel = "Enter Your Old Password";
 const EmailLabel = "Enter Your Email Id"
 const EmailOrPhoneNumberLabel = "Enter Email or Mobile Number";
 const PhoneNumberLabel = "Enter Your Mobile Number";
+const AlternatePhoneNumberLabel = "Enter Alternate Mobile Number";
 const EmailIdLabel = "Enter Your Email Id";
 // Form headings
 const SignupFormHeading = "Sign Up";
