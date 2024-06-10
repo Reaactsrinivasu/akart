@@ -30,6 +30,13 @@ import saveProductForLaterDataReducer from "./saveProductLater/saveProductLaterD
 import orderDataReducer from "./orderDetails/orderDeatilsReducer";
 // my profile user data
 import getUserDataReducer from "./getUserReducer";
+// user address data
+import userAddressReducer from "./address/userAddressDetailsReducer";
+// privacy and policy data
+import privacyAndPolicyDataReducer from "./others/privacyAndPolicyReducer";
+// terms and conditins
+import termsAndConditionsDataReducer from "./others/termsAndConditonsReducer";
+
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
@@ -62,5 +69,11 @@ const rootReducer = combineReducers({
   orderdata: orderDataReducer,
   // getting user account data into My profile dashboard
   myprofileuserdata: getUserDataReducer,
+  // user address details
+  useraddressdata: userAddressReducer,
+  // privacy and Policy data
+  privacyandpolicydata: privacyAndPolicyDataReducer,
+  // terms and conditions data
+  termsandconditionsdata: termsAndConditionsDataReducer,
 });
 export default rootReducer;

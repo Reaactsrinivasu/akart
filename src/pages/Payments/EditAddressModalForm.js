@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button, Box, Grid } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
@@ -15,20 +15,27 @@ import {
   initialValues,
   generateValidationSchema,
 } from "../../../src/common/Validations";
-import { createUserAddressInitiate } from "../../redux/actions/address/userAddressActions";
+import { updateUserAddressInitiate } from "../../redux/actions/address/userAddressActions";
 import Imports from "../../common/Imports";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
-        padding: theme.spacing(2),
-      boxShadow:'10px'
+    padding: theme.spacing(2),
+    boxShadow: "10px",
   },
   "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
 }));
-const CreateNewAddressModalForm = ({ closeModal, title }) => {
+const EditAddressModalForm = ({ closeModal, title, addressData }) => {
+    const [accountId, setAccountId] = useState('');
+    console.table("addressData", addressData);
   const dispatch = useDispatch();
-  
+useEffect(() => {
+  if (addressData) {
+      formik.setValues(addressData);
+      setAccountId(addressData?.account_id);
+  }
+}, []);
   const formFields = [
     "country",
     "first_name",
@@ -61,15 +68,15 @@ const CreateNewAddressModalForm = ({ closeModal, title }) => {
     onSubmit: (values) => handleSubmit(values),
   });
 
-  const handleSubmit = (values, resetForm) => {
-    console.log("values", values);
+  const handleSubmit = (values) => {
+      console.log("values", values);
     const data = {
       ...values,
-      make_default:true,
+      make_default: true,
     };
-    console.log("data", data);
+    console.log("data accountId", accountId, data);
     if (data) {
-      dispatch(createUserAddressInitiate(data));
+      dispatch(updateUserAddressInitiate(accountId,data));
       formik.resetForm();
       closeModal();
     }
@@ -99,7 +106,7 @@ const CreateNewAddressModalForm = ({ closeModal, title }) => {
               <Typography
                 sx={{ fontWeight: 700, fontFamily: "Lato", fontSize: "19px" }}
               >
-                {title} User Details 
+                {title} User Details
               </Typography>
               <CloseIcon
                 sx={{ marginLeft: "auto", cursor: "pointer" }}
@@ -341,7 +348,7 @@ const CreateNewAddressModalForm = ({ closeModal, title }) => {
                     ml: 2,
                   }}
                 >
-                  Add User Address
+                  Update User Address
                 </Box>
               </Grid>
             </Box>
@@ -352,4 +359,4 @@ const CreateNewAddressModalForm = ({ closeModal, title }) => {
   );
 };
 
-export default CreateNewAddressModalForm;
+export default EditAddressModalForm;

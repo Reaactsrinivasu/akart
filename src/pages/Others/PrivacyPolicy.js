@@ -1,10 +1,12 @@
 import React from "react";
+import { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Layout from "../../Layout/Layout";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Grid, Typography, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-
+import { loadPrivacyAndPolicyInitiate } from "../../redux/actions/others/privacyAndPolicyActions";
 const PrivacyPolicy = () => {
   const privacyData1 = [
     "A-Kart.in Privacy Notice",
@@ -96,7 +98,14 @@ const PrivacyPolicy = () => {
       ],
     },
   ];
-
+   const dispatch = useDispatch();
+   useEffect(() => {
+      dispatch(loadPrivacyAndPolicyInitiate());
+   }, [dispatch]);
+   const privacyData = useSelector(
+     (state) => state?.privacyandpolicydata?.data?.data
+   );
+   console.log("privacyData", privacyData);
   return (
     <>
       <Layout>

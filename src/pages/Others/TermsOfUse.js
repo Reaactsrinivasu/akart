@@ -1,10 +1,12 @@
 import React from "react";
+import { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Layout from "../../Layout/Layout";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Grid, Typography,Box } from "@mui/material";
+import { Grid, Typography, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-
+import { loadTermsAndConditionsInitiate } from "../../redux/actions/others/temrsAndConditionsActions";
 const TermsOfUse = () => {
   const firstData = [
     {
@@ -21,7 +23,6 @@ const TermsOfUse = () => {
       q1: "Information from Other Sources: We might receive information about you from other sources, such as updated delivery and address information from our carriers, which we use to correct our records and deliver your next purchase more easily. Click here to see additional examples of the information we receive.",
     },
   ];
-
   const secondData = [
     {
       q: "Purchase and delivery of products and services. We use your personal information to take and fulfill orders, deliver products and services, process payments, and communicate with you about orders, products and services, and promotional offers.",
@@ -48,7 +49,14 @@ const TermsOfUse = () => {
       q: "Fraud Prevention and Credit Risks. We use personal information to prevent and detect fraud and abuse in order to protect the security of our customers, Amazon, and others. We may also use scoring methods to assess and manage credit risks.",
     },
   ];
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadTermsAndConditionsInitiate());
+  }, [dispatch]);
+  const termsData = useSelector(
+    (state) => state?.termsandconditionsdata?.data?.data
+  );
+  console.log("termsData", termsData);
   return (
     <>
       <Layout>

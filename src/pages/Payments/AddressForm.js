@@ -1,5 +1,14 @@
-import React, { useState } from "react";
-import { Box, Grid, Typography, Divider, IconButton,Button } from "@mui/material";
+import React, { useEffect, useState, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate} from "react-router-dom";
+import {
+  Box,
+  Grid,
+  Typography,
+  Divider,
+  IconButton,
+  Button,
+} from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -19,6 +28,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import CloseIcon from "@mui/icons-material/Close";
 import CreateNewAddressModalForm from "./CreateNewAddressModalForm";
+import EditAddressModalForm from "./EditAddressModalForm";
+import { loadUserAddressInitiate } from "../../redux/actions/address/userAddressActions";
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -28,36 +39,46 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 const AddressForm = () => {
-       const [isModalOpen, setIsModalOpen] = useState(false);
-       const [show, setShow] = useState(false);
-       const [open, setOpen] = useState(false);
-       
-  
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+    const getUserAddress = useSelector(
+      (state) => state.useraddressdata?.data?.data?.data[0] || []
+    );
+    useEffect(() => {
+      dispatch(loadUserAddressInitiate());
+    }, [dispatch]);
+    console.log("getUserAddress for edit and update", getUserAddress);
+  const handleEditFormOpenModal = () => {
+    setIsEditModalOpen(true);
   };
-       const handleClickOpen = () => {
-         setOpen(true);
-       };
-       const handleClose = () => {
-         setOpen(false);
+  const handleAddOpenModal = () => {
+    setIsAddModalOpen(true);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
   const closeModal = () => {
     setShow(true);
   };
-    const [selectedValue, setSelectedValue] = useState("");
-    const handleChange = (event) => {
-      setSelectedValue(event.target.value);
-    };
-  
-    const DemoPaper = styled(Paper)(({ theme }) => ({
-      width: "100%",
-      height: "100%",
-      borderRadius: "10px",
-      //   padding: theme.spacing(2),
-      ...theme.typography.body2,
-      //   textAlign: "center",
-    }));
+  const [selectedValue, setSelectedValue] = useState("");
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const DemoPaper = styled(Paper)(({ theme }) => ({
+    width: "100%",
+    height: "100%",
+    borderRadius: "10px",
+    //   padding: theme.spacing(2),
+    ...theme.typography.body2,
+    //   textAlign: "center",
+  }));
   return (
     <>
       <DemoPaper variant="outlined">
@@ -141,8 +162,9 @@ const AddressForm = () => {
                         >
                           {/* D.no, Street Name, Mandal Name, City Name, District
                           ,Pincode. */}
-                          57-5-7, bade vari street,Jagannadhapuram , Kakinada ,
-                          Near chinna Market, East Godavari, ,
+                          {/* 57-5-7, bade vari street,Jagannadhapuram , Kakinada ,
+                          Near chinna Market, East Godavari, , */}
+                          {`${getUserAddress?.house_number}, ${getUserAddress?.street}, ${getUserAddress?.landmark}, ${getUserAddress?.locality}, ${getUserAddress?.city}`}
                         </Typography>
                         <Typography
                           variant="subtitle2"
@@ -150,8 +172,14 @@ const AddressForm = () => {
                           //   component="span"
                         >
                           {/* State Name, Country Name. |{" "} */}
-                          Andhra Pradesh, India - 533002. |{" "}
-                          <TextLink title="Edit Address" /> |{" "}
+                          {/* Andhra Pradesh, India - 533002. |{" "} */}
+                          {`${getUserAddress?.state}, ${getUserAddress?.country} - ${getUserAddress?.pincode} `}
+                          |{" "}
+                          <TextLink
+                            title="Edit Address"
+                            onClick={handleEditFormOpenModal}
+                          />{" "}
+                          |
                           {/* <TextLink title=" Add Delivery Instructions" /> */}
                         </Typography>
                       </RadioGroup>
@@ -174,7 +202,7 @@ const AddressForm = () => {
                 <TextLink
                   title="Add New Address"
                   sx={{ color: "green" }}
-                  onClick={handleOpenModal}
+                  onClick={handleAddOpenModal}
                 />
               </Stack>
             </Box>
@@ -217,11 +245,21 @@ const AddressForm = () => {
           </Box>
         </Grid>
       </DemoPaper>
-      {/* Modal form  */}
-      {isModalOpen && (
+      {/* Add address Modal form  */}
+      {isAddModalOpen && (
         <CreateNewAddressModalForm
+          title="Add"
           // show={show}
-          closeModal={() => setIsModalOpen(false)}
+          closeModal={() => setIsAddModalOpen(false)}
+        />
+      )}
+      {/* Add address Modal form  */}
+      {isEditModalOpen && (
+        <EditAddressModalForm
+          title="Edit"
+          addressData={getUserAddress}
+          // show={show}
+          closeModal={() => setIsEditModalOpen(false)}
         />
       )}
     </>

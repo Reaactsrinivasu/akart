@@ -46,6 +46,12 @@ const generateValidationSchema = (fields) => {
           .max(50, "Relationship is Long!")
           .required("Relationship is required");
         break;
+      case "country":
+        validationRules.country = Yup.string()
+          .min(5, "Country Name is Short!")
+          .max(100, "Country Name is Long!")
+          .required("Country Name is required");
+        break;
       case "address":
         validationRules.address = Yup.string()
           .min(5, "Address is Short!")
@@ -111,12 +117,51 @@ const generateValidationSchema = (fields) => {
           "Date of Birth is required"
         );
         break;
+      case "pincode":
+        validationRules.pincode = Yup.string()
+          .matches(/^[0-9]{6}$/, "Invalid Pincode")
+          .required("Pincode is required");
+        break;
+      case "street":
+        validationRules.street = Yup.string()
+          .min(2, "Street Name is Short!")
+          .max(50, "Street Name is Long!")
+          .required("Street Name is required");
+        break;
+      case "landmark":
+        validationRules.landmark = Yup.string()
+          .min(2, "Landmark Name is Short!")
+          .max(50, "Landmark Name is Long!")
+          .required("Landmark Name is required");
+        break;
+      case "locality":
+        validationRules.locality = Yup.string()
+          .min(2, "Locality Name is Short!")
+          .max(50, "Locality Name is Long!")
+          .required("Locality Name is required");
+        break;
+      case "city":
+        validationRules.city = Yup.string()
+          .min(2, "City Name is Short!")
+          .max(30, "City Name is Long!")
+          .required("City Name is required");
+        break;
+      case "state":
+        validationRules.state = Yup.string()
+          .min(2, "State Name is Short!")
+          .max(30, "State Name is Long!")
+          .required("State Name is required");
+        break;
+      case "house_number":
+        validationRules.house_number = Yup.string().required(
+          "House Number is required"
+        );
+        break;
       // Add additional fields as needed
       default:
         break;
     }
   });
- 
   return Yup.object(validationRules);
 };
  
@@ -124,6 +169,7 @@ const initialValues = {
   name: "",
   email: "",
   mobile_number: "",
+  phone_number: "",
   alternate_phone_number: "",
   relationship: "",
   gender: "",
@@ -135,6 +181,14 @@ const initialValues = {
   location: "",
   date_of_birth: "",
   nick_name: "",
+  country: "",
+  pincode: "",
+  house_number: "",
+  street: "",
+  landmark: "",
+  locality: "",
+  city: "",
+  state: "",
 };
  
 export { initialValues, generateValidationSchema };

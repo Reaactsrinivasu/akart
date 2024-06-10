@@ -54,9 +54,9 @@ export const getUserDetailsInitiate = (navigate) => {
         // let userData = res?.data;
         console.log(res);
         dispatch(loadUserSuccess(res));
-        // if (res.status === 200) {
-        //   navigate("/login");
-        // }
+        if (res.status === 200) {
+          navigate("/login");
+        }
       })
       .catch((error) => dispatch(loadUserError(error.message)));
   };
@@ -69,9 +69,6 @@ export const updateMyProfileUserDetailsInitiate = (userId, user, navigate) => {
        // let userData = res?.data;
        console.log(res);
        dispatch(updateUserSuccess(res));
-       if (res.status === 200) {
-         navigate("/login");
-       }
      })
      .catch((error) => dispatch(updateUserError(error.message)));
  };
@@ -81,4 +78,5 @@ export default {
   getUserDetailsInitiate,
   updateMyProfileUserDetailsInitiate,
 };
+
 

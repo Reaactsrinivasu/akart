@@ -2,8 +2,9 @@ import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Typography, Grid, Box, Divider, Paper, Card } from "@mui/material";
-import MyProfileEditUser from "./MyProfileEditUser";
 import { getUserDetailsInitiate } from "../../redux/actions/updateUserActions";
+import MyProfileEditUser from "./MyProfileEditUser";
+import MyProfileDashboard from "./MyProfileDashboard";
 const MyProfileMyAccounts = () => {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,15 +24,13 @@ const MyProfileMyAccounts = () => {
     setShow(true);
   };
   const dispatch = useDispatch();
-  const accountId = localStorage.getItem("accountId");
-  console.log("accountId", accountId);
+
     const getUserData = useSelector((state) => state.myprofileuserdata?.data?.data);
   useEffect(() => {
       dispatch(getUserDetailsInitiate());
   }, [dispatch]);
 
   console.log("getUserData", getUserData);
-
   return (
     <>
       <Box
@@ -103,7 +102,7 @@ const MyProfileMyAccounts = () => {
             onClick={handleOpenModal}
             component="button"
             sx={{
-              mt:1,
+              mt: 1,
               width: "20%",
               height: "100%",
               backgroundColor: "#ff9f00",
@@ -120,7 +119,7 @@ const MyProfileMyAccounts = () => {
           </Box>
         </Box>
       </Box>
-      {/* Edit User Modal form  */}
+      {/* Edit User Details Modal form  */}
       {isModalOpen && (
         <MyProfileEditUser
           // show={show}

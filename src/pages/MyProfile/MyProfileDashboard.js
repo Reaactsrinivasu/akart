@@ -15,11 +15,19 @@ import InfoIcon from "@mui/icons-material/Info";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import LockIcon from "@mui/icons-material/Lock";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { getUserDetailsInitiate } from "../../redux/actions/updateUserActions";
 const MyProfileDashboard = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
   const [selectedIndex, setSelectedIndex] = useState(null);
+ const getUser = useSelector(
+   (state) => state.myprofileuserdata?.data?.data
+ );
+ useEffect(() => {
+   dispatch(getUserDetailsInitiate());
+ }, [dispatch]);
 
+ console.log("getUser", getUser);
   useEffect(() => {
     navigate(`/myprofile/accounts`);
   }, []);
@@ -138,14 +146,25 @@ const MyProfileDashboard = () => {
                   gap: 2,
                 }}
               >
-                <Typography variant="h5" sx={{ color: "#fff" }}>
-                  Bhagya Srinivasu Aripaka
-                </Typography>
-                <Typography variant="h5" sx={{ color: "#fff" }}>
-                  9440609464
-                </Typography>
+                {getUser ? (
+                  <>
+                    <Typography variant="h5" sx={{ color: "#fff" }}>
+                      {/* Bhagya Srinivasu Aripaka */}
+                      {`${getUser?.first_name} ${getUser?.last_name}`}
+                    </Typography>
+                    <Typography variant="h5" sx={{ color: "#fff" }}>
+                      {/* 9440609464 */}
+                      {`${getUser?.phone_number}`}
+                    </Typography>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="h5" sx={{ color: "#fff" }}>
+                      Loading...
+                    </Typography>
+                  </>
+                )}
               </Paper>
-
               <Paper elevation={1}>
                 <List
                   sx={{
@@ -205,7 +224,6 @@ const MyProfileDashboard = () => {
                     </ListItemButton>
                   ))}
                 </List>
-                
               </Paper>
             </Grid>
             <Grid item xs={12} sm={8} md={9}>
