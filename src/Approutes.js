@@ -20,7 +20,7 @@ const MyProfileAllNotifications = React.lazy(() =>
 );
 
 const MyProfileNotificationPreferences = React.lazy(() =>
-  import("./pages/MyProfile/MyProfileAllNotifications")
+  import("./pages/MyProfile/MyProfileNotificationPreferences")
 );
 
 const MyProfileAboutUs = React.lazy(() =>

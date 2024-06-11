@@ -9,7 +9,7 @@ const MyProfileAddress = () => {
   useEffect(() => {
     dispatch(loadUserAddressInitiate());
   }, [dispatch]);
-  console.log("getUserAddress", getUserAddress);
+  // console.log("getUserAddress", getUserAddress);
   return (
     <>
       <Box

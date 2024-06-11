@@ -27,7 +27,7 @@ const MyProfileDashboard = () => {
    dispatch(getUserDetailsInitiate());
  }, [dispatch]);
 
- console.log("getUser", getUser);
+//  console.log("getUser", getUser);
   useEffect(() => {
     navigate(`/myprofile/accounts`);
   }, []);
@@ -230,7 +230,7 @@ const MyProfileDashboard = () => {
               <Paper
                 elevation={1}
                 sx={{
-                  p: 4,
+                  p:2,
                   width: "100%",
                   height: "100%",
                   backgroundColor: "#FFFFFF",

@@ -36,6 +36,8 @@ import userAddressReducer from "./address/userAddressDetailsReducer";
 import privacyAndPolicyDataReducer from "./others/privacyAndPolicyReducer";
 // terms and conditins
 import termsAndConditionsDataReducer from "./others/termsAndConditonsReducer";
+// notification preferences
+import notificationPreferenceReducer from "./notificationPreferences/notificationPreferenceReducer";
 
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
@@ -75,5 +77,8 @@ const rootReducer = combineReducers({
   privacyandpolicydata: privacyAndPolicyDataReducer,
   // terms and conditions data
   termsandconditionsdata: termsAndConditionsDataReducer,
+
+  // notification Preferences
+  notificationpreferencedata: notificationPreferenceReducer,
 });
 export default rootReducer;

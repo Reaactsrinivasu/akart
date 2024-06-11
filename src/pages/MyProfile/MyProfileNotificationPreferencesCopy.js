@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box} from "@mui/material";
 import Imports from "../../common/Imports";
 import Switch from "@mui/material/Switch";
 import ListInNotfications from "../../components/ListInNotfications";
@@ -11,14 +11,10 @@ import {
 } from "../../redux/actions/notificationPreferences/notificationPreferenceActions";
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 const smsData = [
-  { id: 1, item: "Offers", subItem: "Today deals and more" },
-  { id: 2, item: "My Orders", subItem: "Latest Updates on your Orders" },
-  {
-    id: 3,
-    item: "Recommendations",
-    subItem: "Receive recommendations based on your shopping activity",
-  },
-  { id: 4, item: "Remainders", subItem: "Price drops,Back-in products etc" },
+  {id:1,item:'Offers',subItem:'Today deals and more'},
+  {id:2,item:'My Orders',subItem:'Latest Updates on your Orders'},
+  {id:3,item:'Recommendations',subItem:'Receive recommendations based on your shopping activity'},
+  {id:4,item:'Remainders',subItem:'Price drops,Back-in products etc'},
 ];
 const emailData = [
   { id: 1, item: "Offers", subItem: "Today deals and more" },
