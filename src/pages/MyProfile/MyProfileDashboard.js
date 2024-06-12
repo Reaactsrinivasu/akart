@@ -84,17 +84,19 @@ const MyProfileDashboard = () => {
       id: 9,
       listName: "Logout",
       icon: <LogoutIcon />,
-      path: "",
+      path: "logout"
     },
   ];
-    const handleListItemClick = (index, path,name) => {
+    const handleListItemClick = async (index, path,name) => {
       if (
         path !== "orders" &&
         path !== "termsofuse" &&
-        path !== "privacypolicy"
+        path !== "privacypolicy" &&
+        path !== "aboutus" &&
+        path !== "logout"
       ) {
         navigate(`/myprofile/${path}`);
-      } else if (path === "") {
+      } else if (path === "logout") {
         localStorage.removeItem("token");
         navigate("/");
         window.location.reload(false);
@@ -104,6 +106,8 @@ const MyProfileDashboard = () => {
         navigate("/termsofuse");
       } else if (path === "privacypolicy") {
         navigate("/privacypolicy");
+      } else if (path === "aboutus") {
+        navigate("/aboutus");
       }
       setSelectedIndex(index);
     };

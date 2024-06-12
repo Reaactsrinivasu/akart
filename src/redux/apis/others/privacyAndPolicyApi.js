@@ -6,7 +6,7 @@ export const loadPrivacyAndPolicyApi = async () => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await api.get(`${endPoints}?title=${subEndPoints}`);
-      resolve(result);
+      resolve(result?.data?.data);
     } catch (error) {
       console.error("Error in loadPrivacyAndPolicyApi:", error);
       reject(error);

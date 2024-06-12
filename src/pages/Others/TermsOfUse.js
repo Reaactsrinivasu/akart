@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../../Layout/Layout";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Grid, Typography, Box } from "@mui/material";
+import { Box,Paper} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { loadTermsAndConditionsInitiate } from "../../redux/actions/others/temrsAndConditionsActions";
@@ -54,12 +54,12 @@ const TermsOfUse = () => {
     dispatch(loadTermsAndConditionsInitiate());
   }, [dispatch]);
   const termsData = useSelector(
-    (state) => state?.termsandconditionsdata?.data?.data
+    (state) => state?.termsandconditionsdata?.data?.data[0] || []
   );
   console.log("termsData", termsData);
   return (
     <>
-      <Layout>
+      {/* <Layout>
         <CssBaseline />
         <Box>
           <Grid container sx={{ justifyContent: "center", marginTop: "30px" }}>
@@ -127,6 +127,18 @@ const TermsOfUse = () => {
               </Grid>
             </Grid>
           </Grid>
+        </Box>
+      </Layout> */}
+      <Layout>
+        <CssBaseline />
+        <Box sx={{ p: 5, marginTop: "20px" }}>
+          <Paper
+            elevation={2}
+            sx={{ p: 3, backgroundColor: "#fff" }}
+            variant="contained"
+            component="div"
+            dangerouslySetInnerHTML={{ __html: termsData?.data }}
+          />
         </Box>
       </Layout>
     </>

@@ -12,10 +12,14 @@ import {
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
 
-const MyProfileNotificationPreferences = () => {
+const MyProfileNotificationPreferences1 = () => {
   const dispatch = useDispatch();
   const [notificationPreferences, setNotificationPreferences] = useState({});
-  const [checkedItems, setCheckedItems] = useState({});
+  // const toggleHandler = (id, preference) => {
+  //   dispatch(updateNotificationPreferenceInitiate(id, preference));
+  //   dispatch(loadNotificationPreferenceInitiate());
+  // };
+
   const getNotiPreferData = useSelector(
     (state) => state.notificationpreferencedata?.data?.data[0] || {}
   );
@@ -26,29 +30,8 @@ const MyProfileNotificationPreferences = () => {
    useEffect(() => {
      if (getNotiPreferData) {
        setNotificationPreferences(getNotiPreferData);
-       setCheckedItems({
-         sms_offers: getNotiPreferData.sms_offers,
-         sms_myorders: getNotiPreferData.sms_myorders,
-         sms_recommendations: getNotiPreferData.sms_recommendations,
-         sms_reminders: getNotiPreferData.sms_reminders,
-         email_offers: getNotiPreferData.email_offers,
-         email_myorders: getNotiPreferData.email_myorders,
-         email_recommendations: getNotiPreferData.email_recommendations,
-         email_reminders: getNotiPreferData.email_reminders,
-         whatsapp_offers: getNotiPreferData.whatsapp_offers,
-         whatsapp_myorders: getNotiPreferData.whatsapp_myorders,
-         whatsapp_recommendations: getNotiPreferData.whatsapp_recommendations,
-         whatsapp_reminders: getNotiPreferData.whatsapp_reminders,
-       });
      }
    }, [getNotiPreferData]);
-  
-  const [checkboxDisabled, setCheckboxDisabled] = useState({
-    sms: !getNotiPreferData?.sms,
-    email: !getNotiPreferData?.email,
-    whatsapp: !getNotiPreferData?.whatsapp,
-  });
-
   const notificationData = [
     {
       id: notificationPreferences?.id,
@@ -78,28 +61,28 @@ const smsData = [
     id: notificationPreferences?.id,
     item: "Offers",
     type: "sms_offers",
-    checked: checkedItems?.sms_offers,
+    checked: notificationPreferences?.sms_offers,
     subItem: "Today's deals and more",
   },
   {
     id: notificationPreferences?.id,
     item: "My Orders",
-    type: "sms_myorders",
-    checked: checkedItems?.sms_myorders,
+    type: "sms_orders",
+    checked: notificationPreferences?.sms_orders,
     subItem: "Latest updates on your orders",
   },
   {
     id: notificationPreferences?.id,
     item: "Recommendations",
     type: "sms_recommendations",
-    checked: checkedItems?.sms_recommendations,
+    checked: notificationPreferences?.sms_recommendations,
     subItem: "Receive recommendations based on your shopping activity",
   },
   {
     id: notificationPreferences?.id,
     item: "Reminders",
     type: "sms_reminders",
-    checked: checkedItems?.sms_reminders,
+    checked: notificationPreferences?.sms_reminders,
     subItem: "Price drops, back-in-stock products, etc.",
   },
 ];
@@ -109,28 +92,28 @@ const emailData = [
     id: notificationPreferences?.id,
     item: "Offers",
     type: "email_offers",
-    checked: checkedItems?.email_offers,
+    checked: notificationPreferences?.email_offers,
     subItem: "Today's deals and more",
   },
   {
     id: notificationPreferences?.id,
     item: "My Orders",
-    type: "email_myorders",
-    checked: checkedItems?.email_myorders,
+    type: "email_orders",
+    checked: notificationPreferences?.email_orders,
     subItem: "Latest updates on your orders",
   },
   {
     id: notificationPreferences?.id,
     item: "Recommendations",
     type: "email_recommendations",
-    checked: checkedItems?.email_recommendations,
+    checked: notificationPreferences?.email_recommendations,
     subItem: "Receive recommendations based on your shopping activity",
   },
   {
     id: notificationPreferences?.id,
     item: "Reminders",
     type: "email_reminders",
-    checked: checkedItems?.email_reminders,
+    checked: notificationPreferences?.email_reminders,
     subItem: "Price drops, back-in-stock products, etc.",
   },
 ];
@@ -140,69 +123,42 @@ const whatsappData = [
     id: notificationPreferences?.id,
     item: "Offers",
     type: "whatsapp_offers",
-    checked: checkedItems?.whatsapp_offers,
+    checked: notificationPreferences?.whatsapp_offers,
     subItem: "Today's deals and more",
   },
   {
     id: notificationPreferences?.id,
     item: "My Orders",
-    type: "whatsapp_myorders",
-    checked: checkedItems?.whatsapp_myorders,
+    type: "whatsapp_orders",
+    checked: notificationPreferences?.whatsapp_orders,
     subItem: "Latest updates on your orders",
   },
   {
     id: notificationPreferences?.id,
     item: "Recommendations",
     type: "whatsapp_recommendations",
-    checked: checkedItems?.whatsapp_recommendations,
+    checked: notificationPreferences?.whatsapp_recommendations,
     subItem: "Receive recommendations based on your shopping activity",
   },
   {
     id: notificationPreferences?.id,
     item: "Reminders",
     type: "whatsapp_reminders",
-    checked: checkedItems?.whatsapp_reminders,
+    checked: notificationPreferences?.whatsapp_reminders,
     subItem: "Price drops, back-in-stock products, etc.",
   },
 ];
 
   const handleToggle = (id, key) => {
-    console.log("id,key switch toggler", id, key);
-    console.log("checkboxDisabled", checkboxDisabled);
+    console.log("id,key", id, key);
     const updatedPreference = { [key]: !notificationPreferences[key] };
     setNotificationPreferences((prevState) => ({
       ...prevState,
       [key]: !prevState[key],
     }));
-    if (key==="sms"||key==="email"||key==="whatsapp") {
-      setCheckboxDisabled((prevState) => ({
-        ...prevState,
-        [key]: !prevState[key],
-      }));
-    }
     dispatch(updateNotificationPreferenceInitiate(id, updatedPreference));
-   
-      
-    
   };
-
-  const handleCheckboxChange = (id, type) => {
-    console.log("id,type checkbox toggler", id, type);
-    const updatedCheckedItems = {
-      ...checkedItems,
-      [type]: !checkedItems[type],
-    };
-    const checkedBoxItems = {[type]: updatedCheckedItems[type]};
-    // setCheckedItems(updatedCheckedItems);
-    setCheckedItems((prevState) => ({
-      ...prevState,
-      [type]: !prevState[type],
-    }));
-
-    dispatch(
-      updateNotificationPreferenceInitiate(id,checkedBoxItems)
-    );
-  };
+  
   return (
     <>
       <Box
@@ -316,19 +272,16 @@ const whatsappData = [
                       <Switch
                         {...label}
                         onChange={() =>
-                          handleToggle(notificationPreferences?.id, "sms")
+                          handleToggle(
+                            notificationPreferences?.id,
+                            "sms"
+                          )
                         }
                         checked={!!notificationPreferences?.sms}
                         color="warning"
                       />
                     </Box>
-                    {/* <ListInNotfications list={smsData} /> */}
-                    <ListInNotfications
-                      list={smsData}
-                      handleCheckboxChange={handleCheckboxChange}
-                      checkedItems={checkedItems}
-                      disabled={checkboxDisabled.sms}
-                    />
+                    <ListInNotfications list={smsData} />
                   </Imports.Paper>
                 </Box>
               </Grid>
@@ -398,19 +351,16 @@ const whatsappData = [
                       <Switch
                         {...label}
                         onChange={() =>
-                          handleToggle(notificationPreferences?.id, "email")
+                          handleToggle(
+                            notificationPreferences?.id,
+                            "email"
+                          )
                         }
                         checked={!!notificationPreferences?.email}
                         color="warning"
                       />
                     </Box>
-                    {/* <ListInNotfications list={emailData} /> */}
-                    <ListInNotfications
-                      list={emailData}
-                      handleCheckboxChange={handleCheckboxChange}
-                      checkedItems={checkedItems}
-                      disabled={checkboxDisabled.email}
-                    />
+                    <ListInNotfications list={emailData} />
                   </Imports.Paper>
                 </Box>
               </Grid>
@@ -445,19 +395,18 @@ const whatsappData = [
                       <Switch
                         {...label}
                         onChange={() =>
-                          handleToggle(notificationPreferences?.id, "whatsapp")
+                          handleToggle(
+                            notificationPreferences?.id,
+                            "whatsapp"
+                          )
                         }
-                        checked={!!notificationPreferences?.whatsapp}
+                        checked={
+                          !!notificationPreferences?.whatsapp
+                        }
                         color="warning"
                       />
                     </Box>
-                    {/* <ListInNotfications list={whatsappData} /> */}
-                    <ListInNotfications
-                      list={whatsappData}
-                      handleCheckboxChange={handleCheckboxChange}
-                      checkedItems={checkedItems}
-                      disabled={checkboxDisabled.whatsapp}
-                    />
+                    <ListInNotfications list={whatsappData} />
                   </Imports.Paper>
                 </Box>
               </Grid>
@@ -469,4 +418,4 @@ const whatsappData = [
   );
 };
 
-export default MyProfileNotificationPreferences;
+export default MyProfileNotificationPreferences1;

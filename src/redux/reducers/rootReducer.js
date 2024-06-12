@@ -38,7 +38,8 @@ import privacyAndPolicyDataReducer from "./others/privacyAndPolicyReducer";
 import termsAndConditionsDataReducer from "./others/termsAndConditonsReducer";
 // notification preferences
 import notificationPreferenceReducer from "./notificationPreferences/notificationPreferenceReducer";
-
+// about us
+import aboutUsDataReducer from "./others/aboutUsReducer";
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
@@ -80,5 +81,7 @@ const rootReducer = combineReducers({
 
   // notification Preferences
   notificationpreferencedata: notificationPreferenceReducer,
+  // abour us
+  aboutusdata: aboutUsDataReducer,
 });
 export default rootReducer;

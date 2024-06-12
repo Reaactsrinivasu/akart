@@ -15,9 +15,7 @@ export const loadNotificationPreferencesApi = async () => {
 export const updateNotificationPreferencesApi = async (userId, preference) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await api.put(`${endPoints}/${userId}`, {
-        notification_preference: preference,
-      });
+      const result = await api.put(`${endPoints}/${userId}`, preference);
       console.log("result updateNotificationPreferencesApi api", result.data);
       resolve(result.data); // Directly resolving with the data
     } catch (error) {
