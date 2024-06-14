@@ -9,6 +9,9 @@ const MyProfile = React.lazy(() => import("./pages/MyProfile/MyProfile"));
 const PaymementStatus = React.lazy(() =>
   import("./pages/Payments/PaymementStatus")
 );
+const PaymentOptions = React.lazy(() =>
+  import("./pages/Payments/PaymentOptions")
+);
 const MyProfileMyAccounts = React.lazy(() =>
   import("./pages/MyProfile/MyProfileMyAccounts")
 );
@@ -22,9 +25,10 @@ const MyProfileNotificationPreferences = React.lazy(() =>
   import("./pages/MyProfile/MyProfileNotificationPreferences")
 );
 const CheckoutPage = React.lazy(() => import("./pages/Payments/CheckoutPage"));
-const Payments = React.lazy(() =>
-  import("./pages/Payments/Payments")
+const PaymentMethods = React.lazy(() =>
+  import("./pages/Payments/PaymentMethods")
 );
+
 const ViewOrder = React.lazy(() =>
   import("./pages/OrderManagement/ViewOrder")
 );
@@ -150,8 +154,9 @@ const Approutes = () => {
             <Route path="/orders" exact element={<Orders />} />
             <Route path="/vieworders" exact element={<ViewOrder />} />
             <Route path="/checkout" exact element={<CheckoutPage />} />
-            <Route path="/payments" exact element={<Payments />} />
+            <Route path="/payments" exact element={<PaymentMethods />} />
             <Route path="/paymentstatus" exact element={<PaymementStatus />} />
+            <Route path="/paymentoptions" exact element={<PaymentOptions />} />
             <Route path="/termsofuse" exact element={<TermsOfUse />} />
             <Route path="/privacypolicy" exact element={<PrivacyPolicy />} />
             <Route path="/aboutus" exact element={<AboutUs />} />

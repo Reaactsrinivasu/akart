@@ -14,8 +14,12 @@ import ReusableLink from "../../components/Link";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
-const PaymentOptions = () => {
+import { createPaymentWithCodInitiate } from "../../redux/actions/payments/paymentWithCodActions";
+const PaymentOptions = (data) => {
+  const orderAndAddressIds = data?.data;
+  console.log("orderAndAddressIds", orderAndAddressIds);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState("");
   const [disable, setDisable] = useState(false);
   const handleChange = (event) => {
@@ -24,6 +28,7 @@ const PaymentOptions = () => {
 
   const radioButtonHandler = (event) => {
     const newValue = event.target.value;
+    console.log("newValue", newValue);
     setSelectedValue(newValue);
   };
   const imageList = [
@@ -58,6 +63,14 @@ const PaymentOptions = () => {
       </ReusableLink>
     );
   };
+  const submitHandler = () => {
+    const postParams = {
+      ...orderAndAddressIds,
+      type: selectedValue,
+    };
+    console.log("postParams", postParams);
+    dispatch(createPaymentWithCodInitiate(postParams,navigate));
+  }
   return (
     <>
       <DemoPaper variant="outlined">
@@ -291,7 +304,7 @@ const PaymentOptions = () => {
                   onChange={radioButtonHandler}
                 >
                   <FormControlLabel
-                    value="Cash on delivery/Pay on delivery"
+                    value="CashOnDelivery"
                     control={
                       <Radio
                         onChange={radioButtonHandler}
@@ -336,7 +349,8 @@ const PaymentOptions = () => {
                 }}
               >
                 <Box
-                  onClick={() => navigate("/paymentstatus")}
+                  // onClick={() => navigate("/paymentstatus")}
+                  onClick={()=>submitHandler()}
                   component="button"
                   disabled={selectedValue === ""}
                   sx={{

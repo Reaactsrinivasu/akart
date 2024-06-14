@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 
-const AddtoCartCounter = () => {
+const AddtoCartCounter = (props) => {
   const [count, setCount] = useState(0);
 
   const handleIncrement = () => {
@@ -19,7 +19,7 @@ const AddtoCartCounter = () => {
   };
 
   return (
-    <Box display="flex" alignItems="center" sx={{gap:1.5,mt:1,mb:1}}>
+    <Box display="flex" alignItems="center" sx={{ gap: 1.5, mt: 1, mb: 1 }}>
       <IconButton
         onClick={handleDecrement}
         sx={{
@@ -33,7 +33,7 @@ const AddtoCartCounter = () => {
       </IconButton>
       <Box
         sx={{
-          padding:'5px',
+          padding: "5px",
           width: "60px",
           // width: '100%',
           textAlign: "center",
@@ -42,7 +42,9 @@ const AddtoCartCounter = () => {
           // margin: "0 10px",
         }}
       >
-        <Typography variant="body1">{count}</Typography>
+        <Typography variant="body1">
+          {props?.items ? props?.items : count}
+        </Typography>
       </Box>
       <IconButton
         onClick={handleIncrement}

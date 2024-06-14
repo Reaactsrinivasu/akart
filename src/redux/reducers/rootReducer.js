@@ -40,6 +40,11 @@ import termsAndConditionsDataReducer from "./others/termsAndConditonsReducer";
 import notificationPreferenceReducer from "./notificationPreferences/notificationPreferenceReducer";
 // about us
 import aboutUsDataReducer from "./others/aboutUsReducer";
+// checkoutorderdata
+import orderInCheckOutReducer from "./payments/checkOutPageReducer";
+// payment with cod 
+import paymentWithCodReducer from "./payments/paymentWithCodReducer";
+
 const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
@@ -83,5 +88,9 @@ const rootReducer = combineReducers({
   notificationpreferencedata: notificationPreferenceReducer,
   // abour us
   aboutusdata: aboutUsDataReducer,
+  // checkoutorderdata
+  checkoutorderdata: orderInCheckOutReducer,
+  // payment with cod
+  codpaymentdata: paymentWithCodReducer,
 });
 export default rootReducer;
