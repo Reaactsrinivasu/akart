@@ -44,8 +44,9 @@ import aboutUsDataReducer from "./others/aboutUsReducer";
 import orderInCheckOutReducer from "./payments/checkOutPageReducer";
 // payment with cod 
 import paymentWithCodReducer from "./payments/paymentWithCodReducer";
-
-const rootReducer = combineReducers({
+// adding  fcm token to backend
+import createFCMTokenReducer from "./notifications/createFCMTokenReducer";
+ const rootReducer = combineReducers({
   resendotpdata: resendOtpReducer,
   emaillogindata: emailLoginReducer,
   updateuserdata: updateUserAccountReducer,
@@ -92,5 +93,7 @@ const rootReducer = combineReducers({
   checkoutorderdata: orderInCheckOutReducer,
   // payment with cod
   codpaymentdata: paymentWithCodReducer,
+  // creating fcm token
+  fcmtokendata: createFCMTokenReducer,
 });
 export default rootReducer;
