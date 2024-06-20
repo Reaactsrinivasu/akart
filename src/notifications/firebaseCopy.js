@@ -1,20 +1,26 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDepSZFaBM-6OL0XwhpH1SZpwO90roCh4Q",
-  authDomain: "my-push-notifications-666.firebaseapp.com",
-  projectId: "my-push-notifications-666",
-  storageBucket: "my-push-notifications-666.appspot.com",
-  messagingSenderId: "254670177759",
-  appId: "1:254670177759:web:68c9274c47a872accbf06a",
-  measurementId: "G-Z5T0C2WGLH",
+  apiKey: "AIzaSyBnenxG5dPH9_LAp-P2e4TrnyfGsFVYpcU",
+  authDomain: "akart-ef5dd.firebaseapp.com",
+  projectId: "akart-ef5dd",
+  storageBucket: "akart-ef5dd.appspot.com",
+  messagingSenderId: "1022418037023",
+  appId: "1:1022418037023:web:a184e5bb48e323e26de82a",
+  measurementId: "G-Q5YHN9D1RN",
 };
+
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 export const generateToken = async () => {
   try {
     const permission = await Notification.requestPermission();
+    console.log('Permission status:', permission);
+
     if (permission === "granted") {
       const token = await getToken(messaging, {
         vapidKey:
@@ -33,10 +39,11 @@ export const generateToken = async () => {
     throw error;
   }
 };
+
 export const onMessageListener = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
-      console.log("Message received in foreground:", payload);
+      console.log('Message received in foreground:', payload);
       resolve(payload);
     });
   });

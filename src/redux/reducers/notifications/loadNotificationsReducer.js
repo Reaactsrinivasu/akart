@@ -1,29 +1,30 @@
-
 import * as types from "../../actions/actionTypes";
 
 const initialState = {
-  createNotificationData: {
-    users: [], 
+  loadeNotificationData: {
+    users: [],
     token: null,
     loading: false,
   },
 };
-const createFCMTokenReducer = (
-  state = initialState.createNotificationData,
+const loadNotificationReducer = (
+  state = initialState.loadeNotificationData,
   action
 ) => {
   switch (action.type) {
-    case types.CREATE_FCM_TOKEN_START:
+    case types.LOAD_NOTIFICATIONS_START:
       return {
         ...state,
         loading: true,
       };
-    case types.CREATE_FCM_TOKEN_SUCCESS:
+
+    case types.LOAD_NOTIFICATIONS_SUCCESS:
       return {
         ...state,
         loading: false,
+        data: action.payload,
       };
-    case types.CREATE_FCM_TOKEN_ERROR:
+    case types.LOAD_NOTIFICATIONS_ERROR:
       return {
         ...state,
         loading: false,
@@ -33,4 +34,4 @@ const createFCMTokenReducer = (
       return state;
   }
 };
-export default createFCMTokenReducer;
+export default loadNotificationReducer;

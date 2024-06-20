@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState,useEffect} from "react";
 import {
   AppBar,
   Toolbar,
@@ -24,17 +24,21 @@ import Atc from "./Atc";
 import Profile from "./Profile";
 import Orders from "./Orders";
 import Pm from "./Pm";
+import Notification from "./Notification";
+import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
+import Badge from "@mui/material/Badge";
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
   const navigate = useNavigate();
-  
+
   return (
     // <Box sx={{ display: "flex" }}>
     <Box>
@@ -211,6 +215,15 @@ const Navbar = () => {
             }}
           >
             <CartIcon />
+          </Box>
+          <Box
+            style={{
+              // marginLeft: "auto",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+          <Notification />
           </Box>
         </Toolbar>
       </AppBar>

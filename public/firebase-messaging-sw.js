@@ -1,39 +1,22 @@
-// Give the service worker access to Firebase Messaging.
-// Note that you can only use Firebase Messaging here. Other Firebase libraries
-// are not available in the service worker.
-importScripts("https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js");
-importScripts(
-  "https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"
-);
+// public/firebase-messaging-sw.js
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging-compat.js');
 
-// Initialize the Firebase app in the service worker by passing in
-// your app's Firebase config object.
-// https://firebase.google.com/docs/web/setup#config-object
 firebase.initializeApp({
-  apiKey: "AIzaSyBnenxG5dPH9_LAp-P2e4TrnyfGsFVYpcU",
-  authDomain: "akart-ef5dd.firebaseapp.com",
-  projectId: "akart-ef5dd",
-  storageBucket: "akart-ef5dd.appspot.com",
-  messagingSenderId: "1022418037023",
-  appId: "1:1022418037023:web:a184e5bb48e323e26de82a",
-  measurementId: "G-Q5YHN9D1RN",
+  apiKey: "AIzaSyDepSZFaBM-6OL0XwhpH1SZpwO90roCh4Q",
+  authDomain: "my-push-notifications-666.firebaseapp.com",
+  projectId: "my-push-notifications-666",
+  storageBucket: "my-push-notifications-666.appspot.com",
+  messagingSenderId: "254670177759",
+  appId: "1:254670177759:web:68c9274c47a872accbf06a",
+  measurementId: "G-Z5T0C2WGLH",
 });
-
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
 const messaging = firebase.messaging();
-
 messaging.onBackgroundMessage((payload) => {
-  console.log(
-    "[firebase-messaging-sw.js] Received background message ",
-    payload
-  );
-  // Customize notification here
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: payload.notification.image,
   };
-
   self.registration.showNotification(notificationTitle, notificationOptions);
 });

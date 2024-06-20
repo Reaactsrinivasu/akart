@@ -1,5 +1,7 @@
 import * as types from "../actionTypes";
-import { createFCMTokenApi } from "../../apis/notifications/createFCMTokenApi";
+import {
+  createFCMTokenApi,
+} from "../../apis/notifications/createFCMTokenApi";
 //adding fcm token 
 export const createFCMTokenStart = (users) => {
   return {
@@ -14,6 +16,17 @@ export const createFCMTokenError = (error) => ({
   type: types.CREATE_FCM_TOKEN_ERROR,
   payload: error,
 });
+export const loadNotificationsDataStart = () => ({
+  type: types.LOAD_NOTIFICATIONS_START,
+});
+export const loadNotificationsDataSuccess = (data) => ({
+  type: types.LOAD_NOTIFICATIONS_SUCCESS,
+  payload: data,
+});
+export const loadNotificationsDataError = (error) => ({
+  type: types.LOAD_NOTIFICATIONS_ERROR,
+  payload: error,
+});
 
 export const createFCMTokenInitiate = (user, navigate) => {
   return function (dispatch) {
@@ -26,6 +39,7 @@ export const createFCMTokenInitiate = (user, navigate) => {
       .catch((error) => dispatch(createFCMTokenError(error.message)));
   };
 };
+
 export default {
   createFCMTokenInitiate,
 };

@@ -6,6 +6,7 @@ import Layout from "../../Layout/Layout";
 import Imports from "../../common/Imports";
 import AddtoCartCounter from "../AddToCart/AddtoCartcounter";
 import { loadOrderInCheckOutInitiate } from "../../redux/actions/payments/checkOutPageActions";
+import { easing } from "@mui/material";
 const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -28,10 +29,16 @@ const CheckoutPage = () => {
   const upperCaseName =
     `${userAddressData?.first_name} ${userAddressData?.last_name}`.toUpperCase();
   const orderData = getOrderDataInCheckOut && getOrderDataInCheckOut?.order;
+  const TotalPayableAmount = 100 + 100 + orderData?.discount_price;
   console.log("orderData", orderData);
   const productIdsData = {
     addressId: userAddressData?.id,
     orderProductId: orderData?.product_id,
+    userName: `${userAddressData?.first_name} ${userAddressData?.last_name}`,
+    // email: userAddressData?.email,
+    phoneNumber: userAddressData?.phone_number,
+    totalPrice: TotalPayableAmount,
+    productImage: orderData?.product_images_urls[0],
   };
   return (
     <>
@@ -490,7 +497,7 @@ const CheckoutPage = () => {
                                 textAlign="left"
                                 fontWeight="bold"
                               >
-                                ₹{100 + 100 + orderData?.discount_price}
+                                ₹{TotalPayableAmount}
                               </Imports.Typography>
                             </Imports.Box>
                           </Imports.Grid>

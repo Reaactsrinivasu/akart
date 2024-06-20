@@ -1,9 +1,11 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { googleLogout, useGoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useNavigate, useLocation } from "react-router-dom";
 import Imports from "../../../common/Imports";
 import DataTerms from "../../../common/DataTerms";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   initialValues,
   generateValidationSchema,
@@ -12,79 +14,82 @@ const GoogleIcon = "assets/imgs/google.png";
 const FacebookIcon = "assets/imgs/facebook.png";
 
 const Login = () => {
-   const [profile, setProfile] = Imports?.useState();
-   const location = useLocation();
-   const navigate = useNavigate();
-   const preData = location?.state;
-   const [credential, setCredential] = Imports?.useState(preData);
-   const login = useGoogleLogin({
-     // onSuccess: (tokenResponse) => console.log(tokenResponse),
-     onSuccess: async (response) => {
-       try {
-         const res = await Imports.axios
-           .get(
-             `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${response.access_token}`,
-             {
-               headers: {
-                 Authorization: `Bearer ${response.access_token}`,
-                 Accept: "application/json",
-               },
-             }
-           )
-           .then((res) => {
-             setProfile(res.data);
-             // console.log('res', res);
-           })
-           .catch((err) => console.log(err));
-         // console.log('res',res)
-       } catch (err) {
-         // console.log(err);
-       }
-     },
-   });
-   const responseFacebook = (response) => {
-     // console.log(response.picture?.data.url);
-     setProfile(response);
-   };
-   // const profiePic = profile?.picture?.data.url;
-   // console.log("profile", profile?.picture);
-   const logOut = () => {
-     googleLogout();
-     setProfile(null);
-   };
 
-   const authHandler = (err, data) => {
-     //  console.log("insta data",err, data);
+  const [profile, setProfile] = Imports?.useState();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const preData = location?.state;
+  const [credential, setCredential] = Imports?.useState(preData);
+  
+  const login = useGoogleLogin({
+    // onSuccess: (tokenResponse) => console.log(tokenResponse),
+    onSuccess: async (response) => {
+      try {
+        const res = await Imports.axios
+          .get(
+            `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${response.access_token}`,
+            {
+              headers: {
+                Authorization: `Bearer ${response.access_token}`,
+                Accept: "application/json",
+              },
+            }
+          )
+          .then((res) => {
+            setProfile(res.data);
+            // console.log('res', res);
+          })
+          .catch((err) => console.log(err));
+        // console.log('res',res)
+      } catch (err) {
+        // console.log(err);
+      }
+    },
+  });
+  const responseFacebook = (response) => {
+    // console.log(response.picture?.data.url);
+    setProfile(response);
   };
- const handleSubmit = async (values) => {
+  // const profiePic = profile?.picture?.data.url;
+  // console.log("profile", profile?.picture);
+  const logOut = () => {
+    googleLogout();
+    setProfile(null);
+  };
+
+  const authHandler = (err, data) => {
+    //  console.log("insta data",err, data);
+  };
+  const handleSubmit = async (values) => {
     console.log("email login ", values);
-      // Determine whether the entered value is an email or mobile number
-      const isEmail = /^\S+@\S+\.\S+$/.test(values?.input);
-      const isMobileNumber = /^\d{10}$/.test(values?.input);
-      console.log("isEmail ", isEmail);
+    // Determine whether the entered value is an email or mobile number
+    const isEmail = /^\S+@\S+\.\S+$/.test(values?.input);
+    const isMobileNumber = /^\d{10}$/.test(values?.input);
+    console.log("isEmail ", isEmail);
 
-   if (isEmail) {
-     navigate("/login/email", { state: values?.input });
-   } else if (isMobileNumber) {
-     // Redirect to login with mobile number page
-     navigate("/login/mobile", { state: values?.input });
-   } else {
-     // Handle invalid input
-     Imports.toast.error("Invalid email or mobile number");
-   }
+    if (isEmail) {
+      navigate("/login/email", { state: values?.input });
+    } else if (isMobileNumber) {
+      // Redirect to login with mobile number page
+      navigate("/login/mobile", { state: values?.input });
+    } else {
+      // Handle invalid input
+      Imports.toast.error("Invalid email or mobile number");
+    }
 
-   // const data = new FormData(event.currentTarget);
-   // console.log("credential", credential);
- };
- const formFields = ["input"];
- const validationSchema = generateValidationSchema(formFields);
- const formik = Imports.useFormik({
-   initialValues: {
-    input:""
-   },
-   validationSchema: validationSchema,
-   onSubmit: (values) => handleSubmit(values),
- });
+    // const data = new FormData(event.currentTarget);
+    // console.log("credential", credential);
+  };
+  const formFields = ["input"];
+  const validationSchema = generateValidationSchema(formFields);
+  const formik = Imports.useFormik({
+    initialValues: {
+      input: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => handleSubmit(values),
+  });
   return (
     <>
       <Imports.ReusableBgBox
