@@ -27,7 +27,7 @@ useEffect(() => {
       const firebaseToken = await generateToken();
       if (firebaseToken) {
         console.log("Firebase token: ", firebaseToken);
-        dispatch(createFCMTokenInitiate(firebaseToken));
+        // dispatch(createFCMTokenInitiate(firebaseToken));
       }
 
       onMessageListener()
