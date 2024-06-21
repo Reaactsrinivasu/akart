@@ -15,6 +15,7 @@ import { loadAddProductToCartInitiate } from "../../../redux/actions/addToCart/a
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import loadInnerProductDataInitiate from "../../../redux/actions/InnerProduct/getInnerProductWithId";
+import {createOrderInCheckOutInitiate} from "../../../redux/actions/payments/checkOutPageActions";
 import Imports from "../../../common/Imports";
 
 // Memoize the component
@@ -39,11 +40,9 @@ const InnerProductMagnifier = React.memo((props) => {
       dispatch(loadInnerProductDataInitiate(linkName));
     }
   }, [dispatch, linkName]);
-
   const [hoveredImage, setHoveredImage] = useState(
     innerProductsData?.magnifier_images?.[0] || null
   );
-
   useEffect(() => {
     if (innerProductsData?.magnifier_images?.[0]) {
       setHoveredImage(innerProductsData.magnifier_images[0]);
@@ -53,7 +52,6 @@ const InnerProductMagnifier = React.memo((props) => {
   const handleHoverImage = useCallback((image) => {
     setHoveredImage(image);
   }, []);
-
   const addWishListHandler = useCallback(
     (itemId) => {
       dispatch(createWishListDataInitiate(itemId));
@@ -63,7 +61,6 @@ const InnerProductMagnifier = React.memo((props) => {
     },
     [dispatch]
   );
-
   const deleteWishListHandler = useCallback(
     (itemId) => {
       dispatch(deleteWishListDataInitiate(itemId));
@@ -73,7 +70,6 @@ const InnerProductMagnifier = React.memo((props) => {
     },
     [dispatch]
   );
-
   const addToCartHandler = useCallback(
     (id) => {
       dispatch(createAddProductToCartInitiate(id));
@@ -83,15 +79,22 @@ const InnerProductMagnifier = React.memo((props) => {
     },
     [dispatch]
   );
-  const orderProductHandler = useCallback(
+  // const orderProductHandler = useCallback(
+  //   (productId) => {
+  //     dispatch(createOrderDetailsInitiate(productId));
+  //     setTimeout(() => {
+  //       navigate("/checkout", { state: innerProductsData });
+  //     }, 1000);
+  //   },
+  //   [dispatch, navigate, innerProductsData]
+  // );
+  const orderToCheckOutPageHandler = useCallback(
     (productId) => {
-      dispatch(createOrderDetailsInitiate(productId));
-      setTimeout(() => {
-        navigate("/checkout", { state: innerProductsData });
-      }, 1000);
+      dispatch(createOrderInCheckOutInitiate(productId, navigate));
     },
-    [dispatch, navigate, innerProductsData]
+    [dispatch, ]
   );
+  
   return (
     <Grid container p={0} spacing={1}>
       <Grid item xs={12} sm={6} md={5}>
@@ -270,7 +273,9 @@ const InnerProductMagnifier = React.memo((props) => {
               </Grid>
               <Grid item xs={12} sm={12} md={5}>
                 <Imports.Button
-                  onClick={() => orderProductHandler(innerProductsData?.id)}
+                  onClick={() =>
+                    orderToCheckOutPageHandler(innerProductsData?.id)
+                  }
                   startIcon={<FlashOnIcon />}
                   sx={{
                     width: "100%",

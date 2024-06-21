@@ -14,16 +14,24 @@ import ReusableLink from "../../components/Link";
 import { styled } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import AddIcon from "@mui/icons-material/Add";
-const PaymentOptions = () => {
+import { createPaymentWithCodInitiate } from "../../redux/actions/payments/paymentWithCodActions";
+import { LoadNotificationsInitiate } from "../../redux/actions/notifications/loadNotificationsActions";
+import { createTransactionInitiate } from "../../redux/actions/payments/transactionActions";
+const PaymentOptions = (data) => {
+  const orderAndAddressIds = data?.data;
+  console.log("orderAndAddressIds", orderAndAddressIds);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState("");
   const [disable, setDisable] = useState(false);
+
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
   };
 
   const radioButtonHandler = (event) => {
     const newValue = event.target.value;
+    console.log("newValue", newValue);
     setSelectedValue(newValue);
   };
   const imageList = [
@@ -58,6 +66,65 @@ const PaymentOptions = () => {
       </ReusableLink>
     );
   };
+  const amount = orderAndAddressIds?.totalPrice;
+  const submitHandler = (paymentType) => {
+    console.log("paymentType",  paymentType);
+    const postParams = {
+      ...orderAndAddressIds,
+      type: selectedValue,
+    };
+    
+    console.log("amount", amount);
+    console.log("postParams", postParams);
+    if (paymentType === "CashOnDelivery") {
+      dispatch(createPaymentWithCodInitiate(postParams, navigate));
+      setTimeout(() => {
+        dispatch(LoadNotificationsInitiate());
+      }, 100);
+    } else if (paymentType === "CreditDebitCard")
+      console.log("CreditDebitCard");
+    var options = {
+      // key: "YOUR_KEY_ID",
+      key: "rzp_test_M2Sb0gJt4nyRVA",
+      amount: (amount * 100),
+      // currency: "INR",
+      name: "Actimize's  A-kart", //your business name
+      description: "Thanking for Purchanging with A-kart",
+      // image: "https://example.com/your_logo",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR479FWg9YaleiX_ZI76N80c5FfeCg1bBUsqg&s",
+      // image: orderAndAddressIds?.productImage,
+      // order_id: "order_9A33XWu170gUtm",
+      order_id: "order_OObnLXNcQNnVr0",
+      handler: function (response) {
+        console.log("response", response);
+        if (response?.razorpay_payment_id) {
+          dispatch(createTransactionInitiate(amount, navigate));
+        }
+        // navigate("/");
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature);
+      },
+      prefill: {
+        name: orderAndAddressIds?.userName,
+        email: "absv1111@gmail.com",
+        contact: orderAndAddressIds?.phoneNumber,
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp = new window.Razorpay(options);
+    rzp.open();
+  }
+  // const notificationData = useSelector(
+  //   (state) => state?.getnotificationdata?.data?.data?.data || []
+  // );
+  // console.log("notificationData", notificationData);
+  // useEffect(() => {
+  //   dispatch(LoadNotificationsInitiate());
+  // }, [dispatch]);
   return (
     <>
       <DemoPaper variant="outlined">
@@ -70,13 +137,15 @@ const PaymentOptions = () => {
                 aria-labelledby="demo-radio-buttons-group-label"
                 // defaultValue="Credit or debit card"
                 name="radio-buttons-group"
+                // onChange={radioButtonHandler}
                 sx={{ padding: "15px 30px 8px" }}
               >
                 <FormControlLabel
-                  value="Credit or debit card"
+                  value="CreditDebitCard"
                   control={
                     <Radio
-                      disabled
+                      // disabled
+                      onChange={radioButtonHandler}
                       sx={{
                         color: "blue",
                         "& .MuiSvgIcon-root": {
@@ -291,7 +360,7 @@ const PaymentOptions = () => {
                   onChange={radioButtonHandler}
                 >
                   <FormControlLabel
-                    value="Cash on delivery/Pay on delivery"
+                    value="CashOnDelivery"
                     control={
                       <Radio
                         onChange={radioButtonHandler}
@@ -336,7 +405,8 @@ const PaymentOptions = () => {
                 }}
               >
                 <Box
-                  onClick={() => navigate("/paymentstatus")}
+                  // onClick={() => navigate("/paymentstatus")}
+                  onClick={() => submitHandler(selectedValue)}
                   component="button"
                   disabled={selectedValue === ""}
                   sx={{

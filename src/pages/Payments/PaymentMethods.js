@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Grid, Typography, Divider, IconButton } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Radio from "@mui/material/Radio";
@@ -20,6 +22,11 @@ import PaymentStatement from "./PaymentStatement";
 import NeedHelp from "./NeedHelp";
 import ItemsAndDelivery from "./ItemsAndDelivery";
 const PaymentMethods = () => {
+   const location = useLocation();
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
+   const idsData = location?.state;
+   console.log("ids data", idsData);
   const DemoPaper = styled(Paper)(({ theme }) => ({
     width: "100%",
     height: "100%",
@@ -75,7 +82,7 @@ const PaymentMethods = () => {
                       </Grid>
                       {/* demo paper */}
                       <Grid item xs={12} sm={12} md={12} p={1} ml={1}>
-                        <PaymentOptions />
+                        <PaymentOptions data={idsData} />
                       </Grid>
                       {/* Items and Address */}
                       <Grid item xs={12} sm={12} md={12}>

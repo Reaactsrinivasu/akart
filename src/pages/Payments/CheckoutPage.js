@@ -5,13 +5,41 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Layout from "../../Layout/Layout";
 import Imports from "../../common/Imports";
 import AddtoCartCounter from "../AddToCart/AddtoCartcounter";
+import { loadOrderInCheckOutInitiate } from "../../redux/actions/payments/checkOutPageActions";
+import { easing } from "@mui/material";
 const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const viewOrderData = location?.state;
-  console.log("view order details", viewOrderData);
+  const orderId = location?.state;
+  console.log("view order details", orderId);
+  const getOrderDataInCheckOut = useSelector(
+    (state) => state?.checkoutorderdata?.data?.data || []
+  );
+  console.log("getOrderDataInCheckOut", getOrderDataInCheckOut);
+  useEffect(() => {
+    if (orderId) {
+      dispatch(loadOrderInCheckOutInitiate(orderId,navigate));
+    }
+  }, [dispatch, orderId]);
   
+  const userAddressData = getOrderDataInCheckOut && getOrderDataInCheckOut?.address;
+  console.log("userAddressData", userAddressData);
+  
+  const upperCaseName =
+    `${userAddressData?.first_name} ${userAddressData?.last_name}`.toUpperCase();
+  const orderData = getOrderDataInCheckOut && getOrderDataInCheckOut?.order;
+  const TotalPayableAmount = 100 + 100 + orderData?.discount_price;
+  console.log("orderData", orderData);
+  const productIdsData = {
+    addressId: userAddressData?.id,
+    orderProductId: orderData?.product_id,
+    userName: `${userAddressData?.first_name} ${userAddressData?.last_name}`,
+    // email: userAddressData?.email,
+    phoneNumber: userAddressData?.phone_number,
+    totalPrice: TotalPayableAmount,
+    productImage: orderData?.product_images_urls[0],
+  };
   return (
     <>
       <Layout>
@@ -67,10 +95,10 @@ const CheckoutPage = () => {
                       >
                         LOGIN
                       </Imports.Typography>
-                      <Imports.Typography>Aripaka Bhagya Srinivasu</Imports.Typography>
+                      <Imports.Typography>{`${userAddressData?.first_name} ${userAddressData?.last_name}`}</Imports.Typography>
                     </Imports.Paper>
                     {/* user address component */}
-                    {/* <Imports.Paper
+                    <Imports.Paper
                       // variant="outlined"
                       elevation={1}
                       sx={{
@@ -97,23 +125,26 @@ const CheckoutPage = () => {
                         component="span"
                         sx={{ fontWeight: "bold", color: "#212121" }}
                       >
-                        ARIPAKA BHAGYA SRINIVASU{" "}
+                        {upperCaseName}{" "}
                       </Imports.Typography>
                       <Imports.Typography
                         component="span"
                         sx={{ fontSize: "16px" }}
                       >
-                        57-5-7, bade vari street,Jagannadhapuram , Kakinada ,
+                        {/* 57-5-7, bade vari street,Jagannadhapuram , Kakinada ,
                         near small market, East Godavari, Andhra Pradesh, India-
-                        533002, Eastgodavari, Andhra Pradesh -
+                        533002, Eastgodavari, Andhra Pradesh - */}
+                        {`${userAddressData?.house_number}, ${userAddressData?.street}, ${userAddressData?.landmark}, ${userAddressData?.locality}, ${userAddressData?.city}${userAddressData?.state}, ${userAddressData?.country}`}
                       </Imports.Typography>
                       <Imports.Typography
                         component="span"
                         sx={{ fontWeight: "bold", color: "#212121" }}
                       >
-                        533002
+                        {" "}
+                        - {userAddressData?.pincode}
                       </Imports.Typography>
-                    </Imports.Paper> */}
+                    </Imports.Paper>
+                    {/* order summary component */}
                     <Imports.Paper
                       // variant="outlined"
                       elevation={1}
@@ -151,7 +182,7 @@ const CheckoutPage = () => {
                           <Imports.Grid item xs={12} sm={12} md={2}>
                             <Imports.Box
                               component="img"
-                              src={viewOrderData?.magnifier_images[0]}
+                              src={orderData?.product_images_urls?.[0]}
                               alt=""
                               style={{
                                 width: "100%",
@@ -159,7 +190,7 @@ const CheckoutPage = () => {
                                 objectFit: "cover",
                               }}
                             />
-                            <AddtoCartCounter p={1} />
+                            <AddtoCartCounter p={1} items="1" />
                           </Imports.Grid>
                           <Imports.Grid item xs={12} sm={12} md={10}>
                             <Imports.Box
@@ -186,7 +217,7 @@ const CheckoutPage = () => {
                                   variant="h5"
                                   sx={{ fontWeight: "bold" }}
                                 >
-                                  {viewOrderData?.product_name}
+                                  {orderData?.product_name}
                                 </Imports.Typography>
                               </Imports.Box>
 
@@ -220,7 +251,7 @@ const CheckoutPage = () => {
                                   fontWeight="bold"
                                   sx={{ color: "#121212" }}
                                 >
-                                  ₹{viewOrderData?.discount_price}
+                                  ₹{orderData?.discount_price}
                                 </Imports.Typography>
                               </Imports.Box>
                               <Imports.Box
@@ -237,7 +268,7 @@ const CheckoutPage = () => {
                                     textDecorationLine: "line-through",
                                   }}
                                 >
-                                  ₹{viewOrderData?.actual_price}
+                                  ₹{orderData?.actual_price}
                                 </Imports.Typography>
                                 <Imports.Typography
                                   sx={{
@@ -246,14 +277,13 @@ const CheckoutPage = () => {
                                     fontSize: "18px",
                                   }}
                                 >
-                                  {viewOrderData?.discount}
+                                  {orderData?.discount}
                                 </Imports.Typography>
                               </Imports.Box>
                             </Imports.Box>
                           </Imports.Grid>
                         </Imports.Grid>
                       </Imports.Box>
-
                       {/* <Imports.Typography>+91 9440609464</Imports.Typography> */}
                     </Imports.Paper>
                     {/* user GST Invoices */}
@@ -301,7 +331,9 @@ const CheckoutPage = () => {
                         </Imports.Typography>
                       </Imports.Typography>
                       <Imports.Box
-                      onClick={()=>navigate("/payments")}
+                        onClick={() =>
+                          navigate("/payments", { state: productIdsData })
+                        }
                         component="button"
                         sx={{
                           backgroundColor: "#ff9f00",
@@ -313,7 +345,7 @@ const CheckoutPage = () => {
                           whiteSpace: "nowrap",
                           padding: "10px 13px",
                           borderRadius: "5px",
-                          cursor:'pointer',
+                          cursor: "pointer",
                           ml: 2,
                         }}
                       >
@@ -386,7 +418,7 @@ const CheckoutPage = () => {
                                 Price (1 Items)
                               </Imports.Typography>
                               <Imports.Typography textAlign="left">
-                                ₹{viewOrderData?.actual_price}
+                                ₹{orderData?.actual_price}
                               </Imports.Typography>
                             </Imports.Box>
                           </Imports.Grid>
@@ -402,9 +434,7 @@ const CheckoutPage = () => {
                                 Discount
                               </Imports.Typography>
                               <Imports.Typography textAlign="left">
-                                − ₹
-                                {viewOrderData?.actual_price -
-                                  viewOrderData?.discount_price}
+                                − ₹{orderData?.discount_price}
                               </Imports.Typography>
                             </Imports.Box>
                           </Imports.Grid>
@@ -467,7 +497,7 @@ const CheckoutPage = () => {
                                 textAlign="left"
                                 fontWeight="bold"
                               >
-                                ₹{100 + 100 + viewOrderData?.discount_price}
+                                ₹{TotalPayableAmount}
                               </Imports.Typography>
                             </Imports.Box>
                           </Imports.Grid>

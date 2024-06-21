@@ -26,7 +26,7 @@ export const loginWithEmailInitiate = (user, navigate) => {
         console.log(res);
         console.log("res in api", res.status);
         const token = res?.data.token;
-        console.log("res token", token);
+        // console.log("res token", token);
         localStorage.setItem("token", token);
         dispatch(createLoginWithEmailIdSuccess(res));
         if (res.status === 200) {

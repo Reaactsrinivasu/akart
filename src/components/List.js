@@ -11,7 +11,7 @@ const ReusableList = (props) => {
     setOpen(!open);
   };
   return (
-    <List sx={{ width: "100%",}}>
+    <List sx={{ width: "100%" }}>
       <ListItemButton
         onClick={handleClick}
         disableRipple={true}
@@ -26,6 +26,7 @@ const ReusableList = (props) => {
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         {props.list?.map((item, index) => (
+          console.log('props',props),
           <List
             component="div"
             key={index}
@@ -47,7 +48,7 @@ const ReusableList = (props) => {
               }}
             >
               <Checkbox edge="start" />
-              <ListItemText primary={item.item} />
+              <ListItemText primary={item.item} secondary={item.subItem} />
             </ListItemButton>
           </List>
         ))}

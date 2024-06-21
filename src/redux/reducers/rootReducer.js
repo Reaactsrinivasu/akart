@@ -36,44 +36,72 @@ import userAddressReducer from "./address/userAddressDetailsReducer";
 import privacyAndPolicyDataReducer from "./others/privacyAndPolicyReducer";
 // terms and conditins
 import termsAndConditionsDataReducer from "./others/termsAndConditonsReducer";
+// notification preferences
+import notificationPreferenceReducer from "./notificationPreferences/notificationPreferenceReducer";
+// about us
+import aboutUsDataReducer from "./others/aboutUsReducer";
+// checkoutorderdata
+import orderInCheckOutReducer from "./payments/checkOutPageReducer";
+// payment with cod 
+import paymentWithCodReducer from "./payments/paymentWithCodReducer";
+// adding  fcm token to backend
+import createFCMTokenReducer from "./notifications/createFCMTokenReducer";
+// notifications data 
+import loadNotificationReducer from "./notifications/loadNotificationsReducer";
+// create transaction 
+import transactionReducer from "./payments/transactionReducer";
+ const rootReducer = combineReducers({
+   resendotpdata: resendOtpReducer,
+   emaillogindata: emailLoginReducer,
+   updateuserdata: updateUserAccountReducer,
+   mobilelogindata: mobileLoginReducer,
+   emailsignupdata: emailSignupReducer,
+   mobilesignupdata: mobileSignupReducer,
+   emailotpverifydata: emailOtpVerfyReducer,
+   mobileotpverifydata: mobileOtpVerfyReducer,
+   passwordrecoverydata: creatPasswordRecoveryReducer,
+   createnewpassworddata: createNewPasswordReducer,
+   // Home page data
+   homecarouseldata: getHomeCarouselDataReducer,
+   homeyoumaylikedata: homeYouMayLikeDataReducer,
+   hometodaydealsdata: homeTodayDealsDataReducer,
+   homegrandglobaldata: homeGrandGlobalDataReducer,
+   homediscountcardsdata: homeDiscountCardsDataReducer,
+   homeshopbycategorydata: homeShopByCategoryDataReducer,
+   // product page data
+   productdata: productDataReducer,
+   // innerproduct page data
+   innerproductdata: innerProductDataReducer,
+   // wishlist page data
+   wishlistdata: wishListDataReducer,
+   // add to cart page data
+   addtocartdata: addProductToCartDataReducer,
+   // save for later data
+   saveforlaterdata: saveProductForLaterDataReducer,
+   // order details
+   orderdata: orderDataReducer,
+   // getting user account data into My profile dashboard
+   myprofileuserdata: getUserDataReducer,
+   // user address details
+   useraddressdata: userAddressReducer,
+   // privacy and Policy data
+   privacyandpolicydata: privacyAndPolicyDataReducer,
+   // terms and conditions data
+   termsandconditionsdata: termsAndConditionsDataReducer,
 
-const rootReducer = combineReducers({
-  resendotpdata: resendOtpReducer,
-  emaillogindata: emailLoginReducer,
-  updateuserdata: updateUserAccountReducer,
-  mobilelogindata: mobileLoginReducer,
-  emailsignupdata: emailSignupReducer,
-  mobilesignupdata: mobileSignupReducer,
-  emailotpverifydata: emailOtpVerfyReducer,
-  mobileotpverifydata: mobileOtpVerfyReducer,
-  passwordrecoverydata: creatPasswordRecoveryReducer,
-  createnewpassworddata: createNewPasswordReducer,
-  // Home page data
-  homecarouseldata: getHomeCarouselDataReducer,
-  homeyoumaylikedata: homeYouMayLikeDataReducer,
-  hometodaydealsdata: homeTodayDealsDataReducer,
-  homegrandglobaldata: homeGrandGlobalDataReducer,
-  homediscountcardsdata: homeDiscountCardsDataReducer,
-  homeshopbycategorydata: homeShopByCategoryDataReducer,
-  // product page data
-  productdata: productDataReducer,
-  // innerproduct page data
-  innerproductdata: innerProductDataReducer,
-  // wishlist page data
-  wishlistdata: wishListDataReducer,
-  // add to cart page data
-  addtocartdata: addProductToCartDataReducer,
-  // save for later data
-  saveforlaterdata: saveProductForLaterDataReducer,
-  // order details
-  orderdata: orderDataReducer,
-  // getting user account data into My profile dashboard
-  myprofileuserdata: getUserDataReducer,
-  // user address details
-  useraddressdata: userAddressReducer,
-  // privacy and Policy data
-  privacyandpolicydata: privacyAndPolicyDataReducer,
-  // terms and conditions data
-  termsandconditionsdata: termsAndConditionsDataReducer,
-});
+   // notification Preferences
+   notificationpreferencedata: notificationPreferenceReducer,
+   // abour us
+   aboutusdata: aboutUsDataReducer,
+   // checkoutorderdata
+   checkoutorderdata: orderInCheckOutReducer,
+   // payment with cod
+   codpaymentdata: paymentWithCodReducer,
+   // creating fcm token
+   addfcmtokendata: createFCMTokenReducer,
+   // get notifications data
+   getnotificationdata: loadNotificationReducer,
+   //  create transaction data
+   createtransaction: transactionReducer,
+ });
 export default rootReducer;

@@ -9,6 +9,9 @@ const MyProfile = React.lazy(() => import("./pages/MyProfile/MyProfile"));
 const PaymementStatus = React.lazy(() =>
   import("./pages/Payments/PaymementStatus")
 );
+const PaymentOptions = React.lazy(() =>
+  import("./pages/Payments/PaymentOptions")
+);
 const MyProfileMyAccounts = React.lazy(() =>
   import("./pages/MyProfile/MyProfileMyAccounts")
 );
@@ -18,25 +21,14 @@ const MyProfileAddress = React.lazy(() =>
 const MyProfileAllNotifications = React.lazy(() =>
   import("./pages/MyProfile/MyProfileAllNotifications")
 );
-
 const MyProfileNotificationPreferences = React.lazy(() =>
-  import("./pages/MyProfile/MyProfileAllNotifications")
+  import("./pages/MyProfile/MyProfileNotificationPreferences")
 );
-
-const MyProfileAboutUs = React.lazy(() =>
-  import("./pages/MyProfile/MyProfileAboutUs")
-);
-const MyProfileTermsofUse = React.lazy(() =>
-  import("./pages/MyProfile/MyProfileTermsofUse")
-);
-const MyProfilePrivacyPolicy = React.lazy(() =>
-  import("./pages/MyProfile/MyProfilePrivacyPolicy")
-);
-
 const CheckoutPage = React.lazy(() => import("./pages/Payments/CheckoutPage"));
-const Payments = React.lazy(() =>
-  import("./pages/Payments/Payments")
+const PaymentMethods = React.lazy(() =>
+  import("./pages/Payments/PaymentMethods")
 );
+
 const ViewOrder = React.lazy(() =>
   import("./pages/OrderManagement/ViewOrder")
 );
@@ -98,6 +90,8 @@ const UpdateUserAccount = React.lazy(() =>
   import("./pages/UserAuthentication/UserAccount/UpdateUserAccount")
 );
 const TermsOfUse = React.lazy(() => import("./pages/Others/TermsOfUse"));
+
+const AboutUs = React.lazy(() => import("./pages/Others/AboutUs"));
 const PrivacyPolicy = React.lazy(() => import("./pages/Others/PrivacyPolicy"));
 const Approutes = () => {
     //   <Suspense
@@ -160,13 +154,13 @@ const Approutes = () => {
             <Route path="/orders" exact element={<Orders />} />
             <Route path="/vieworders" exact element={<ViewOrder />} />
             <Route path="/checkout" exact element={<CheckoutPage />} />
-            <Route path="/payments" exact element={<Payments />} />
+            <Route path="/payments" exact element={<PaymentMethods />} />
             <Route path="/paymentstatus" exact element={<PaymementStatus />} />
+            <Route path="/paymentoptions" exact element={<PaymentOptions />} />
             <Route path="/termsofuse" exact element={<TermsOfUse />} />
             <Route path="/privacypolicy" exact element={<PrivacyPolicy />} />
-
+            <Route path="/aboutus" exact element={<AboutUs />} />
             <Route path="/myprofile" exact element={<MyProfile />}>
-              <Route path="/myprofile/aboutus" element={<MyProfileAboutUs />} />
               <Route
                 path="/myprofile/notificationprefereances"
                 element={<MyProfileNotificationPreferences />}
