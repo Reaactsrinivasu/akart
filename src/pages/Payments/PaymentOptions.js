@@ -66,8 +66,8 @@ const PaymentOptions = (data) => {
       </ReusableLink>
     );
   };
-  // const amount = orderAndAddressIds?.totalPrice;
-  const amount = 1000000;
+  const amount = orderAndAddressIds?.totalPrice;
+  // const amount = 1000000;
   const submitHandler = (paymentType) => {
     console.log("paymentType",  paymentType);
     const postParams = {
@@ -81,6 +81,7 @@ const PaymentOptions = (data) => {
       // alert("CashOnDelivery");
       dispatch(createPaymentWithCodInitiate(postParams, navigate));
       setTimeout(() => {
+        dispatch(createTransactionInitiate(amount, navigate));
         dispatch(LoadNotificationsInitiate());
       }, 100);
     } else if (paymentType === "CreditDebitCard")
