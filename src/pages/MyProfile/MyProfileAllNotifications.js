@@ -19,6 +19,18 @@ const MyProfileAllNotifications = () => {
   useEffect(() => {
     dispatch(LoadNotificationsInitiate());
   }, [dispatch]);
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      };
+      return date.toLocaleDateString("en-US", options);
+    };
   return (
     <>
       <Imports.Box
@@ -151,7 +163,7 @@ const MyProfileAllNotifications = () => {
                         {item.contents}
                       </Typography>
                       <Typography color="text.secondary">
-                        {item.created_at}
+                        {formatDate(item.created_at)}
                       </Typography>
                     </Imports.Box>
                   </Imports.Box>

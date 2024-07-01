@@ -17,9 +17,12 @@ import AddIcon from "@mui/icons-material/Add";
 import { createPaymentWithCodInitiate } from "../../redux/actions/payments/paymentWithCodActions";
 import { LoadNotificationsInitiate } from "../../redux/actions/notifications/loadNotificationsActions";
 import { createTransactionInitiate } from "../../redux/actions/payments/transactionActions";
-const PaymentOptions = (data) => {
-  const orderAndAddressIds = data?.data;
-  console.log("orderAndAddressIds", orderAndAddressIds);
+const PaymentOptions = () => {
+  const location = useLocation();
+   const order = location?.state;
+
+  // console.log("orderAndAddressIds", orderAndAddressIds);
+  console.log("order", order);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedValue, setSelectedValue] = useState("");
@@ -66,62 +69,69 @@ const PaymentOptions = (data) => {
       </ReusableLink>
     );
   };
-  const amount = orderAndAddressIds?.totalPrice;
-  // const amount = 1000000;
+  // const amount = orderAndAddressIds?.totalPrice;
+  const amount = 1;
   const submitHandler = (paymentType) => {
     console.log("paymentType",  paymentType);
     const postParams = {
-      ...orderAndAddressIds,
+      product_id: order?.product_id,
+      address_id:order?.address_id,
       type: selectedValue,
     };
-    
     console.log("amount", amount);
     console.log("postParams", postParams);
     if (paymentType === "CashOnDelivery") {
-      // alert("CashOnDelivery");
+      alert("CashOnDelivery");
       dispatch(createPaymentWithCodInitiate(postParams, navigate));
       setTimeout(() => {
-        dispatch(createTransactionInitiate(amount, navigate));
+        // dispatch(createTransactionInitiate(amount, navigate));
         dispatch(LoadNotificationsInitiate());
       }, 100);
-    } else if (paymentType === "CreditDebitCard")
+    } else if (paymentType === "CreditDebitCard") {
       alert("CreditDebitCard");
-    // var options = {
-    //   // key: "YOUR_KEY_ID",
-    //   key: "rzp_test_M2Sb0gJt4nyRVA",
-    //   amount: amount * 100,
-    //   // currency: "INR",
-    //   name: "Actimize's  A-kart", //your business name
-    //   description: "Thanking for Purchanging with A-kart",
-    //   // image: "https://example.com/your_logo",
-    //   image:
-    //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR479FWg9YaleiX_ZI76N80c5FfeCg1bBUsqg&s",
-    //   // image: orderAndAddressIds?.productImage,
-    //   // order_id: "order_9A33XWu170gUtm",
-    //   // order_id: "order_OObnLXNcQNnVr0",
-    //   order_id: "order_OPHrQOC5ghdqJ7",
-    //   invoice_id: "inv_OPHpQuiiUK2hl0",
-    //   handler: function (response) {
-    //     console.log("response", response);
-    //     if (response?.razorpay_payment_id) {
-    //       dispatch(createTransactionInitiate(amount, navigate));
-    //     }
-    //     // navigate("/");
-    //     // alert(response.razorpay_payment_id);
-    //     // alert(response.razorpay_order_id);
-    //     // alert(response.razorpay_signature);
-    //   },
-    //   prefill: {
-    //     name: orderAndAddressIds?.userName,
-    //     email: "absv1111@gmail.com",
-    //     contact: orderAndAddressIds?.phoneNumber,
-    //   },
-    //   theme: {
-    //     color: "#3399cc",
-    //   },
-    // };
-    // var rzp = new window.Razorpay(options);
-    // rzp.open();
+    var options = {
+      key: "rzp_test_M2Sb0gJt4nyRVA",
+      amount: amount * 100,
+      // currency: "INR",
+      name: "Actimize's  A-kart", //your business name
+      order_id: order?.order_id,
+      description: "Thanking for Purchanging with A-kart",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR479FWg9YaleiX_ZI76N80c5FfeCg1bBUsqg&s",
+
+      handler: function (response) {
+        console.log("response", response);
+        if (response?.razorpay_payment_id && response?.razorpay_invoice_id) {
+          navigate("/");
+        }
+        // if (response?.razorpay_payment_id) {
+        //   dispatch(createTransactionInitiate(amount, navigate));
+        // }
+        // navigate("/");
+        // alert(response.razorpay_payment_id);
+        // alert(response.razorpay_order_id);
+        // alert(response.razorpay_signature);
+      },
+      prefill: {
+        // name: orderAndAddressIds?.userName,
+        name: "Aripaka Bhagyaa Srinivasuu",
+        email: "absv1111@gmail.com",
+        // contact: orderAndAddressIds?.phoneNumber,
+        contact: "9440609464",
+      },
+      appname: "A-kart",
+      appid: "abc_1234akart",
+      notes: {
+        app_name: "A-kart",
+        app_id: "abc_1234akart",
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp = new window.Razorpay(options);
+    rzp.open();
+    }
   }
   // const notificationData = useSelector(
   //   (state) => state?.getnotificationdata?.data?.data?.data || []

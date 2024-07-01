@@ -15,9 +15,10 @@ import { loadAddProductToCartInitiate } from "../../../redux/actions/addToCart/a
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import loadInnerProductDataInitiate from "../../../redux/actions/InnerProduct/getInnerProductWithId";
-import {createOrderInCheckOutInitiate} from "../../../redux/actions/payments/checkOutPageActions";
+import { createOrderInCheckOutInitiate } from "../../../redux/actions/payments/checkOutPageActions";
+import { createInvoiceInitiate } from "../../../redux/actions/invoice/productInvoiceActions";
 import Imports from "../../../common/Imports";
-
+import { loadUserAddressInitiate } from "../../../redux/actions/address/userAddressActions";
 // Memoize the component
 const InnerProductMagnifier = React.memo((props) => {
   const dispatch = useDispatch();
@@ -34,7 +35,7 @@ const InnerProductMagnifier = React.memo((props) => {
   useEffect(() => {
     dispatch(loadAddProductToCartInitiate());
   }, [dispatch]);
-  
+
   useEffect(() => {
     if (linkName) {
       dispatch(loadInnerProductDataInitiate(linkName));
@@ -88,13 +89,38 @@ const InnerProductMagnifier = React.memo((props) => {
   //   },
   //   [dispatch, navigate, innerProductsData]
   // );
+
+  // const orderToCheckOutPageHandler = useCallback(
+  //   (productId) => {
+  //     dispatch(
+  //       createOrderInCheckOutInitiate(productId,navigate)
+  //     );
+  //   },
+  //   [dispatch, ]
+  // );
+  useEffect(() => {
+    dispatch(loadUserAddressInitiate());
+  }, [dispatch]);
+  const getUserAddress = useSelector(
+    (state) => state.useraddressdata?.data?.data?.data[0] || []
+  );
+
   const orderToCheckOutPageHandler = useCallback(
     (productId) => {
-      dispatch(createOrderInCheckOutInitiate(productId, navigate));
+
+      dispatch(
+        createInvoiceInitiate(
+          {
+            amount: 100,
+            product_id: productId,
+          },
+          navigate
+        )
+      );
     },
-    [dispatch, ]
+    [dispatch]
   );
-  
+
   return (
     <Grid container p={0} spacing={1}>
       <Grid item xs={12} sm={6} md={5}>
@@ -274,7 +300,9 @@ const InnerProductMagnifier = React.memo((props) => {
               <Grid item xs={12} sm={12} md={5}>
                 <Imports.Button
                   onClick={() =>
-                    orderToCheckOutPageHandler(innerProductsData?.id)
+                    orderToCheckOutPageHandler(
+                      innerProductsData?.id
+                    )
                   }
                   startIcon={<FlashOnIcon />}
                   sx={{

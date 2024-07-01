@@ -1,7 +1,7 @@
 import React from 'react'
 import {Typography,IconButton,Badge} from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-const CartIcon = () => {
+const CartIcon = (count) => {
     return (
       <div
         style={{ display: "flex", alignItems: "center", marginRight: "20px" }}

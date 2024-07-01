@@ -50,6 +50,8 @@ import createFCMTokenReducer from "./notifications/createFCMTokenReducer";
 import loadNotificationReducer from "./notifications/loadNotificationsReducer";
 // create transaction 
 import transactionReducer from "./payments/transactionReducer";
+// invoice data
+import createInvoiceReducer from "./invoice/productInvoiceReducer";
  const rootReducer = combineReducers({
    resendotpdata: resendOtpReducer,
    emaillogindata: emailLoginReducer,
@@ -103,5 +105,7 @@ import transactionReducer from "./payments/transactionReducer";
    getnotificationdata: loadNotificationReducer,
    //  create transaction data
    createtransaction: transactionReducer,
+   //  invoice data
+   invoicedata: createInvoiceReducer,
  });
 export default rootReducer;

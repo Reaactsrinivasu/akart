@@ -7,55 +7,40 @@ import Imports from "../../common/Imports";
 import AddtoCartCounter from "../AddToCart/AddtoCartcounter";
 import { loadOrderInCheckOutInitiate } from "../../redux/actions/payments/checkOutPageActions";
 import { easing } from "@mui/material";
-import loadInnerProductDataInitiate from "../../redux/actions/InnerProduct/getInnerProductWithId";
-import { loadUserAddressInitiate } from "../../redux/actions/address/userAddressActions";
 const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  // checout product data
   const checkOutItemData = location?.state;
-  console.log("checkOutItemData", checkOutItemData);
-  const product_id = checkOutItemData?.product?.id;
-  console.log("product_id", product_id);
-  const orderData = checkOutItemData?.data?.attributes;
+  console.log("view order details", orderId);
   const razorPayOrderId = checkOutItemData?.data?.attributes?.order_id;
-  console.log("orderData", orderData);
-  console.log("razorPayOrderId", razorPayOrderId);
-  const getOrderDataInCheckOut = useSelector(
-    (state) => state?.innerproductdata?.data?.data[0] || {}
-  );
-  console.log(
-    "getOrderDataInCheckOut in checkout page",
-    getOrderDataInCheckOut
-  );
-  useEffect(() => {
-    console.log("on refresh", product_id);
-      dispatch(loadInnerProductDataInitiate(product_id));
-  }, [dispatch,product_id]);
-  // checkout address data
-  const userAddressData = useSelector(
-    (state) => state.useraddressdata?.data?.data?.data[0] || []
-  );
-  useEffect(() => {
-    dispatch(loadUserAddressInitiate());
-  }, [dispatch]);
+// for future
+  // const getOrderDataInCheckOut = useSelector(
+  //   (state) => state?.checkoutorderdata?.data?.data || []
+  // );
+  // console.log("getOrderDataInCheckOut", getOrderDataInCheckOut);
+  // useEffect(() => {
+  //   if (orderId) {
+  //     dispatch(loadOrderInCheckOutInitiate(orderId,navigate));
+  //   }
+  // }, [dispatch, orderId]);
+  
+  const userAddressData = getOrderDataInCheckOut && getOrderDataInCheckOut?.address;
   console.log("userAddressData", userAddressData);
   
-
   const upperCaseName =
     `${userAddressData?.first_name} ${userAddressData?.last_name}`.toUpperCase();
-
-  const TotalPayableAmount =
-    100 +
-    100 +
-    getOrderDataInCheckOut?.discount_price;
-
+  const orderData = getOrderDataInCheckOut && getOrderDataInCheckOut?.order;
+  const TotalPayableAmount = 100 + 100 + orderData?.discount_price;
+  console.log("orderData", orderData);
   const productIdsData = {
-    product_id: checkOutItemData?.product?.id,
-    address_id: userAddressData?.id,
-    order_id: razorPayOrderId,
+    addressId: userAddressData?.id,
+    orderProductId: orderData?.product_id,
+    userName: `${userAddressData?.first_name} ${userAddressData?.last_name}`,
+    // email: userAddressData?.email,
+    phoneNumber: userAddressData?.phone_number,
+    totalPrice: TotalPayableAmount,
+    productImage: orderData?.product_images_urls[0],
   };
   return (
     <>
@@ -199,9 +184,7 @@ const CheckoutPage = () => {
                           <Imports.Grid item xs={12} sm={12} md={2}>
                             <Imports.Box
                               component="img"
-                              src={
-                                getOrderDataInCheckOut?.magnifier_images?.[0]
-                              }
+                              src={orderData?.product_images_urls?.[0]}
                               alt=""
                               style={{
                                 width: "100%",
@@ -236,7 +219,7 @@ const CheckoutPage = () => {
                                   variant="h5"
                                   sx={{ fontWeight: "bold" }}
                                 >
-                                  {getOrderDataInCheckOut?.product_name}
+                                  {orderData?.product_name}
                                 </Imports.Typography>
                               </Imports.Box>
 
@@ -270,7 +253,7 @@ const CheckoutPage = () => {
                                   fontWeight="bold"
                                   sx={{ color: "#121212" }}
                                 >
-                                  ₹{getOrderDataInCheckOut?.discount_price}
+                                  ₹{orderData?.discount_price}
                                 </Imports.Typography>
                               </Imports.Box>
                               <Imports.Box
@@ -287,7 +270,7 @@ const CheckoutPage = () => {
                                     textDecorationLine: "line-through",
                                   }}
                                 >
-                                  ₹{getOrderDataInCheckOut?.actual_price}
+                                  ₹{orderData?.actual_price}
                                 </Imports.Typography>
                                 <Imports.Typography
                                   sx={{
@@ -296,7 +279,7 @@ const CheckoutPage = () => {
                                     fontSize: "18px",
                                   }}
                                 >
-                                  {getOrderDataInCheckOut?.discount}
+                                  {orderData?.discount}
                                 </Imports.Typography>
                               </Imports.Box>
                             </Imports.Box>
@@ -346,13 +329,12 @@ const CheckoutPage = () => {
                           variant="h5"
                           sx={{ color: "#212121" }}
                         >
-                          {/* absv1111@gmail.com{" "} */}
-                          {orderData?.customer_details?.email}{" "}
+                          absv1111@gmail.com{" "}
                         </Imports.Typography>
                       </Imports.Typography>
                       <Imports.Box
                         onClick={() =>
-                          navigate("/payments", {state: productIdsData})
+                          navigate("/payments", { state: productIdsData })
                         }
                         component="button"
                         sx={{
@@ -438,7 +420,7 @@ const CheckoutPage = () => {
                                 Price (1 Items)
                               </Imports.Typography>
                               <Imports.Typography textAlign="left">
-                                ₹{getOrderDataInCheckOut?.actual_price}
+                                ₹{orderData?.actual_price}
                               </Imports.Typography>
                             </Imports.Box>
                           </Imports.Grid>
@@ -454,7 +436,7 @@ const CheckoutPage = () => {
                                 Discount
                               </Imports.Typography>
                               <Imports.Typography textAlign="left">
-                                ₹{getOrderDataInCheckOut?.discount_price}
+                                − ₹{orderData?.discount_price}
                               </Imports.Typography>
                             </Imports.Box>
                           </Imports.Grid>

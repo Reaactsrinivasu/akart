@@ -3,52 +3,13 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../../Layout/Layout";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Box,Paper} from "@mui/material";
+import { Box, Paper, Button } from "@mui/material";
+import html2pdf from "html2pdf.js";
 import CloseIcon from "@mui/icons-material/Close";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { loadTermsAndConditionsInitiate } from "../../redux/actions/others/temrsAndConditionsActions";
 const TermsOfUse = () => {
-  const firstData = [
-    {
-      q1: "We collect your personal information in order to provide and continually improve our products and services.",
-    },
-    { q1: "Here are the types of personal information we collect:" },
-    {
-      q1: "Information You Give Us: We receive and store any information you provide in relation to A-Kart Services. Click here to see examples of what we collect. You can choose not to provide certain information, but then you might not be able to take advantage of many of our A-kart Services.",
-    },
-    {
-      q1: "Automatic Information: We automatically collect and store certain types of information about your use of A-Kart Services, including information about your interaction with content and services available through Amazon Services. Like many websites, we use cookies and other unique identifiers, and we obtain certain types of information when your web browser or device accesses A-Kart Services and other content served by or on behalf of A-Kart on other websites. Click here to see examples of what we collect.",
-    },
-    {
-      q1: "Information from Other Sources: We might receive information about you from other sources, such as updated delivery and address information from our carriers, which we use to correct our records and deliver your next purchase more easily. Click here to see additional examples of the information we receive.",
-    },
-  ];
-  const secondData = [
-    {
-      q: "Purchase and delivery of products and services. We use your personal information to take and fulfill orders, deliver products and services, process payments, and communicate with you about orders, products and services, and promotional offers.",
-    },
-    {
-      q: "Provide, troubleshoot, and improve A-Kart Services. We use your personal information to provide functionality, analyze performance, fix errors, and improve the usability and effectiveness of the Amazon Services.",
-    },
-    {
-      q: "Recommendations and personalization. We use your personal information to recommend features, products, and services that might be of interest to you, identify your preferences, and personalize your experience with Amazon Services.",
-    },
-    {
-      q: "Provide voice, image and camera services. When you use our voice, image and camera services, we use your voice input, images, videos, and other personal information to respond to your requests, provide the requested service to you, and improve our services. For more information about Alexa voice services, click here.",
-    },
-    {
-      q: "Comply with legal obligations. In certain cases, we collect and use your personal information to comply with laws. For instance, we collect from sellers information regarding place of establishment and bank account information for identity verification and other purposes.",
-    },
-    {
-      q: "Communicate with you. We use your personal information to communicate with you in relation to Amazon Services via different channels (e.g., by phone, e-mail, chat).",
-    },
-    {
-      q: "Advertising. We use your personal information to display interest-based ads for features, products, and services that might be of interest to you. We do not use information that personally identifies you to display interest-based ads. To learn more, please read our Interest-Based Ads notice.",
-    },
-    {
-      q: "Fraud Prevention and Credit Risks. We use personal information to prevent and detect fraud and abuse in order to protect the security of our customers, Amazon, and others. We may also use scoring methods to assess and manage credit risks.",
-    },
-  ];
+const contentRef = useRef(null);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadTermsAndConditionsInitiate());
@@ -56,90 +17,265 @@ const TermsOfUse = () => {
   const termsData = useSelector(
     (state) => state?.termsandconditionsdata?.data?.data[0] || []
   );
-  console.log("termsData", termsData);
+  // console.log("termsData", termsData);
+
+
+  // const generatePdf = () => {
+  //   const element = document.createElement("div");
+  //   element.innerHTML = termsData?.data || "";
+
+  //   html2pdf().from(element).save("a-kart-terms-document.pdf");
+  // };
+
+//  const generatePdf = () => {
+//    const element = contentRef.current;
+//    if (element) {
+//      // Apply padding to each page
+//      const pages = element.querySelectorAll(".page");
+//      pages.forEach((page) => {
+//        page.style.padding = "20px"; // Adjust as needed
+//        page.style.boxSizing = "border-box";
+//        page.style.height = "100vh";
+//        page.style.marginBottom = "50px";
+//        page.style.marginTop = "50px";
+//      });
+//      html2pdf().from(element).save("a-kart-terms-document.pdf");
+//      // Reset padding after generating PDF (optional)
+//      pages.forEach((page) => {
+//        page.style.padding = ""; // Reset to default
+//        page.style.boxSizing = "";
+//        page.style.height = "";
+//        page.style.margin = "";
+//        page.style.paddingBottom = "";
+//      });
+//    }
+  //  };
+
+ const invoiceData = {
+   id: "inv_E7q0tqkxBRzdau",
+   entity: "invoice",
+   customer_details: {
+     name: "Gaurav Kumar",
+     email: "gaurav.kumar@example.com",
+     contact: "9000090000",
+     billing_address: {
+       line1: "Ground & 1st Floor, SJR Cyber Laskar",
+       line2: "Hosur Road",
+       zipcode: "560068",
+       city: "Bengaluru",
+       state: "Karnataka",
+       country: "in",
+     },
+     shipping_address: {
+       line1: "Ground & 1st Floor, SJR Cyber Laskar",
+       line2: "Hosur Road",
+       zipcode: "560068",
+       city: "Bengaluru",
+       state: "Karnataka",
+       country: "in",
+     },
+   },
+   line_items: [
+     {
+       name: "Master Cloud Computing in 30 Days",
+       description: "Book by Ravena Ravenclaw",
+       amount: 399,
+       currency: "USD",
+       quantity: 1,
+     },
+   ],
+   gross_amount: 399,
+   currency_symbol: "$",
+   description: "Invoice for the month of January 2020",
+   created_at: 1579765167,
+ };
+  const generateHtmlContent = () => {
+    return `
+      <!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Invoice</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+
+            .invoice-box {
+                max-width: 800px;
+                margin: auto;
+                padding: 30px;
+                border: 1px solid #eee;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+                font-size: 16px;
+                line-height: 24px;
+                color: #555;
+            }
+
+            .invoice-box table {
+                width: 100%;
+                line-height: inherit;
+                text-align: left;
+            }
+
+            .invoice-box table td {
+                padding: 5px;
+                vertical-align: top;
+            }
+
+            .invoice-box table tr td:nth-child(2) {
+                text-align: right;
+            }
+
+            .invoice-box table tr.top table td {
+                padding-bottom: 20px;
+            }
+
+            .invoice-box table tr.top table td.title {
+                font-size: 45px;
+                line-height: 45px;
+                color: #333;
+            }
+
+            .invoice-box table tr.information table td {
+                padding-bottom: 40px;
+            }
+
+            .invoice-box table tr.heading td {
+                background: #eee;
+                border-bottom: 1px solid #ddd;
+                font-weight: bold;
+            }
+
+            .invoice-box table tr.details td {
+                padding-bottom: 20px;
+            }
+
+            .invoice-box table tr.item td {
+                border-bottom: 1px solid #eee;
+            }
+
+            .invoice-box table tr.item.last td {
+                border-bottom: none;
+            }
+
+            .invoice-box table tr.total td:nth-child(2) {
+                border-top: 2px solid #eee;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="invoice-box">
+        <div >
+        <h1 style="text-align:center;">Invoice</h1>
+        </div >
+            <table cellpadding="0" cellspacing="0">
+                <tr class="top">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td class="title">
+                                    <img src="/assets/imgs/invoiceLogo.png" style="width:100%; max-width:100px;">
+                                </td>
+                                <td>
+                                    Invoice #: inv_E7q0tqkxBRzdau<br>
+                                    Created: January 23, 2020<br>
+                                    Due: January 23, 2020
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="information">
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td>
+                                    Ground & 1st Floor, SJR Cyber Laskar<br>
+                                    Hosur Road<br>
+                                    Bengaluru, Karnataka, 560068, IN
+                                </td>
+                                <td>
+                                    Gaurav Kumar<br>
+                                    gaurav.kumar@example.com<br>
+                                    9000090000
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="heading">
+                    <td>
+                        Item
+                    </td>
+                    <td>
+                        Price
+                    </td>
+                </tr>
+                <tr class="item">
+                    <td>
+                        Master Cloud Computing in 30 Days - Book by Ravena Ravenclaw
+                    </td>
+                    <td>
+                        $399
+                    </td>
+                </tr>
+                <tr class="total">
+                    <td></td>
+                    <td>
+                        Total: $399
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>
+    `;
+  };
+  // const generatePdf = () => {
+  //   const element = contentRef.current;
+  //   if (element) {
+  //     html2pdf()
+  //       .from(element)
+  //       .set({
+  //         margin: 0.3, // 1 inch margin
+  //         filename: "a-kart-terms-document.pdf",
+  //         html2canvas: { scale: 1 },
+  //         jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+  //         pagebreak: { mode: ["avoid-all", "css", "legacy"] },
+  //       })
+  //       .save();
+  //   }
+  // };
+  const generatePdf = () => {
+    const element = document.createElement("div");
+    element.innerHTML = generateHtmlContent();
+    html2pdf().from(element).save("invoice.pdf");
+  };
   return (
     <>
-      {/* <Layout>
-        <CssBaseline />
-        <Box>
-          <Grid container sx={{ justifyContent: "center", marginTop: "30px" }}>
-            <Grid item xs={12} sm={11} md={10} lg={8}>
-              <Grid
-                sx={{
-                  padding: "10px 20px",
-                  display: "flex",
-                  alignItems: "center",
-                  border: "1px solid #DFD3D3",
-                  backgroundColor: "#F5F3F1",
-                }}
-              >
-                <Typography
-                  sx={{ fontSize: "19px", fontFamily: "Lato", fontWeight: 700 }}
-                >
-                  A-Kart.in Terms of Use
-                </Typography>
-                <CloseIcon sx={{ marginLeft: "auto" }} />
-              </Grid>
-              <Grid sx={{ backgroundColor: "#FFFFFF", padding: "20px" }}>
-                <Grid>
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontFamily: "Lato",
-                      fontWeight: 700,
-                    }}
-                  >
-                    What Personal Information About Customers Does A-Kart
-                    Collect?
-                  </Typography>
-                </Grid>
-                <Grid sx={{ marginTop: "10px" }}>
-                  {firstData.map((item) => (
-                    <>
-                      <Typography sx={{ fontFamily: "Lato", fontSize: "13px" }}>
-                        {item.q1}
-                      </Typography>
-                    </>
-                  ))}
-                </Grid>
-                <Grid sx={{ marginTop: "20px" }}>
-                  <Typography
-                    sx={{
-                      fontSize: "16px",
-                      fontFamily: "Lato",
-                      fontWeight: 700,
-                    }}
-                  >
-                    For What Purposes Does A-Kart Use Your Personal Information?
-                  </Typography>
-                </Grid>
-                <Grid sx={{ marginTop: "10px" }}>
-                  {secondData.map((item) => (
-                    <>
-                      <ul>
-                        <li style={{ fontSize: "13px", fontFamily: "Lato" }}>
-                          {item.q}
-                        </li>
-                      </ul>
-                    </>
-                  ))}
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Box>
-      </Layout> */}
       <Layout>
         <CssBaseline />
-        <Box sx={{ p: 5, marginTop: "20px" }}>
+        {/* <Box sx={{ p: 5, marginTop: "20px" }}>
+          <Button onClick={generatePdf}>PDF</Button>
           <Paper
             elevation={2}
             sx={{ p: 3, backgroundColor: "#fff" }}
             variant="contained"
             component="div"
+            ref={contentRef}
             dangerouslySetInnerHTML={{ __html: termsData?.data }}
           />
-        </Box>
+        </Box> */}
+        <Box sx={{ p: 5, marginTop: "20px" }}>
+      <Button onClick={generatePdf}>Download PDF</Button>
+      <Paper elevation={2} sx={{ p: 3, backgroundColor: "#fff" }} variant="contained" component="div">
+        <div ref={contentRef} dangerouslySetInnerHTML={{ __html: generateHtmlContent() }} />
+      </Paper>
+    </Box>
       </Layout>
     </>
   );

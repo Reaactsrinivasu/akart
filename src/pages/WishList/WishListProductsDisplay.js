@@ -6,7 +6,9 @@ import {
   loadWishListDataInitiate,
   deleteWishListDataInitiate,
 } from "../../redux/actions/wishLIst/wishListDataActions";
+import useSnackbar from '../../components/Snackbar';
 const WishListProductsDisplay = () => {
+  const [showSnackbar, SnackbarComponent] = useSnackbar();
   const dispatch = useDispatch();
   const wishListData = useSelector((state) => state.wishlistdata?.data?.data);
   console.log("wishListData", wishListData);
@@ -14,15 +16,29 @@ const WishListProductsDisplay = () => {
       dispatch(loadWishListDataInitiate());
   }, [dispatch]);
 
-  const deleteHandler = async (status,itemId) => {
-    // const index = wishListData?.data?.findIndex((item) => item.id === itemId);
-     if (status === true && itemId) {
-       await dispatch(deleteWishListDataInitiate(itemId));
-       setTimeout(() => {
-         dispatch(loadWishListDataInitiate());
-       }, 500);
-      }
-  };
+  // const deleteHandler = async (status,itemId) => {
+  //   // const index = wishListData?.data?.findIndex((item) => item.id === itemId);
+  //    if (status === true && itemId) {
+  //      await dispatch(deleteWishListDataInitiate(itemId));
+  //      setTimeout(() => {
+  //        dispatch(loadWishListDataInitiate());
+  //      }, 500);
+  //     }
+  // };
+  
+const deleteHandler = async (status, itemId) => {
+  if (status === true && itemId) {
+    try {
+      // await dispatch(deleteWishListDataInitiate(itemId));
+      await dispatch(deleteWishListDataInitiate(itemId, null, showSnackbar));
+      setTimeout(() => {
+        dispatch(loadWishListDataInitiate());
+      }, 500);
+    } catch (error) {
+      console.error("Error deleting wishlist item:", error);
+    }
+  }
+};
     return (
       <>
         <Box>
@@ -69,7 +85,11 @@ const WishListProductsDisplay = () => {
                           >
                             {item.product_name}
                           </Typography>
-                          <IconButton onClick={() => deleteHandler(item.in_wishlist,item.product_id)}>
+                          <IconButton
+                            onClick={() =>
+                              deleteHandler(item.in_wishlist, item.product_id)
+                            }
+                          >
                             <DeleteRoundedIcon
                               color="disabled"
                               sx={{
@@ -146,6 +166,7 @@ const WishListProductsDisplay = () => {
               ))}
           </Grid>
         </Box>
+        <SnackbarComponent />
       </>
     );
 };

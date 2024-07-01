@@ -35,7 +35,7 @@ export const createPaymentWithCodInitiate = (user, navigate) => {
         console.log("res", res);
         dispatch(createPaymentWithCodSuccess(res));
         if (res.status === 200) {
-        // navigate("/paymentstatus");
+        navigate("/paymentstatus");
         }
       })
       .catch((error) => dispatch(createPaymentWithCodError(error.message)));
