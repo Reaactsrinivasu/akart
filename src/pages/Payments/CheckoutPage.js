@@ -17,8 +17,9 @@ const CheckoutPage = () => {
   // checout product data
   const checkOutItemData = location?.state;
   console.log("checkOutItemData", checkOutItemData);
-  const product_id = checkOutItemData?.product?.id;
-  console.log("product_id", product_id);
+  
+  const product_details = checkOutItemData?.products;
+  console.log("product_details", product_details);
   const orderData = checkOutItemData?.data?.attributes;
   const razorPayOrderId = checkOutItemData?.data?.attributes?.order_id;
   console.log("orderData", orderData);
@@ -30,10 +31,10 @@ const CheckoutPage = () => {
     "getOrderDataInCheckOut in checkout page",
     getOrderDataInCheckOut
   );
-  useEffect(() => {
-    console.log("on refresh", product_id);
-      dispatch(loadInnerProductDataInitiate(product_id));
-  }, [dispatch,product_id]);
+  // useEffect(() => {
+  //   console.log("on refresh", product_id);
+  //     dispatch(loadInnerProductDataInitiate(product_id));
+  // }, [dispatch,product_id]);
   // checkout address data
   const userAddressData = useSelector(
     (state) => state.useraddressdata?.data?.data?.data[0] || []
@@ -52,8 +53,12 @@ const CheckoutPage = () => {
     100 +
     getOrderDataInCheckOut?.discount_price;
 
+    // product_id: checkOutItemData?.product?.id,
   const productIdsData = {
-    product_id: checkOutItemData?.product?.id,
+    products: product_details?.map((data) => ({
+      product_id: data?.id,
+      product_quantity: 1,
+    })),
     address_id: userAddressData?.id,
     order_id: razorPayOrderId,
   };

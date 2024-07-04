@@ -1,45 +1,32 @@
-import { useState } from 'react';
-import IconButton from '@mui/material/IconButton';
-import Snackbar from '@mui/material/Snackbar';
-import Slide from '@mui/material/Slide';
-import Fade from '@mui/material/Fade';
-import Grow from '@mui/material/Grow';
+import React from "react";
+import Snackbar from "@mui/material/Snackbar";
+import { Slide } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import SnackbarContent from "@mui/material/SnackbarContent";
-function SlideTransition(props) {
-  return <Slide {...props} direction="up" />;
-}
 
 const useSnackbar = () => {
-  const [snackbarState, setSnackbarState] = useState({
-    open: false,
-    message: '',
-    Transition: SlideTransition,
-  });
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+  const [Transition, setTransition] = React.useState(() => Slide);
 
-  const showSnackbar = (message, transition) => {
-    setSnackbarState({
-      open: true,
-      message,
-      Transition: transition || SlideTransition,
-    });
+  const showSnackbar = (message, Transition) => {
+    setMessage(message);
+    setTransition(() => Transition);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setSnackbarState((prev) => ({
-      ...prev,
-      open: false,
-    }));
+    setOpen(false);
   };
 
   const SnackbarComponent = () => (
     <Snackbar
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      open={snackbarState.open}
+      open={open}
       onClose={handleClose}
-      TransitionComponent={snackbarState.Transition}
-      message={snackbarState.message}
-      key={snackbarState.Transition.name}
+      TransitionComponent={Transition}
+      message={message}
+      key={Transition.name}
       autoHideDuration={3000}
       action={
         <IconButton
@@ -53,10 +40,20 @@ const useSnackbar = () => {
       }
     />
   );
-
-  return [showSnackbar, SnackbarComponent];
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+  // Debounce the showSnackbar function to limit its calls
+  const debouncedShowSnackbar = debounce(showSnackbar, 300);
+  return [debouncedShowSnackbar, SnackbarComponent];
 };
 
 export default useSnackbar;
-
-

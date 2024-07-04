@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Grid, Typography, Divider, IconButton } from "@mui/material";
@@ -6,6 +6,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import AddtoCartCounter from "./AddtoCartcounter";
 import ReusableButton from "../../components/Button";
 import Imports from "../../common/Imports";
+import {createInvoiceInitiate} from "../../redux/actions/invoice/productInvoiceActions";
 import {
   loadAddProductToCartInitiate,
   deleteAddProductToCartInitiate,
@@ -15,7 +16,9 @@ import {
   loadSaveProductForLaterInitiate,
 } from "../../redux/actions/saveProductLater/saveProductForLaterActions";
 const AddtoCartProductsDisplay = ({ addtoCartData }) => {
+  console.log('addtoCartData', addtoCartData);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const deleteProductHandler = (itemId) => {
     alert(itemId);
@@ -36,6 +39,21 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
       }, 500);
     }
   };
+
+  // const orderPlaceHandler = () => {
+  //   alert('working');
+  //   products: addtoCartData?.map((data) => ({
+  //     product_id: data?.product_id,
+  //     product_quantity: 1,
+  //     amount: 100
+  //   }))
+  // };
+  const orderPlaceHandler = useCallback(
+    (product_details) => {
+      dispatch(createInvoiceInitiate(product_details, navigate));
+    },
+    [dispatch]
+  );
   return (
     <>
       <Box sx={{ width: "100%", height: "100%", bgcolor: "#FFFFFF" }}>
@@ -234,6 +252,15 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
       >
         <Grid item>
           <Box
+            onClick={() => {
+              orderPlaceHandler({
+                products: addtoCartData?.map((data) => ({
+                  product_id: data?.product_id,
+                  quantity: 1,
+                  amount: 100,
+                }))
+              });
+            }}
             component="button"
             sx={{
               width: "100%",

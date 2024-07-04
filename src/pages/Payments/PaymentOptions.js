@@ -74,7 +74,7 @@ const PaymentOptions = () => {
   const submitHandler = (paymentType) => {
     console.log("paymentType",  paymentType);
     const postParams = {
-      product_id: order?.product_id,
+      products: order?.products,
       address_id:order?.address_id,
       type: selectedValue,
     };

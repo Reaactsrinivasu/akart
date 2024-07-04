@@ -29,6 +29,7 @@ import {
   createWishListDataInitiate,
   loadWishListDataInitiate,
 } from "../../../redux/actions/wishLIst/wishListDataActions";
+import useSnackbar from "../../../components/Snackbar";
 const ProductsDisplay = React.memo(() => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -37,31 +38,37 @@ const ProductsDisplay = React.memo(() => {
   console.log("searchParams in product display", searchParams);
   const subCategoryName = searchParams.get("sub_category_name");
   console.log("subCategoryName", subCategoryName);
-  const productsData = useSelector((state) => state.productdata?.data?.data || []);
+    const [debouncedShowSnackbar, SnackbarComponent] = useSnackbar();
+  const productsData = useSelector(
+    (state) => state.productdata?.data?.data || []
+  );
   console.log("productsData", productsData);
- useEffect(() => {
-   if (subCategoryName) {
-     dispatch(loadProductDataInitiate(subCategoryName));
-   }
- }, [dispatch, subCategoryName]);
+  useEffect(() => {
+    if (subCategoryName) {
+      dispatch(loadProductDataInitiate(subCategoryName));
+    }
+  }, [dispatch, subCategoryName]);
   const getInnerProductHandler = (productName) => {
     if (productName) {
-     const encodedProductNameForRouteParams = productName.toLowerCase()
-       .replace(/ /g, "-");
-     navigate(
-       `/innerproducts/filter_by_product_name?link_name=${encodedProductNameForRouteParams}`
-     );
-   }
+      const encodedProductNameForRouteParams = productName
+        .toLowerCase()
+        .replace(/ /g, "-");
+      navigate(
+        `/innerproducts/filter_by_product_name?link_name=${encodedProductNameForRouteParams}`
+      );
+    }
   };
-   const wishListData = useSelector((state) => state.wishlistdata?.data?.data?.data || []);
-   console.log("wishListData", wishListData);
-   useEffect(() => {
-     dispatch(loadWishListDataInitiate());
-    }, [dispatch]);
-    const isInWishlist = wishListData?.some(
-      item => item.product_id === productsData?.id
-    );
-    console.log("isInWishlist", isInWishlist);
+  const wishListData = useSelector(
+    (state) => state.wishlistdata?.data?.data?.data || []
+  );
+  console.log("wishListData", wishListData);
+  useEffect(() => {
+    dispatch(loadWishListDataInitiate());
+  }, [dispatch]);
+  const isInWishlist = wishListData?.some(
+    (item) => item.product_id === productsData?.id
+  );
+  console.log("isInWishlist", isInWishlist);
 
   // const addWishListHandler = (itemId) => {
   //       dispatch(createWishListDataInitiate(itemId));
@@ -71,25 +78,54 @@ const ProductsDisplay = React.memo(() => {
   //         dispatch(deleteWishListDataInitiate(itemId));
   //       dispatch(loadProductDataInitiate(subCategoryName));
   //   };
-const addWishListHandler = useCallback(
-  (itemId) => {
-    dispatch(createWishListDataInitiate(itemId));
-    setTimeout(() => {
-      dispatch(loadProductDataInitiate(subCategoryName));
-    }, 200);
-  },
-  [dispatch]
-);
+  // const addWishListHandler = useCallback(
+  //   (itemId) => {
+  //     dispatch(createWishListDataInitiate(itemId));
+  //     setTimeout(() => {
+  //       dispatch(loadProductDataInitiate(subCategoryName));
+  //     }, 200);
+  //   },
+  //   [dispatch]
+  // );
 
-const deleteWishListHandler = useCallback(
-  (itemId) => {
-    dispatch(deleteWishListDataInitiate(itemId));
-      setTimeout(() => {
-      dispatch(loadProductDataInitiate(subCategoryName));
-    }, 200);
-  },
-  [dispatch]
-);
+  // const deleteWishListHandler = useCallback(
+  //   (itemId) => {
+  //     dispatch(deleteWishListDataInitiate(itemId));
+  //     setTimeout(() => {
+  //       dispatch(loadProductDataInitiate(subCategoryName));
+  //     }, 200);
+  //   },
+  //   [dispatch]
+  // );
+  
+
+  const addWishListHandler = (status, itemId) => {
+    if (status === false && itemId) {
+      try {
+        dispatch(createWishListDataInitiate(itemId, debouncedShowSnackbar));
+        setTimeout(() => {
+          dispatch(loadProductDataInitiate(subCategoryName));
+        }, 200);
+      } catch (error) {
+        console.error("Error deleting wishlist item in product:", error);
+      }
+     }
+  };
+
+  const deleteWishListHandler = (status, itemId) => {
+    if (status === true && itemId) {
+      try {
+        dispatch(deleteWishListDataInitiate(itemId, debouncedShowSnackbar));
+        setTimeout(() => {
+          dispatch(loadProductDataInitiate(subCategoryName));
+        }, 200);
+      } catch (error) {
+        console.error("Error deleting wishlist item in product:", error);
+      }
+     }
+  };
+
+  
   return (
     <>
       {/* {productDetails?.map((item, index) => ( */}
@@ -135,13 +171,13 @@ const deleteWishListHandler = useCallback(
                   <IconButton
                     onClick={() => {
                       if (item.in_wishlist) {
-                        deleteWishListHandler(item.id);
+                        deleteWishListHandler(item?.in_wishlist, item?.id);
                       } else {
-                        addWishListHandler(item.id);
+                        addWishListHandler(item?.in_wishlist, item?.id);
                       }
                     }}
                   >
-                    {item?.in_wishlist ? 
+                    {item?.in_wishlist ? (
                       <FavoriteIcon
                         sx={{
                           color: "#f50057",
@@ -149,12 +185,13 @@ const deleteWishListHandler = useCallback(
                           height: "35px",
                         }}
                       />
-                     : 
+                    ) : (
                       <FavoriteBorderIcon
                         sx={{ width: "35px", height: "35px" }}
                       />
-                    }
+                    )}
                   </IconButton>
+                  <SnackbarComponent />
                   <Box
                     component="img"
                     // onClick={() => navigate("/innerproducts")}

@@ -6,7 +6,7 @@ export const createPaymentWithCodApi = async (data) => {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await api.post(
-        `${endPoints}?product_id=${data?.product_id}&address_id=${data?.address_id}&type=${data?.type}`
+        `${endPoints}`,data
       );
       resolve(result);
     } catch (error) {

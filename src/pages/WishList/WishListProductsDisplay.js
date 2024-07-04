@@ -8,7 +8,7 @@ import {
 } from "../../redux/actions/wishLIst/wishListDataActions";
 import useSnackbar from '../../components/Snackbar';
 const WishListProductsDisplay = () => {
-  const [showSnackbar, SnackbarComponent] = useSnackbar();
+  const [debouncedShowSnackbar, SnackbarComponent] = useSnackbar();
   const dispatch = useDispatch();
   const wishListData = useSelector((state) => state.wishlistdata?.data?.data);
   console.log("wishListData", wishListData);
@@ -26,14 +26,14 @@ const WishListProductsDisplay = () => {
   //     }
   // };
   
-const deleteHandler = async (status, itemId) => {
+const deleteHandler =  (status, itemId) => {
   if (status === true && itemId) {
     try {
       // await dispatch(deleteWishListDataInitiate(itemId));
-      await dispatch(deleteWishListDataInitiate(itemId, null, showSnackbar));
+      dispatch(deleteWishListDataInitiate(itemId, debouncedShowSnackbar));
       setTimeout(() => {
         dispatch(loadWishListDataInitiate());
-      }, 500);
+      }, 200);
     } catch (error) {
       console.error("Error deleting wishlist item:", error);
     }

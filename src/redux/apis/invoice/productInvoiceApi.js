@@ -3,12 +3,13 @@ const api = new API();
 const createInvoiceEndPoints = "create_invoice_razorpay";
 const getInvoiceEndPoints = "get_invoice_id";
 
-export const createInvoiceApi = async (user) => {
+export const createInvoiceApi = async (product_details) => {
   return new Promise(async (resolve, reject) => {
     try {
       // const result = await api.post(`${invoiceEndPoints}?product_id=${id}`);
       const result = await api.post(
-        `${createInvoiceEndPoints}?product_id=${user?.product_id}&amount=${user?.amount}`
+        `${createInvoiceEndPoints}`,
+        product_details
       );
       resolve(result);
     } catch (error) {

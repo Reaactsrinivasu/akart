@@ -29,10 +29,10 @@ export const loadInvoiceError = (error) => ({
   payload: error,
 });
 
-export const createInvoiceInitiate = (user, navigate) => {
+export const createInvoiceInitiate = (product_details, navigate) => {
   return function (dispatch) {
-    dispatch(createInvoiceStart(user));
-    createInvoiceApi(user)
+    dispatch(createInvoiceStart(product_details));
+    createInvoiceApi(product_details)
       .then((res) => {
         console.log("res", res);
         const data = res?.data;
