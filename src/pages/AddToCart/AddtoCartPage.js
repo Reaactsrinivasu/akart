@@ -19,7 +19,8 @@ const AddtoCartPage = () => {
   }, [dispatch]);
   console.log("addtoCartData", addtoCartData);
   const totalDiscountPrice = addtoCartData.reduce(
-    (total, item) => total + item.discount_price,
+    (total, item) =>
+      total + parseFloat(item?.product?.discount_price * item.quantity || 0),
     0
   );
   const totalActuralPrice = addtoCartData.reduce(
@@ -28,18 +29,34 @@ const AddtoCartPage = () => {
   );
   const deliveryCharges = 100;
   const securedPackageCharges = 100;
-  const totalAmount = totalDiscountPrice;
+  const totalAmount =
+    totalDiscountPrice + deliveryCharges + securedPackageCharges;
   const itemNumber = addtoCartData?.length;
+  const quantity = addtoCartData?.reduce((sum, item) => sum + item.quantity, 0);
   console.log("addtoCartData", addtoCartData, totalActuralPrice, itemNumber);
   const paymentData = {
     itemNumber: addtoCartData?.length,
     totalActualPrice: addtoCartData.reduce(
-      (total, item) => total + parseFloat(item.actual_price || 0),0),
+      (total, item) =>
+        total + parseFloat(item?.product?.actual_price * item.quantity || 0),
+      0
+    ),
     totalDiscountPrice: addtoCartData.reduce(
-      (total, item) => total + parseFloat(item.discount_price || 0),0),
+      (total, item) =>
+        total + parseFloat(item?.product?.discount_price * item.quantity || 0),
+      0
+    ),
     deliveryCharges: 100,
     securedPackageCharges: 100,
+    quantity: quantity,
   };
+
+  const prices = addtoCartData?.map(
+    (item) => item?.product?.actual_price * item?.quantity
+  );
+  const discountPrices = addtoCartData?.map(
+    (item) => item?.product?.discount_price * item?.quantity
+  );
   return (
     <>
       <Box>

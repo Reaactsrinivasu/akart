@@ -75,7 +75,7 @@ const PaymentOptions = () => {
     console.log("paymentType",  paymentType);
     const postParams = {
       products: order?.products,
-      address_id:order?.address_id,
+      amount:order?.amount,
       type: selectedValue,
     };
     console.log("amount", amount);
@@ -104,20 +104,31 @@ const PaymentOptions = () => {
         if (response?.razorpay_payment_id && response?.razorpay_invoice_id) {
           navigate("/");
         }
-        // if (response?.razorpay_payment_id) {
-        //   dispatch(createTransactionInitiate(amount, navigate));
-        // }
+        if (response?.razorpay_payment_id) {
+          // dispatch(createTransactionInitiate(amount, navigate));
+          dispatch(
+            createTransactionInitiate(
+              {
+                type: "OnLinePayment",
+                amount: 100,
+                products: order?.products,
+                razorpay_payment_id: response?.razorpay_payment_id,
+                razorpay_order_id: response?.razorpay_order_id,
+                razorpay_signature: response?.razorpay_signature,
+              },
+              navigate
+            )
+          );
+        }
         // navigate("/");
         // alert(response.razorpay_payment_id);
         // alert(response.razorpay_order_id);
         // alert(response.razorpay_signature);
       },
       prefill: {
-        // name: orderAndAddressIds?.userName,
-        name: "Aripaka Bhagyaa Srinivasuu",
-        email: "absv1111@gmail.com",
-        // contact: orderAndAddressIds?.phoneNumber,
-        contact: "9440609464",
+        name: order?.user_details?.name,
+        email: order?.user_details?.email,
+        contact: order?.user_details?.contact,
       },
       appname: "A-kart",
       appid: "abc_1234akart",

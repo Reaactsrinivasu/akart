@@ -9,7 +9,9 @@ const AddtoCartPriceDetails = ({paymentData}) => {
     totalDiscountPrice,
     deliveryCharges,
     securedPackageCharges,
+    quantity,
   } = paymentData;
+
   return (
     <>
       {/* <Box sx={{ mb: 1 }}>
@@ -29,9 +31,7 @@ const AddtoCartPriceDetails = ({paymentData}) => {
                 justifyContent: "space-between",
               }}
             >
-              <Typography textAlign="left">
-                Price ({itemNumber} items)
-              </Typography>
+              <Typography textAlign="left">Price ({quantity} items)</Typography>
               <Typography textAlign="left">₹{totalActualPrice}</Typography>
             </Box>
           </Grid>
@@ -44,7 +44,7 @@ const AddtoCartPriceDetails = ({paymentData}) => {
               }}
             >
               <Typography textAlign="left">Discount</Typography>
-              <Typography textAlign="left">− ₹{totalDiscountPrice}</Typography>
+              <Typography textAlign="left">₹{totalDiscountPrice}</Typography>
             </Box>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -88,11 +88,7 @@ const AddtoCartPriceDetails = ({paymentData}) => {
                 Total Amount
               </Typography>
               <Typography variant="h5" textAlign="left" fontWeight="bold">
-                ₹
-                {deliveryCharges +
-                  securedPackageCharges +
-                  totalActualPrice -
-                  totalDiscountPrice}
+                ₹{totalDiscountPrice}
               </Typography>
             </Box>
           </Grid>

@@ -3,6 +3,7 @@ import {
   loadAddProductToCartApi,
   createAddProductToCartApi,
   deleteAddProductToCartApi,
+  updateAddProductToCartApi,
 } from "../../apis/addToCart/addToCartDataApi";
 
 //adding wishlist details
@@ -46,7 +47,18 @@ export const deleteAddProductToCartError = (error) => ({
   type: types.DELETE_ADD_PRODUCT_TO_CART_ERROR,
   payload: error,
 });
-
+// updating existing user details
+export const updateAddProductToCartStart = (id, userInfo) => ({
+  type: types.UPDATE_ADD_PRODUCT_TO_CART_START,
+  payload: [id, userInfo],
+});
+export const updateAddProductToCartSuccess = () => ({
+  type: types.UPDATE_ADD_PRODUCT_TO_CART_SUCCESS,
+});
+export const updateAddProductToCartError = (error) => ({
+  type: types.UPDATE_ADD_PRODUCT_TO_CART_ERROR,
+  payload: error,
+});
 export const createAddProductToCartInitiate = (user, navigate) => {
   return function (dispatch) {
     dispatch(createAddProductToCartStart(user));
@@ -80,9 +92,25 @@ export const deleteAddProductToCartInitiate = (id, navigate) => {
       .catch((error) => dispatch(deleteAddProductToCartError(error.message)));
   };
 };
-
+export const updateAddProductToCartInitiate = (userId, user, callback) => {
+  return function (dispatch) {
+    dispatch(updateAddProductToCartStart(userId, user));
+    updateAddProductToCartApi(userId, user)
+      .then((res) => {
+        console.log(res);
+        dispatch(updateAddProductToCartSuccess(res));
+        if (res.status === 200) {
+          callback(true);
+        } else {
+          callback(false);
+        }
+      })
+      .catch((error) => dispatch(updateAddProductToCartSuccess(error.message)));
+  };
+};
 export default {
-    createAddProductToCartInitiate,
-    loadAddProductToCartInitiate,
-    deleteAddProductToCartInitiate,
+  createAddProductToCartInitiate,
+  loadAddProductToCartInitiate,
+  deleteAddProductToCartInitiate,
+  updateAddProductToCartInitiate,
 };

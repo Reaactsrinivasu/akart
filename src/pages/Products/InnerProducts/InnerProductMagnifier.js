@@ -154,7 +154,6 @@ const InnerProductMagnifier = React.memo((props) => {
 
   const orderToCheckOutPageHandler = useCallback(
     (product_details) => {
-
       dispatch(
         createInvoiceInitiate(
           product_details,
@@ -358,11 +357,11 @@ const InnerProductMagnifier = React.memo((props) => {
                   <Imports.Button
                     onClick={() =>
                       orderToCheckOutPageHandler({
+                        amount: 100,
                         products: [
                           {
                             product_id: innerProductsData?.id,
-                            amount: 100,
-                            quantity: 1,
+                           product_quantity: 1,
                           },
                         ],
                       })

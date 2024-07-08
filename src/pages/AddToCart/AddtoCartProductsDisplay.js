@@ -10,6 +10,7 @@ import {createInvoiceInitiate} from "../../redux/actions/invoice/productInvoiceA
 import {
   loadAddProductToCartInitiate,
   deleteAddProductToCartInitiate,
+  updateAddProductToCartInitiate,
 } from "../../redux/actions/addToCart/addProductToCartActions";
 import {
   createSaveProductForLaterInitiate,
@@ -54,6 +55,29 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
     },
     [dispatch]
   );
+
+
+  const handleIncrement = (id, quantity) => {
+    console.log("hii1111");
+    dispatch(
+      updateAddProductToCartInitiate(id, quantity + 1, (success) => {
+        if (success) {
+          console.log("hii2222");
+          dispatch(loadAddProductToCartInitiate());
+        }
+      })
+    );
+  };
+
+   const handleDecrement = (id, quantity) => {
+     dispatch(
+       updateAddProductToCartInitiate(id, quantity - 1, (success) => {
+         if (success) {
+           dispatch(loadAddProductToCartInitiate());
+         }
+       })
+     );
+   };
   return (
     <>
       <Box sx={{ width: "100%", height: "100%", bgcolor: "#FFFFFF" }}>
@@ -63,7 +87,7 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
               <Grid container columnSpacing={5} mt={0.1} mb={1}>
                 <Grid item xs={12} sm={12} md={2}>
                   <img
-                    src={item.product_images_urls}
+                    src={item?.product?.product_images_urls}
                     alt=""
                     style={{
                       width: "100%",
@@ -71,7 +95,12 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
                       objectFit: "cover",
                     }}
                   />
-                  <AddtoCartCounter />
+                  <AddtoCartCounter
+                    handleIncrement={handleIncrement}
+                    handleDecrement={handleDecrement}
+                    quantity={item?.quantity}
+                    id={item?.id}
+                  />
                 </Grid>
                 <Grid item xs={12} sm={12} md={10}>
                   <Box
@@ -95,7 +124,7 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
                       }}
                     >
                       <Typography variant="h5" sx={{ fontWeight: "bold" }}>
-                        {item.product_name}
+                        {item?.product?.product_name}
                       </Typography>
                       <IconButton onClick={() => deleteProductHandler(item.id)}>
                         <DeleteRoundedIcon
@@ -138,7 +167,7 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
                         fontWeight="bold"
                         sx={{ color: "#121212" }}
                       >
-                        ₹{item.discount_price}
+                        ₹{item?.product?.discount_price}
                       </Typography>
                     </Box>
                     <Box
@@ -155,12 +184,12 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
                           textDecorationLine: "line-through",
                         }}
                       >
-                        ₹{item.actual_price}
+                        ₹{item?.product?.actual_price}
                       </Typography>
                       <Typography
                         sx={{ ml: 3, color: "#308150", fontSize: "18px" }}
                       >
-                        {item.discount}
+                        {item?.product?.discount}
                       </Typography>
                     </Box>
                     <Grid container gap={2} p={1} mt={4}>
@@ -254,11 +283,11 @@ const AddtoCartProductsDisplay = ({ addtoCartData }) => {
           <Box
             onClick={() => {
               orderPlaceHandler({
+                amount: 100,
                 products: addtoCartData?.map((data) => ({
-                  product_id: data?.product_id,
-                  quantity: 1,
-                  amount: 100,
-                }))
+                  product_id: data?.product?.product_id,
+                  product_quantity: data?.quantity,
+                })),
               });
             }}
             component="button"

@@ -24,7 +24,7 @@ export const createTransactionInitiate = (user, navigate) => {
         // const orderId = res.data?.order?.id;
         // console.log("orderId", orderId);
         dispatch(createTransactionSuccess(res));
-        if (res.status === 201) {
+        if (res.status === 200) {
           navigate("/");
         }
       })

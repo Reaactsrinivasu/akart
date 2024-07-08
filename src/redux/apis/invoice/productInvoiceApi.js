@@ -1,6 +1,6 @@
 import API from "../../../API/API";
 const api = new API();
-const createInvoiceEndPoints = "create_invoice_razorpay";
+const createInvoiceEndPoints = "razor_pay_order_create";
 const getInvoiceEndPoints = "get_invoice_id";
 
 export const createInvoiceApi = async (product_details) => {
