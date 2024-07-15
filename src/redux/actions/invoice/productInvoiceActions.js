@@ -44,6 +44,22 @@ export const createInvoiceInitiate = (product_details, navigate) => {
       .catch((error) => dispatch(createInvoiceError(error.message)));
   };
 };
+export const createInvoiceForModalInitiate = (product_details, navigate) => {
+  return function (dispatch) {
+    dispatch(createInvoiceStart(product_details));
+    createInvoiceApi(product_details)
+      .then((res) => {
+        console.log("res", res);
+        const data = res?.data;
+        dispatch(createInvoiceSuccess(res));
+        if (res.status === 201) {
+          // navigate("/checkout", { state: data });
+          localStorage.setItem("allDetails", JSON.stringify(data));
+        }
+      })
+      .catch((error) => dispatch(createInvoiceError(error.message)));
+  };
+};
 export const LoadInvoiceInitiate = (user, navigate) => {
   return function (dispatch) {
     dispatch(loadInvoiceStart(user));
@@ -56,6 +72,7 @@ export const LoadInvoiceInitiate = (user, navigate) => {
   };
 };
 export default {
+  createInvoiceForModalInitiate,
   createInvoiceInitiate,
   LoadInvoiceInitiate,
 };

@@ -1,7 +1,7 @@
 import API from "../../../API/API";
 const api = new API();
-const endPoints = "orders";
-
+// const endPoints = "orders";
+const endPoints = "payments";
 export const createOrderDetailsApi = async (user) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -34,6 +34,17 @@ export const deleteOrderDetailsApi = async (user) => {
       resolve(result);
     } catch (error) {
       console.error("Error in deleteOrderProduct in api:", error);
+      reject(error);
+    }
+  });
+};
+export const getOrderByIdApi = async (user) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await api.get(`${endPoints}/${user}`);
+      resolve(result);
+    } catch (error) {
+      console.error("Error in getOrderByIdApi in api:", error);
       reject(error);
     }
   });

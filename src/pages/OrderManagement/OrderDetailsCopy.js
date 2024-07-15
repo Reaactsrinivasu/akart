@@ -27,18 +27,6 @@ import {
   removeOrderDetailsInitiate,
 } from "../../redux/actions/orderDetails/orderDetailsActions";
 import ViewOrderDetails from "./ViewOrderPage";
-const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  const options = {
-    // year: "numeric",
-    month: "long",
-    day: "numeric",
-    // hour: "2-digit",
-    // minute: "2-digit",
-    hour12: true,
-  };
-  return date.toLocaleDateString("en-US", options);
-};
 const OrderDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -85,20 +73,8 @@ const OrderDetails = () => {
                   }}
                 >
                   <Grid container spacing={1} p={3}>
-                    <Grid item xs={12} sm={12} md={2} p={1}>
-                      <Box
-                        component="img"
-                        // src="assets/imgs/phone-2.png"
-                        src={item?.products[0]?.product_images_urls[0]}
-                        alt=""
-                        loading="lazy"
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                      {/* <img
+                    <Grid item xs={12} sm={12} md={3} p={1}>
+                      <img
                         // src="assets/imgs/phone-2.png"
                         src={item?.products[0]?.product_images_urls[0]}
                         alt=""
@@ -107,7 +83,7 @@ const OrderDetails = () => {
                           height: "auto",
                           objectFit: "cover",
                         }}
-                      /> */}
+                      />
                     </Grid>
                     <Grid item xs={12} sm={12} md={9}>
                       <Grid container p={2} spacing={0} mt={0}>
@@ -126,16 +102,15 @@ const OrderDetails = () => {
                             <Grid item xs={12} sm={10} md={2}>
                               <Button
                                 onClick={() =>
-                                  navigate("/vieworders", { state: item })
-                                }
+                              navigate("/vieworders", { state: item })
+                            }
                                 variant="contained"
                                 sx={{
                                   borderRadius: "20px",
-                                  padding: "8px 20px",
+                                  padding: "5px 13px",
                                   textTransform: "none",
                                   backgroundColor: "#ff9f00",
                                   border: "1px solid #ff9f00",
-                                  whiteSpace: "nowrap",
                                   cursor: "pointer",
                                   "&:hover": {
                                     backgroundColor: "#ff9f00",
@@ -146,35 +121,40 @@ const OrderDetails = () => {
                               >
                                 View Details
                               </Button>
-                              <Typography
-                                
-                                sx={{
-                                  mt:2,
-                                  fontSize: "10px",
-                                  color: "orange",
-                                  whiteSpace: "nowrap",
-                                }}
-                              >
-                                Delivery Expected by{" "}
-                                {formatDate(item?.delivery_date)}
-                              </Typography>
                             </Grid>
                           </Grid>
                         </Grid>
+                        {/* <Grid item xs={12} sm={12} md={6} p={2}>
+                          <Typography
+                            variant="h7"
+                            sx={{ color: "#6B6767", fontWeight: 600 }}
+                          >
+                            Order Id : #0345-8901-383
+                          </Typography>
+                        </Grid> */}
+                        {/* <Grid item xs={12} sm={12} md={6} p={2}>
+                          <Typography
+                            variant="h7"
+                            sx={{ color: "#6B6767", fontWeight: 600 }}
+                          >
+                            Seller :Treasure Haul Union
+                          </Typography>
+                        </Grid> */}
                         <Grid item xs={12} sm={12} md={6} p={2}>
                           <Typography
                             variant="h7"
                             sx={{ color: "orange", fontWeight: 600 }}
                           >
+                            {/* Rs {item.products[0]?.actual_price}.00 */}
                             Rs {item.products[0]?.discount_price}.00
                           </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} p={2}>
                           <Typography
                             variant="h7"
-                            sx={{ color: "#6B6767", fontWeight: 500 }}
+                            sx={{ color: "#6B6767", fontWeight: 600 }}
                           >
-                            {item.products[0]?.discount}
+                             {item.products[0]?.discount}
                           </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} md={6} p={2}>
@@ -192,6 +172,22 @@ const OrderDetails = () => {
                           <span style={{ color: "#6B6767" }}>
                             {"(inclusive all taxes)"}
                           </span>
+                        </Grid>
+
+                        <Grid item xs={12} sm={12} md={6} p={2}>
+                          <ReusableLink
+                            variant="h7"
+                            underline="none"
+                            sx={{
+                              cursor: "pointer",
+                              color: "blue",
+                              // m: 3,
+                              transition: "0.3s",
+                              fontWeight: 600,
+                            }}
+                          >
+                            View Order Details
+                          </ReusableLink>
                         </Grid>
                       </Grid>
                     </Grid>

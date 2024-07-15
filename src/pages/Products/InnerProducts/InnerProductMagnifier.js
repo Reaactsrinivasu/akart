@@ -20,6 +20,7 @@ import { createInvoiceInitiate } from "../../../redux/actions/invoice/productInv
 import Imports from "../../../common/Imports";
 import { loadUserAddressInitiate } from "../../../redux/actions/address/userAddressActions";
 import useSnackbar from "../../../components/Snackbar";
+import InnerProductRatingAndReviews from "./InnerProductRatingAndReviews";
 // Memoize the component
 const InnerProductMagnifier = React.memo((props) => {
   const dispatch = useDispatch();
@@ -163,7 +164,11 @@ const InnerProductMagnifier = React.memo((props) => {
     },
     [dispatch]
   );
-
+  const ratingData = {
+    product_id: innerProductsData?.id,
+    total_ratings: innerProductsData?.total_ratings,
+    total_reviews: innerProductsData?.total_reviews,
+  };
   return (
     <>
       <Grid container p={0} spacing={1}>
@@ -361,7 +366,7 @@ const InnerProductMagnifier = React.memo((props) => {
                         products: [
                           {
                             product_id: innerProductsData?.id,
-                           product_quantity: 1,
+                            product_quantity: 1,
                           },
                         ],
                       })
@@ -526,7 +531,6 @@ const InnerProductMagnifier = React.memo((props) => {
                           variant="h4"
                           sx={{ ml: 3, color: "#308150" }}
                         >
-                          {/* 20% OFF */}
                           {innerProductsData?.discount}
                         </Typography>
                       </Box>
@@ -657,6 +661,7 @@ const InnerProductMagnifier = React.memo((props) => {
           </Box>
         </Grid>
       </Grid>
+      <InnerProductRatingAndReviews ratingData={ratingData} />
     </>
   );
 });

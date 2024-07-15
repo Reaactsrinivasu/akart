@@ -125,7 +125,7 @@ const PaymentOptions = () => {
         // alert(response.razorpay_order_id);
         // alert(response.razorpay_signature);
       },
-      prefill: {
+      prefill: { 
         name: order?.user_details?.name,
         email: order?.user_details?.email,
         contact: order?.user_details?.contact,

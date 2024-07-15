@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Imports from "../../../common/Imports";
 import DataTerms from "../../../common/DataTerms";
 import { useDispatch, useSelector } from "react-redux";
-
+import axios from "axios";
 import {
   initialValues,
   generateValidationSchema,
@@ -23,10 +23,10 @@ const Login = () => {
   const [credential, setCredential] = Imports?.useState(preData);
   
   const login = useGoogleLogin({
-    // onSuccess: (tokenResponse) => console.log(tokenResponse),
+    onSuccess: (tokenResponse) => console.log(tokenResponse),
     onSuccess: async (response) => {
       try {
-        const res = await Imports.axios
+        const res = await axios
           .get(
             `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${response.access_token}`,
             {
@@ -38,12 +38,12 @@ const Login = () => {
           )
           .then((res) => {
             setProfile(res.data);
-            // console.log('res', res);
+            console.log('res', res);
           })
           .catch((err) => console.log(err));
-        // console.log('res',res)
+        console.log('res',res)
       } catch (err) {
-        // console.log(err);
+        console.log(err);
       }
     },
   });

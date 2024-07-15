@@ -52,6 +52,12 @@ import loadNotificationReducer from "./notifications/loadNotificationsReducer";
 import transactionReducer from "./payments/transactionReducer";
 // invoice data
 import createInvoiceReducer from "./invoice/productInvoiceReducer";
+// ratings and reviews data
+import ratingsAndReviewsReducer from "./ratingsAndReviews/ratingsAndReviewsReducer";
+import getOrderedProductByIdReducer from "./orderDetails/getOrderByIdReducer";
+import createLikesReducer from "./ratingsAndReviews/createLikeReducer";
+import createDisLikesReducer from "./ratingsAndReviews/createDisLikeReducer";
+import loadReviesByIdReducer from "./ratingsAndReviews/loadReviewsByIdReducer";
  const rootReducer = combineReducers({
    resendotpdata: resendOtpReducer,
    emaillogindata: emailLoginReducer,
@@ -80,8 +86,10 @@ import createInvoiceReducer from "./invoice/productInvoiceReducer";
    addtocartdata: addProductToCartDataReducer,
    // save for later data
    saveforlaterdata: saveProductForLaterDataReducer,
-   // order details
+   // get all orders details
    orderdata: orderDataReducer,
+   //  get single order by Id
+   getorderbyid: getOrderedProductByIdReducer,
    // getting user account data into My profile dashboard
    myprofileuserdata: getUserDataReducer,
    // user address details
@@ -107,5 +115,13 @@ import createInvoiceReducer from "./invoice/productInvoiceReducer";
    createtransaction: transactionReducer,
    //  invoice data
    invoicedata: createInvoiceReducer,
+   //  reviews and ratings
+   ratingsreviewsdata: ratingsAndReviewsReducer,
+   //  create likes
+   likesdata: createLikesReducer,
+   //  create dislikes
+   dislikesdata: createDisLikesReducer,
+  //  reviews data by product id
+   reviewsdatabyid:loadReviesByIdReducer,
  });
 export default rootReducer;

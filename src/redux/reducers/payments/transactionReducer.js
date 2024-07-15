@@ -30,6 +30,22 @@ const transactionReducer = (
       };
     default:
       return state;
+      case types.UPDATE_TRANSACTION_START:
+        return {
+          ...state,
+          loading: true,
+        };
+      case types.UPDATE_TRANSACTION_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+        };
+      case types.UPDATE_TRANSACTION_ERROR:
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
   }
 };
 export default transactionReducer;

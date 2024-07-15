@@ -3,6 +3,7 @@ import {
   createOrderDetailsApi,
   loadOrderDetailsApi,
   deleteOrderDetailsApi,
+  getOrderByIdApi,
 } from "../../apis/orderDetails/orderDetailsApi";
 //adding product for later details
 export const createOrderDetailsStart = (users) => {
@@ -44,6 +45,19 @@ export const deleteOrderDetailsError = (error) => ({
   payload: error,
 });
 
+export const getOrderByIdStart = (userId) => ({
+  type: types.GET_ORDER_BY_ID_START,
+  payload: userId,
+});
+export const getOrderByIdSuccess = (userId) => ({
+  type: types.GET_ORDER_BY_ID_SUCCESS,
+  payload: userId,
+});
+export const getOrderByIdError = (error) => ({
+  type: types.GET_ORDER_BY_ID_ERROR,
+  payload: error,
+});
+
 export const createOrderDetailsInitiate = (user, navigate) => {
   return function (dispatch) {
     dispatch(createOrderDetailsStart(user));
@@ -81,8 +95,20 @@ export const removeOrderDetailsInitiate = (id, navigate) => {
       );
   };
 };
+export const getOrderByIdInitiate = (id, navigate) => {
+  return function (dispatch) {
+    dispatch(getOrderByIdStart(id));
+    getOrderByIdApi(id)
+      .then((res) => {
+        console.log("res", res);
+        dispatch(getOrderByIdSuccess(res));
+      })
+      .catch((error) => dispatch(getOrderByIdError(error.message)));
+  };
+};
 export default {
   createOrderDetailsInitiate,
   loadOrderDetailsInitiate,
   removeOrderDetailsInitiate,
+  getOrderByIdInitiate,
 };

@@ -157,6 +157,16 @@ const generateValidationSchema = (fields) => {
           "House Number is required"
         );
         break;
+      case "rating":
+        validationRules.rating = Yup.number()
+          .min(1, "Rating is Short!")
+          .required("Rating is required");
+        break;
+      case "review":
+        validationRules.review = Yup.string()
+          .min(10, "Review is Short!")
+          .required("Review is required");
+        break;
       // Add additional fields as needed
       default:
         break;
@@ -189,6 +199,8 @@ const initialValues = {
   locality: "",
   city: "",
   state: "",
+  rating: "",
+  review: "",
 };
  
 export { initialValues, generateValidationSchema };
