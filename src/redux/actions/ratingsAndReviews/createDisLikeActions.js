@@ -39,8 +39,16 @@ export const createDisLikesInitiate = (user, navigate, callback) => {
       .then((res) => {
         console.log("res", res);
         dispatch(createDisLikesSuccess(res));
+        // if (res.status === 200) {
+        //   callback({
+        //     likes_count: res?.data?.likes_count,
+        //     dislikes_count: res?.data?.dislikes_count,
+        //   });
+        // }
         if (res.status === 200) {
-          callback(res?.data?.disLikes_count);
+          callback(res?.data);
+        } else {
+          callback(null); // Indicate failure
         }
       })
       .catch((error) => dispatch(createDisLikesError(error.message)));

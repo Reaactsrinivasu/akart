@@ -39,11 +39,19 @@ export const createLikesInitiate = (user, navigate, callback) => {
     createLikesApi(user)
       .then((res) => {
         console.log("res", res);
-        // const orderId = res.data?.order?.id;
-        // console.log("orderId", orderId);
+        
         dispatch(createLikesSuccess(res));
+        
+        // if (res.status === 200) {
+        //   callback({
+        //     likes_count: res?.data?.likes_count,
+        //     dislikes_count: res?.data?.dislikes_count,
+        //   });
+        // }
         if (res.status === 200) {
-          callback(res?.data?.Likes_count);
+          callback(res?.data);
+        } else {
+          callback(null); // Indicate failure
         }
       })
       .catch((error) => dispatch(createLikesError(error.message)));

@@ -176,6 +176,7 @@ const editPayHandler = (product_details) => {
   const removeOrderHandler = (id) => {
     dispatch(removeOrderDetailsInitiate(id));
   };
+
   return (
     <>
       <Box
@@ -930,6 +931,7 @@ const editPayHandler = (product_details) => {
           </Grid>
         </Grid>
       </Box>
+
       <ProductReview
         reviewShow={reviewShow}
         handleClose={closeReviewModal}

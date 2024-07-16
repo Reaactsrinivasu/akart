@@ -124,7 +124,7 @@ const InnerProductRatingAndReviews = (props) => {
                   color: "#121212",
                 }}
               >
-                {averageRating ? averageRating : "0"}★
+                {averageRating ? Math.ceil(averageRating) : "0"}★
               </Box>
               <Typography color="#6B6767">
                 {totalRating ? totalRating : "0"} Ratings{" "}
